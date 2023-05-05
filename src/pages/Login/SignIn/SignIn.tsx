@@ -14,22 +14,28 @@ const SignIn = () => {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
   const setUser = usePersistStore((state) => state.setUser);
   const firstName = usePersistStore((state) => state.firstName);
   const lastName = usePersistStore((state) => state.lastName);
   const token = usePersistStore((state) => state.token);
 
   const handleSignIn = () => {
+    setLoading(true);
+    setError(false);
     SIGNIN({
       username: userName,
       password: password,
       onSuccess: (res: any) => {
         console.log(res);
         setUser(res.firstName, res.lastName, res.token);
+        setLoading(false);
       },
-      // @ts-ignore
-      onFailure: (err: any) => {
+      onFail: (err: any) => {
         console.log(err);
+        setLoading(false);
+        setError(true);
       },
     });
   };

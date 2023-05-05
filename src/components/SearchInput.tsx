@@ -1,7 +1,6 @@
-import * as React from "react";
-import TextField from "@mui/material/TextField";
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Autocomplete } from "@mui/material";
-import { Box } from "@mui/system";
+import TextField from "@mui/material/TextField";
 import { borderRadiuosTextField } from "../theme/Themes";
 
 interface SearchInputProps {
@@ -36,29 +35,10 @@ interface SearchInputProps {
 }
 
 export default function SearchInput(props: SearchInputProps) {
-  const id = props.id;
   const label = props.label != null ? props.label : "label";
-  const type = props.type != null ? props.type : "text";
-  const idNum = props.idNum;
-  const autoComplete = props.autoComplete != null ? props.autoComplete : "";
-  const disabled = props.disabled != null ? props.disabled : false;
-  const fontSize = props.fontSize != null ? props.fontSize : 16;
-  const height = props.height != null ? props.height : {};
-  const width = props.width != null ? props.width : {};
-  const textColor = props.textColor != null ? props.textColor : "black";
   const backgroundColor = props.backgroundColor != null ? props.backgroundColor : "";
-  const hoverColor = props.hoverColor != null ? props.hoverColor : "";
-  const position = props.position != null ? props.position : {};
-  const bottom = props.bottom != null ? props.bottom : {};
-  const right = props.right != null ? props.right : {};
-  const top = props.top != null ? props.top : {};
-  const left = props.left != null ? props.left : {};
   const margin = props.margin != null ? props.margin : {};
-  const text = props.text != null ? props.text : "text";
-  const value = props.setValue != null ? props.setValue : {};
   const items = props.items != null ? props.items : [];
-  const helperText = props.helperText != null ? props.helperText : "";
-  const error = props.error != null ? props.error : false;
   const size = props.size != null ? props.size : "small";
   const mx = props.mx != null ? props.mx : {};
   const my = props.my != null ? props.my : {};

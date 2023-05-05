@@ -5,14 +5,12 @@ import SignIn from "../pages/Login/SignIn/SignIn";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" element={<Root />}>
-      <Route path="login" element={<LoginLayout />} >
-        <Route path="signin"
-        element={<SignIn />}
-        />
+    <Route path='/' element={<Root />}>
+      <Route path='login' element={<LoginLayout />}>
+        <Route path='' element={<SignIn />} />
       </Route>
-    </Route>
-  )
+    </Route>,
+  ),
 );
 
 export default router;

@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 import { Drawer as MUIDrawer } from "@mui/material";
 import React from "react";
 
 interface DrawerProps {
-  open: boolean;
-  onClose: () => void;
-  anchor: "left" | "right" | "top" | "bottom";
+  open?: boolean;
+  onClose?: () => void;
+  anchor?: "left" | "right" | "top" | "bottom";
   width?: number | string | object;
   height?: number | string | object;
   backgroundColor?: string;
@@ -20,56 +21,51 @@ interface DrawerProps {
   borderRadius?: string | object | number;
 }
 function Drawer(props: DrawerProps) {
-  props.open = props.open || false;
-  props.onClose = props.onClose || (() => {});
-  props.anchor = props.anchor || "left";
-  props.width = props.width || "auto";
-  props.height = props.height || "auto";
-  props.backgroundColor = props.backgroundColor || "white";
-  props.top = props.top || {};
-  props.bottom = props.bottom || {};
-  props.left = props.left || {};
-  props.right = props.right || {};
-  props.PaperProps = props.PaperProps || {};
-  props.variant = props.variant || "temporary";
-  props.sx = props.sx || {};
-  props.border = props.border || "none";
+  const width = props.width || {};
+  const height = props.height || "100%";
+  const backgroundColor = props.backgroundColor || "white";
+  const top = props.top || {};
+  const bottom = props.bottom || {};
+  const left = props.left || {};
+  const right = props.right || {};
+  const border = props.border || "none";
 
   return (
-    <MUIDrawer
-      open={props.open}
-      onClose={props.onClose}
-      anchor={props.anchor}
-      sx={{
-        width: props.width,
-        height: props.height,
-        backgroundColor: props.backgroundColor,
-        top: props.top,
-        bottom: props.bottom,
-        left: props.left,
-        right: props.right,
-        flexShrink: 0,
-        "& .MuiDrawer-paper": {
-            width: props.width,
-        },
-        ...props.sx,
-      }}
-      PaperProps={{
-        // @ts-ignore
-        backgroundColor: props.backgroundColor,
-        border: props.border,
-        height: props.height,
-        top: props.top,
-        bottom: props.bottom,
-        left: props.left,
-        right: props.right,
-        borderRadius: props.borderRadius,
-        ...props.PaperProps,
-      }}
-      variant={props.variant}
-    >
-      {props.children}
-    </MUIDrawer>
+      <MUIDrawer
+        open={props.open}
+        onClose={props.onClose}
+
+        anchor={props.anchor}
+        sx={{
+          "width": width,
+          "height": height,
+          "top": top,
+          "bottom": bottom,
+          "left": left,
+          "right": right,
+          "flexShrink": 0,
+          "& .MuiDrawer-paper": {
+            width: width,
+          },
+          ...props.sx,
+        }}
+        PaperProps={{
+          sx: {
+            backgroundColor: backgroundColor,
+            border: border,
+            height: height,
+            top: top,
+            bottom: bottom,
+            left: left,
+            right: right,
+            borderRadius: props.borderRadius,
+            ...props.PaperProps,
+          },
+        }}
+        variant={props.variant}
+      >
+        {props.children}
+      </MUIDrawer>
   );
 }
 

@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/ban-types */
 import { Center } from "@chakra-ui/react";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { onPrimary, primary, primaryLight} from "../theme/Colors";
+import { onPrimary, primaryLight, secondary } from "../theme/Colors";
 import { borderRadiuosButton } from "../theme/Themes";
-import { ReactNode } from "react";
+import React, { ReactNode } from "react";
 
 interface LinkButtonProps {
   text?: string;
@@ -33,6 +34,7 @@ interface LinkButtonProps {
   pr?: object | number | string;
   pb?: object | number | string;
   onClick?: Function;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   children?: ReactNode | object | any;
   fun?: Function;
   fullWidth?: boolean;
@@ -40,8 +42,8 @@ interface LinkButtonProps {
   Endicon?: string;
   borderRadius?: string;
   boxShadow?: object | number | string;
-  type?: "button" | "submit" | "reset" | undefined;
-  variant?: "text" | "outlined" | "contained"| undefined;
+  type?: "button" | "submit" | "reset";
+  variant?: "contained" | "text" | "outlined";
   border?: object | number | string;
   borderRight?: string;
   borderLeft?: string;
@@ -52,47 +54,45 @@ interface LinkButtonProps {
 }
 
 export default function LinkButton(props: LinkButtonProps) {
-  let text = props.text != null ? props.text : "";
-  let disabled = props.disabled != null ? props.disabled : false;
-  let fontSize = props.fontSize != null ? props.fontSize : 16;
-  let height = props.height != null ? props.height : "max-content";
-  let width = props.width != null ? props.width : "100%";
-  let minWidth = props.minWidth != null ? props.minWidth : "max-content";
-  let textColor = props.textColor != null ? props.textColor : onPrimary;
-  let backgroundColor = props.backgroundColor || primary;
-  let hoverColor = props.hoverColor != null ? props.hoverColor : primaryLight;
-  let position = props.position != null ? props.position : {};
-  let bottom = props.bottom != null ? props.bottom : {};
-  let right = props.right != null ? props.right : {};
-  let top = props.top != null ? props.top : {};
-  let left = props.left != null ? props.left : {};
-  let margin = props.margin != null ? props.margin : {};
-  let mt = props.mt != null ? props.mt : {};
-  let ml = props.ml != null ? props.ml : {};
-  let mr = props.mr != null ? props.mr : {};
-  let mb = props.mb != null ? props.mb : {};
-  let padding = props.padding != null ? props.padding : {};
-  let fullWidth = props.fullWidth != null ? props.fullWidth : false;
-  let icon = props.icon != null ? props.icon : "";
-  let Endicon = props.Endicon != null ? props.Endicon : "";
-  let borderRadius = props.borderRadius != null ? props.borderRadius : borderRadiuosButton;
-  let boxShadow = props.boxShadow != null ? props.boxShadow : {};
-  let pt = props.pt != null ? props.pt : {};
-  let pl = props.pl != null ? props.pl : {};
-  let pr = props.pr != null ? props.pr : {};
-  let pb = props.pb != null ? props.pb : {};
-  let children = props.children != null ? props.children : <></>;
-  let type = props.type != null ? props.type : "button";
-  let border = props.border != null ? props.border : "none";
-  let borderRight = props.borderRight != null ? props.borderRight : "none";
-  let borderLeft = props.borderLeft != null ? props.borderLeft : "none";
-  let borderTop = props.borderTop != null ? props.borderTop : "none";
-  let borderBottom = props.borderBottom != null ? props.borderBottom : "none";
-  let borderColor = props.borderColor != null ? props.borderColor : "none";
+  const disabled = props.disabled != null ? props.disabled : false;
+  const fontSize = props.fontSize != null ? props.fontSize : 16;
+  const height = props.height != null ? props.height : "max-content";
+  const width = props.width != null ? props.width : "max-content";
+  const minWidth = props.minWidth != null ? props.minWidth : "max-content";
+  const textColor = props.textColor != null ? props.textColor : onPrimary;
+  const backgroundColor = props.backgroundColor || secondary;
+  const hoverColor = props.hoverColor != null ? props.hoverColor : primaryLight;
+  const position = props.position != null ? props.position : {};
+  const bottom = props.bottom != null ? props.bottom : {};
+  const right = props.right != null ? props.right : {};
+  const top = props.top != null ? props.top : {};
+  const left = props.left != null ? props.left : {};
+  const margin = props.margin != null ? props.margin : {};
+  const mt = props.mt != null ? props.mt : {};
+  const ml = props.ml != null ? props.ml : {};
+  const mr = props.mr != null ? props.mr : {};
+  const mb = props.mb != null ? props.mb : {};
+  const padding = props.padding != null ? props.padding : {};
+  const fullWidth = props.fullWidth != null ? props.fullWidth : false;
+  const borderRadius = props.borderRadius != null ? props.borderRadius : borderRadiuosButton;
+  const boxShadow = props.boxShadow != null ? props.boxShadow : {};
+  const pt = props.pt != null ? props.pt : {};
+  const pl = props.pl != null ? props.pl : {};
+  const pr = props.pr != null ? props.pr : {};
+  const pb = props.pb != null ? props.pb : {};
+  const type = props.type != null ? props.type : "button";
+  const border = props.border != null ? props.border : "none";
+  const borderRight = props.borderRight != null ? props.borderRight : "none";
+  const borderLeft = props.borderLeft != null ? props.borderLeft : "none";
+  const borderTop = props.borderTop != null ? props.borderTop : "none";
+  const borderBottom = props.borderBottom != null ? props.borderBottom : "none";
+  const borderColor = props.borderColor != null ? props.borderColor : "none";
+
   const navigate = useNavigate();
 
   const handleClick = () => {
-    props.onClick && props.onClick();
+    props.onClick &&
+    props.onClick();
     if (props.fun) {
       props.fun();
     }
@@ -104,18 +104,16 @@ export default function LinkButton(props: LinkButtonProps) {
       navigate(`${props.link}`);
     }
     if (props.href) {
-      // open in new tab
       window.open(props.href, "_blank");
     }
   };
 
   return (
-    
     <Button
       variant={props.variant}
       type={type}
-      startIcon={icon}
-      endIcon={Endicon}
+      startIcon={props.icon}
+      endIcon={props.Endicon}
       sx={{
         width: width,
         height: height,
@@ -156,9 +154,9 @@ export default function LinkButton(props: LinkButtonProps) {
       fullWidth={fullWidth}
     >
       <Center height={"100%"}>
-        {text}
-        {children}
+        {props.text}
+        {props.children}
       </Center>
     </Button>
   );
-}
+} 

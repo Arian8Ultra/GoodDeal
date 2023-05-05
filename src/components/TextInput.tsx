@@ -1,3 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+/* eslint-disable @typescript-eslint/no-empty-function */
+/* eslint-disable @typescript-eslint/ban-types */
 import { CheckCircleOutlineRounded } from "@mui/icons-material";
 import {
   Box,
@@ -15,7 +19,6 @@ import { borderRadiuosTextField } from "../theme/Themes";
 interface TextInputProps {
   id?: string;
   label?: string;
-  name?: string;
   type?: string;
   idNum?: number;
   autoComplete?: string;
@@ -43,14 +46,14 @@ interface TextInputProps {
   maxRows?: number;
   py?: object | number | string;
   px?: object | number | string;
-  getText?: Function;
+  getText: Function;
   dir?: string;
   hasIcon?: boolean;
-  iconClick?: Function;
+  iconClick: Function;
   iconColor?: string;
   iconHoverColor?: string;
   iconSize?: number | string;
-  iconPosition?: "end" | "start";
+  iconPosition: "end" | "start";
   iconMargin?: object | number | string;
   iconBackground?: string;
   fullWidth?: boolean;
@@ -80,6 +83,7 @@ interface TextInputProps {
 }
 
 function TextInput(props: TextInputProps) {
+  const id = props.id != null ? props.id : "";
   const type = props.type != null ? props.type : "text";
   const autoComplete = props.autoComplete != null ? props.autoComplete : "";
   const disabled = props.disabled != null ? props.disabled : false;
@@ -106,7 +110,6 @@ function TextInput(props: TextInputProps) {
   const iconColor = props.iconColor != null ? props.iconColor : "black";
   const iconHoverColor = props.iconHoverColor != null ? props.iconHoverColor : "black";
   const iconSize = props.iconSize != null ? props.iconSize : 16;
-  const iconMargin = props.iconMargin != null ? props.iconMargin : "0px";
   const iconBackground = props.iconBackground != null ? props.iconBackground : "transparent";
   const fullWidth = props.fullWidth != null ? props.fullWidth : false;
   const defaultValue = props.defaultValue != null ? props.defaultValue : "";
@@ -119,7 +122,6 @@ function TextInput(props: TextInputProps) {
   const stickyTextColor = props.stickyTextColor != null ? props.stickyTextColor : "black";
   const stickyTextSize = props.stickyTextSize != null ? props.stickyTextSize : 16;
   const stickyTextMargin = props.stickyTextMargin != null ? props.stickyTextMargin : "0px";
-  const shrink = props.shrink != null ? props.shrink : {};
   const hasButton = props.hasButton != null ? props.hasButton : false;
   const buttonOnClick = props.buttonOnClick != null ? props.buttonOnClick : () => {};
   const buttonColor = props.buttonColor != null ? props.buttonColor : "black";
@@ -127,7 +129,6 @@ function TextInput(props: TextInputProps) {
   const items = props.items != null ? props.items : [];
   const isSelect = props.isSelect != null ? props.isSelect : false;
   const focus = props.focus != null ? props.focus : {};
-  const border = props.border != null ? props.border : {};
   const borderColor = props.borderColor != null ? props.borderColor : primary;
   const borderColorHover = props.borderColorHover != null ? props.borderColorHover : secondary;
   const borderColorFocus = props.borderColorFocus != null ? props.borderColorFocus : secondary;
@@ -157,13 +158,13 @@ function TextInput(props: TextInputProps) {
     <Box display={"flex"}>
       <TextField
         onChange={(newValue) => changeData(newValue.target.value)}
-        name={props.name}
+        name={id}
         label={props.label}
         fullWidth={fullWidth}
         defaultValue={defaultValue}
         value={textValue}
         autoComplete={autoComplete}
-        variant="outlined"
+        variant='outlined'
         type={type}
         disabled={disabled}
         error={error}
@@ -180,11 +181,11 @@ function TextInput(props: TextInputProps) {
             <InputAdornment position={iconPosition} onClick={iconClick}>
               <IconButton
                 sx={{
-                  color: iconColor,
+                  "color": iconColor,
                   "&:hover": { color: iconHoverColor },
                   // change icon size
-                  fontSize: iconSize,
-                  backgroundColor: iconBackground,
+                  "fontSize": iconSize,
+                  "backgroundColor": iconBackground,
                 }}
               >
                 {icon}
@@ -197,7 +198,7 @@ function TextInput(props: TextInputProps) {
             borderBottomRightRadius: hasButton ? 0 : borderRadius,
           },
           startAdornment: hasStickyText ? (
-            <InputAdornment position="start">
+            <InputAdornment position='start'>
               <Typography
                 sx={{
                   color: stickyTextColor,
@@ -211,19 +212,19 @@ function TextInput(props: TextInputProps) {
           ) : null,
         }}
         sx={{
-          boxShadow: 0,
-          borderRadius: hasButton ? 0 : borderRadius,
-          py: py,
-          px: px,
-          width: width,
-          fontSize: fontSize,
-          backgroundColor: backgroundColor,
-          color: textColor,
-          top: top,
-          left: left,
-          right: right,
-          bottom: bottom,
-          position: position,
+          "boxShadow": 0,
+          "borderRadius": hasButton ? 0 : borderRadius,
+          "py": py,
+          "px": px,
+          "right": right,
+          "left": left,
+          "top": top,
+          "bottom": bottom,
+          "position": position,
+          "width": width,
+          "fontSize": fontSize,
+          "backgroundColor": backgroundColor,
+          "color": textColor,
           "&:focus": focus,
           "& .MuiOutlinedInput-root": {
             "& fieldset": {
@@ -240,7 +241,7 @@ function TextInput(props: TextInputProps) {
         InputLabelProps={{
           size: size,
           sx: {
-            color: textColor,
+            "color": textColor,
             "&.Mui-focused": {
               color: texColorFocus,
             },
@@ -259,11 +260,11 @@ function TextInput(props: TextInputProps) {
       {hasButton && (
         <Button
           sx={{
-            color: textColor,
-            bgcolor: buttonColor,
-            borderRadius: borderRadiuosTextField,
-            borderTopLeftRadius: 0,
-            borderBottomLeftRadius: 0,
+            "color": textColor,
+            "bgcolor": buttonColor,
+            "borderRadius": borderRadiuosTextField,
+            "borderTopLeftRadius": 0,
+            "borderBottomLeftRadius": 0,
             "&:hover": {
               backgroundColor: buttonHoverColor,
             },

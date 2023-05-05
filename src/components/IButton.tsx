@@ -1,8 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { IconButton } from "@mui/material";
-import * as React from "react";
 import { useNavigate } from "react-router-dom";
-import { onSecondary, secondary, secondaryLight } from "../theme/Colors";
-import { borderRadiuosTextField } from "../theme/Themes";
+import { onSecondary, secondary } from "../theme/Colors";
 
 interface IButtonProps {
   text?: string;
@@ -37,50 +36,39 @@ interface IButtonProps {
 }
 
 export default function IButton(props: IButtonProps) {
-  props.text = props.text != null ? props.text : "";
-  props.link = props.link != null ? props.link : "";
-  props.pageTitle = props.pageTitle != null ? props.pageTitle : "";
-  props.disabled = props.disabled != null ? props.disabled : false;
-  props.fontSize = props.fontSize != null ? props.fontSize : 20;
-  props.height = props.height != null ? props.height : {};
-  props.width = props.width != null ? props.width : {};
-  props.minWidth = props.minWidth != null ? props.minWidth : {};
-  props.position = props.position != null ? props.position : {};
-  props.bottom = props.bottom != null ? props.bottom : {};
-  props.right = props.right != null ? props.right : {};
-  props.top = props.top != null ? props.top : {};
-  props.left = props.left != null ? props.left : {};
-  props.margin = props.margin != null ? props.margin : {};
-  props.mt = props.mt != null ? props.mt : {};
-  props.ml = props.ml != null ? props.ml : {};
-  props.mr = props.mr != null ? props.mr : {};
-  props.mb = props.mb != null ? props.mb : {};
-  props.padding = props.padding != null ? props.padding : {};
-  props.icon = props.icon != null ? props.icon : "";
-  props.borderRadius = props.borderRadius != null ? props.borderRadius : '10px';
-  props.boxShadow = props.boxShadow != null ? props.boxShadow : {};
-  props.hoverColor = props.hoverColor != null ? props.hoverColor : {};
-  props.fun = props.fun != null ? props.fun : null;
-  props.color = props.color != null ? props.color : onSecondary;
-  props.backgroundColor = props.backgroundColor != null ? props.backgroundColor : secondary;
-  props.children = props.children != null ? props.children : null;
-  props.url = props.url != null ? props.url : '';
-  props.label = props.label != null ? props.label : '';
+  const fontSize = props.fontSize != null ? props.fontSize : 20;
+  const height = props.height != null ? props.height : {};
+  const width = props.width != null ? props.width : {};
+  const minWidth = props.minWidth != null ? props.minWidth : {};
+  const bottom = props.bottom != null ? props.bottom : {};
+  const right = props.right != null ? props.right : {};
+  const top = props.top != null ? props.top : {};
+  const left = props.left != null ? props.left : {};
+  const margin = props.margin != null ? props.margin : {};
+  const mt = props.mt != null ? props.mt : {};
+  const ml = props.ml != null ? props.ml : {};
+  const mr = props.mr != null ? props.mr : {};
+  const mb = props.mb != null ? props.mb : {};
+  const padding = props.padding != null ? props.padding : {};
+  const borderRadius = props.borderRadius != null ? props.borderRadius : '10px';
+  const hoverColor = props.hoverColor != null ? props.hoverColor : {};
+  const color = props.color != null ? props.color : onSecondary;
+  const backgroundColor = props.backgroundColor != null ? props.backgroundColor : secondary;
 
   const navigate = useNavigate();
 
   const handleClick = () => {
-    if (props.fun != null) {
+    if (props.fun) {
       props.fun();
     }
-    if (props.pageTitle != '') {
+    if (props.pageTitle) {
       console.log(props.pageTitle);
       document.title = props.pageTitle;
     }
-    if (props.link != '') {
+    if (props.link) {
       navigate(`${props.link}`);
     }
-    if (props.url != null) {
+    if (props.url) {
       window.open(props.url, "_blank");
     }
   };
@@ -89,25 +77,25 @@ export default function IButton(props: IButtonProps) {
     <IconButton
     aria-label={props.label}
       sx={{
-        "width": props.width,
-        "height": props.height,
-        "borderRadius": props.borderRadius,
-        "bottom": props.bottom,
-        "left": props.left,
-        "right": props.right,
-        "top": props.top,
-        "m": props.margin,
-        "mt": props.mt,
-        "mr": props.mr,
-        "ml": props.ml,
-        "mb": props.mb,
-        "color": props.color,
-        "backgroundColor": props.backgroundColor,
-        "minWidth": props.minWidth,
-        "fontSize": props.fontSize,
-        "padding": props.padding,
+        "width": width,
+        "height": height,
+        "borderRadius": borderRadius,
+        "bottom": bottom,
+        "left": left,
+        "right": right,
+        "top": top,
+        "m": margin,
+        "mt": mt,
+        "mr": mr,
+        "ml": ml,
+        "mb": mb,
+        "color": color,
+        "backgroundColor": backgroundColor,
+        "minWidth": minWidth,
+        "fontSize": fontSize,
+        "padding": padding,
         "&:hover": {
-          backgroundColor: props.hoverColor,
+          backgroundColor: hoverColor,
         },
       }}
       onClick={handleClick}

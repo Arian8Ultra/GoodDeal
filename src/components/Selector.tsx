@@ -1,14 +1,15 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
+/* eslint-disable @typescript-eslint/ban-types */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import * as React from "react";
 // @ts-ignore
-import Box from "@mui/material/Box";
+import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 // @ts-ignore
-import { borderRadiuosButton, borderRadiuosTextField } from "../theme/Themes";
+import { borderRadiuosTextField } from "../theme/Themes";
 // @ts-ignore
-import { ArrowDownwardRounded } from "@mui/icons-material";
 
 export default function Selector(
   id: string | undefined,
@@ -22,8 +23,8 @@ export default function Selector(
   fontColor: string | undefined,
   border: string | undefined,
   firstValue: string | undefined,
-  mt: number | string | any,
-  mb: number | string | any,
+  mt: number | string | never,
+  mb: number | string | never,
   backgroundColor: string | undefined,
   borderRadius: string | number | undefined,
   display: string | undefined,

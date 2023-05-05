@@ -1,4 +1,8 @@
-import { Box, Center, ChakraProvider, Input } from "@chakra-ui/react";
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-empty-function */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+/* eslint-disable @typescript-eslint/ban-types */
+import { Box, Input } from "@chakra-ui/react";
 import React from "react";
 import { primary } from "../theme/Colors";
 
@@ -24,13 +28,8 @@ interface OTPInputProps {
 // create react functional component
 export default function OTPInput(props: OTPInputProps) {
   const numberOfSpaces = props.numberOfSpaces || 0;
-  const spaceBetweenInputs = props.spaceBetweenInputs || 0;
-  const indexOfSpace = props.indexOfSpace || 0;
   const numberOfInputs = props.numberOfInputs || 3;
   const focusColor = props.focusColor || primary;
-  const textColor = props.textColor || "black";
-  const mainColor = props.mainColor || "black";
-  const boxShadow = props.boxShadow || {};
   const getData = props.getData || function () {};
   const maxWidth = props.maxWidth || "100%";
   const height = props.height || "60px";
@@ -52,7 +51,7 @@ export default function OTPInput(props: OTPInputProps) {
       setValue(value + e.target.value[0]);
       setValueArray(valueArray.map((data, i) => (i === index ? e.target.value[0] : data)));
     }
-    let otpCopy = [...otp];
+    const otpCopy = [...otp];
     // @ts-ignore
     otpCopy[e.target.dataset.index] = e.target.value;
     setOtp(otpCopy);
@@ -78,7 +77,7 @@ export default function OTPInput(props: OTPInputProps) {
 
   React.useEffect(() => {
     getData(valueArray.join(""));
-  }, [otp]);
+  }, [getData, otp, valueArray]);
 
   return (
     // adding rtl support to chakra ui

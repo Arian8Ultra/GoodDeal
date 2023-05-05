@@ -1,16 +1,15 @@
-import { Center, Image } from "@chakra-ui/react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-empty-function */
+/* eslint-disable @typescript-eslint/ban-types */
+import { Center } from "@chakra-ui/react";
 import { Button } from "@mui/material";
 import * as React from "react";
-import { useNavigate } from "react-router-dom";
 import {
   onPrimary,
-  primary,
-  primaryDark,
-  primaryLight,
   secondary,
-  secondaryLight,
+  secondaryLight
 } from "../theme/Colors";
-import { borderRadiuosButton, borderRadiuosTextField } from "../theme/Themes";
+import { borderRadiuosButton } from "../theme/Themes";
 
 interface FileButtonProps {
   text?: string;
@@ -61,51 +60,40 @@ interface FileButtonProps {
 }
 
 function FileButton(props: FileButtonProps) {
-  props.text = props.text != null ? props.text : "";
-  props.link = props.link != null ? props.link : "";
-  props.pageTitle = props.pageTitle != null ? props.pageTitle : "";
-  props.disabled = props.disabled != null ? props.disabled : false;
-  props.fontSize = props.fontSize != null ? props.fontSize : 16;
-  props.height = props.height != null ? props.height : "max-content";
-  props.width = props.width != null ? props.width : "max-content";
-  props.minWidth = props.minWidth != null ? props.minWidth : "max-content";
-  props.textColor = props.textColor != null ? props.textColor : onPrimary;
-  props.backgroundColor = props.backgroundColor != null ? props.backgroundColor : secondary;
-  props.hoverColor = props.hoverColor != null ? props.hoverColor : secondaryLight;
-  props.position = props.position != null ? props.position : {};
-  props.bottom = props.bottom != null ? props.bottom : {};
-  props.right = props.right != null ? props.right : {};
-  props.top = props.top != null ? props.top : {};
-  props.left = props.left != null ? props.left : {};
-  props.margin = props.margin != null ? props.margin : {};
-  props.mt = props.mt != null ? props.mt : {};
-  props.ml = props.ml != null ? props.ml : {};
-  props.mr = props.mr != null ? props.mr : {};
-  props.mb = props.mb != null ? props.mb : {};
-  props.padding = props.padding != null ? props.padding : {};
-  props.fullWidth = props.fullWidth != null ? props.fullWidth : false;
-  props.icon = props.icon != null ? props.icon : "";
-  props.Endicon = props.Endicon != null ? props.Endicon : "";
-  props.borderRadius = props.borderRadius != null ? props.borderRadius : borderRadiuosButton;
-  props.boxShadow = props.boxShadow != null ? props.boxShadow : {};
-  props.pt = props.pt != null ? props.pt : {};
-  props.pl = props.pl != null ? props.pl : {};
-  props.pr = props.pr != null ? props.pr : {};
-  props.pb = props.pb != null ? props.pb : {};
-  props.onClick = props.onClick != null ? props.onClick : () => {};
-  props.children = props.children != null ? props.children : "";
-  props.variant = props.variant != null ? props.variant : "contained";
-  props.type = props.type != null ? props.type : "button";
-  props.border = props.border != null ? props.border : "none";
-  props.borderRight = props.borderRight != null ? props.borderRight : "none";
-  props.borderLeft = props.borderLeft != null ? props.borderLeft : "none";
-  props.borderTop = props.borderTop != null ? props.borderTop : "none";
-  props.borderBottom = props.borderBottom != null ? props.borderBottom : "none";
-  props.borderColor = props.borderColor != null ? props.borderColor : "none";
-  props.setFiles = props.setFiles != null ? props.setFiles : () => {};
-  props.multiple = props.multiple != null ? props.multiple : false;
-  props.fileType = props.fileType != null ? props.fileType : "image/*";
+  const fontSize = props.fontSize != null ? props.fontSize : 16;
+  const height = props.height != null ? props.height : "max-content";
+  const width = props.width != null ? props.width : "max-content";
+  const minWidth = props.minWidth != null ? props.minWidth : "max-content";
+  const textColor = props.textColor != null ? props.textColor : onPrimary;
+  const backgroundColor = props.backgroundColor != null ? props.backgroundColor : secondary;
+  const hoverColor = props.hoverColor != null ? props.hoverColor : secondaryLight;
+  const position = props.position != null ? props.position : {};
+  const bottom = props.bottom != null ? props.bottom : {};
+  const right = props.right != null ? props.right : {};
+  const top = props.top != null ? props.top : {};
+  const left = props.left != null ? props.left : {};
+  const margin = props.margin != null ? props.margin : {};
+  const mt = props.mt != null ? props.mt : {};
+  const ml = props.ml != null ? props.ml : {};
+  const mr = props.mr != null ? props.mr : {};
+  const mb = props.mb != null ? props.mb : {};
+  const padding = props.padding != null ? props.padding : {};
+  const borderRadius = props.borderRadius != null ? props.borderRadius : borderRadiuosButton;
+  const boxShadow = props.boxShadow != null ? props.boxShadow : {};
+  const pt = props.pt != null ? props.pt : {};
+  const pl = props.pl != null ? props.pl : {};
+  const pr = props.pr != null ? props.pr : {};
+  const pb = props.pb != null ? props.pb : {};
+  const border = props.border != null ? props.border : "none";
+  const borderRight = props.borderRight != null ? props.borderRight : "none";
+  const borderLeft = props.borderLeft != null ? props.borderLeft : "none";
+  const borderTop = props.borderTop != null ? props.borderTop : "none";
+  const borderBottom = props.borderBottom != null ? props.borderBottom : "none";
+  const borderColor = props.borderColor != null ? props.borderColor : "none";
+  const multiple = props.multiple != null ? props.multiple : false;
+  const fileType = props.fileType != null ? props.fileType : "image/*";
   const [fileName, setFileName] = React.useState("");
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [file, setFile] = React.useState(null);
 
   const handleFile = (e: { target: { files: any; }; }) => {
@@ -122,38 +110,38 @@ function FileButton(props: FileButtonProps) {
       startIcon={props.icon}
       endIcon={props.Endicon}
       sx={{
-        "width": props.width,
-        "height": props.height,
-        "borderRadius": props.borderRadius,
-        "color": props.textColor,
-        "backgroundColor": props.backgroundColor,
-        "fontSize": props.fontSize,
-        "position": props.position,
-        "bottom": props.bottom,
-        "left": props.left,
-        "right": props.right,
-        "top": props.top,
-        "m": props.margin,
-        "mt": props.mt,
-        "mr": props.mr,
-        "ml": props.ml,
-        "mb": props.mb,
-        "minWidth": props.minWidth,
-        "padding": props.padding,
-        "boxShadow": props.boxShadow,
-        "border": props.border,
-        "borderRight": props.borderRight,
-        "borderLeft": props.borderLeft,
-        "borderTop": props.borderTop,
-        "borderBottom": props.borderBottom,
-        "borderColor": props.borderColor,
-        "pt": props.pt,
-        "pl": props.pl,
-        "pr": props.pr,
-        "pb": props.pb,
+        "width": width,
+        "height": height,
+        "borderRadius": borderRadius,
+        "color": textColor,
+        "backgroundColor": backgroundColor,
+        "fontSize": fontSize,
+        "position": position,
+        "bottom": bottom,
+        "left": left,
+        "right": right,
+        "top": top,
+        "m": margin,
+        "mt": mt,
+        "mr": mr,
+        "ml": ml,
+        "mb": mb,
+        "minWidth": minWidth,
+        "padding": padding,
+        "boxShadow": boxShadow,
+        "border": border,
+        "borderRight": borderRight,
+        "borderLeft": borderLeft,
+        "borderTop": borderTop,
+        "borderBottom": borderBottom,
+        "borderColor": borderColor,
+        "pt": pt,
+        "pl": pl,
+        "pr": pr,
+        "pb": pb,
         "&:hover": {
-          backgroundColor: props.hoverColor,
-          boxShadow: props.boxShadow,
+          backgroundColor: hoverColor,
+          boxShadow: boxShadow,
         },
       }}
       disabled={props.disabled}
@@ -162,8 +150,8 @@ function FileButton(props: FileButtonProps) {
       {/* input for file with format of fileType */}
       <input
         type='file'
-        accept={props.fileType}
-        multiple={props.multiple}
+        accept={fileType}
+        multiple={multiple}
         onChange={handleFile}
         hidden
       />
