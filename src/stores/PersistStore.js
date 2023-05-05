@@ -7,11 +7,14 @@ export const usePersistStore = create(
       firstName: "",
       lastName: "",
       token: "",
+      role: "",
       setUser: (
         /** @type {string} */ firstName,
         /** @type {string} */ lastName,
-        /** @type {string} */ token
-      ) => set({ firstName, lastName, token }),
+        /** @type {string} */ token,
+        /** @type {string} */ role
+      ) => set({ firstName, lastName, token, role }),
+      logout: () => set({ firstName: "", lastName: "", token: "", role: "" }),
     }),
     {
       name: "persist-storage", // unique name

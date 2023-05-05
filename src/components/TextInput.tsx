@@ -12,7 +12,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { onPrimary, primary, secondary } from "../theme/Colors";
 import { borderRadiuosTextField } from "../theme/Themes";
 
@@ -39,6 +39,7 @@ interface TextInputProps {
   margin?: object | number | string;
   text?: string;
   value?: string;
+  name?: string;
   helperText?: string;
   error?: boolean;
   multiline?: boolean;
@@ -46,14 +47,14 @@ interface TextInputProps {
   maxRows?: number;
   py?: object | number | string;
   px?: object | number | string;
-  getText: Function;
+  getText?: Function;
   dir?: string;
   hasIcon?: boolean;
-  iconClick: Function;
+  iconClick?: Function;
   iconColor?: string;
   iconHoverColor?: string;
   iconSize?: number | string;
-  iconPosition: "end" | "start";
+  iconPosition?: "end" | "start";
   iconMargin?: object | number | string;
   iconBackground?: string;
   fullWidth?: boolean;
@@ -83,7 +84,6 @@ interface TextInputProps {
 }
 
 function TextInput(props: TextInputProps) {
-  const id = props.id != null ? props.id : "";
   const type = props.type != null ? props.type : "text";
   const autoComplete = props.autoComplete != null ? props.autoComplete : "";
   const disabled = props.disabled != null ? props.disabled : false;
@@ -158,7 +158,7 @@ function TextInput(props: TextInputProps) {
     <Box display={"flex"}>
       <TextField
         onChange={(newValue) => changeData(newValue.target.value)}
-        name={id}
+        name={props.name}
         label={props.label}
         fullWidth={fullWidth}
         defaultValue={defaultValue}

@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import { Center } from "@chakra-ui/react";
 import { Button } from "@mui/material";
+import { ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
-import { onPrimary, primaryLight, secondary } from "../theme/Colors";
+import { onPrimary, primary, primaryLight } from "../theme/Colors";
 import { borderRadiuosButton } from "../theme/Themes";
-import React, { ReactNode } from "react";
 
 interface LinkButtonProps {
   text?: string;
@@ -55,12 +55,12 @@ interface LinkButtonProps {
 
 export default function LinkButton(props: LinkButtonProps) {
   const disabled = props.disabled != null ? props.disabled : false;
-  const fontSize = props.fontSize != null ? props.fontSize : 16;
+  const fontSize = props.fontSize != null ? props.fontSize : 18;
   const height = props.height != null ? props.height : "max-content";
-  const width = props.width != null ? props.width : "max-content";
+  const width = props.width != null ? props.width : "100%";
   const minWidth = props.minWidth != null ? props.minWidth : "max-content";
   const textColor = props.textColor != null ? props.textColor : onPrimary;
-  const backgroundColor = props.backgroundColor || secondary;
+  const backgroundColor = props.backgroundColor || primary;
   const hoverColor = props.hoverColor != null ? props.hoverColor : primaryLight;
   const position = props.position != null ? props.position : {};
   const bottom = props.bottom != null ? props.bottom : {};

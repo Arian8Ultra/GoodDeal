@@ -38,6 +38,7 @@ const SignIn = () => {
         setError(true);
       },
     });
+    setUser('آرین','رضایی','123456789')
   };
   return (
     <Form onSubmit={handleSignIn}>
@@ -80,14 +81,15 @@ const SignIn = () => {
             xl: "20vmax",
           }}
           hasIcon
-          icon={!showPassword ? <VisibilityOffRounded /> : <VisibilityRounded />}
+          icon={showPassword ? <VisibilityOffRounded /> : <VisibilityRounded />}
           iconClick={() => setShowPassword(!showPassword)}
           iconColor={primary}
         />
-        <LinkButton type="submit">ورود</LinkButton>
+        <LinkButton width={'100%'} type="submit">ورود</LinkButton>
         <LinkButton
           backgroundColor="transparent"
           textColor={primary}
+          width={'100%'}
           hoverColor={primaryLightTransparent}
           link="/signup"
         >
