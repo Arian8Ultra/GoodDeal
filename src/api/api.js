@@ -1,6 +1,7 @@
 // @ts-nocheck
 import axios from "axios";
-const API_URL = "http://172.16.37.85:54112/api/"
+// const API_URL = "http://172.16.37.85:54112/api/"
+export const API_URL = "http://172.17.139.18/api/"
 
 export const SIGNIN = ({ username, password, onSuccess, onFail }) => {
   const options = {
@@ -30,7 +31,7 @@ export const GET_OSTAN_LIST = ({ setOstanList, token, onSuccess, onFail }) => {
   const options = {
     method: 'GET',
     url: API_URL + 'Ostans/GetOstanList',
-    headers: { Authorization: token }
+    headers: { Authorization:  `Bearer ${token}`, }
   };
 
   axios.request(options).then(function (response) {
@@ -49,7 +50,7 @@ export const GET_CITY_LIST_BY_OSTANID = ({ setCityList,ostanId, token, onSuccess
     method: 'GET',
     url: API_URL + 'Cities/GetCitiesByOstanId',
     params: { ostanId: ostanId },
-    headers: { Authorization: token }
+    headers: { Authorization:  `Bearer ${token}`, }
   };
 
   axios.request(options).then(function (response) {
@@ -67,7 +68,7 @@ export const GET_REGION_LIST_BY_CITYID = ({ setRegionList,cityId, token, onSucce
     method: 'GET',
     url: API_URL + 'Regions/GetRegionsByCityId',
     params: { cityId: cityId },
-    headers: { Authorization: token }
+    headers: { Authorization:  `Bearer ${token}`, }
   };
 
   axios.request(options).then(function (response) {
@@ -83,9 +84,9 @@ export const GET_REGION_LIST_BY_CITYID = ({ setRegionList,cityId, token, onSucce
 export const GET_SUBREGION_LIST_BY_REGIONID = ({ setSubRegionList,regionId, token, onSuccess, onFail }) => {
   const options = {
     method: 'GET',
-    url: API_URL + 'SubRegions/GetSubRegionsByRegionId',
+    url: API_URL + 'Subregions/GetRegionsByRegionId',
     params: { regionId: regionId },
-    headers: { Authorization: token }
+    headers: { Authorization:  `Bearer ${token}`, }
   };
 
   axios.request(options).then(function (response) {
@@ -103,7 +104,7 @@ export const GET_SHOP_LIST_BY_CITYID = ({ setShopList,cityId, token, onSuccess, 
     method: 'GET',
     url: API_URL + 'Shops/GetShopsByCityId',
     params: { cityId: cityId },
-    headers: { Authorization: token }
+    headers: { Authorization:  `Bearer ${token}`, }
   };
 
   axios.request(options).then(function (response) {
@@ -122,7 +123,7 @@ export const GET_SHOP_LIST_BY_REGIONID = ({ setShopList,regionId, token, onSucce
     method: 'GET',
     url: API_URL + 'Shops/GetShopsByRegionId',
     params: { regionId: regionId },
-    headers: { Authorization: token }
+    headers: { Authorization:  `Bearer ${token}`, }
   };
 
   axios.request(options).then(function (response) {
@@ -141,7 +142,7 @@ export const GET_SHOP_LIST_BY_SUBREGIONID = ({ setShopList,subRegionId, token, o
     method: 'GET',
     url: API_URL + 'Shops/GetShopsBySubRegionId',
     params: { subRegionId: subRegionId },
-    headers: { Authorization: token }
+    headers: { Authorization:  `Bearer ${token}`, }
   };
 
   axios.request(options).then(function (response) {
@@ -159,7 +160,7 @@ export const GET_PRODUCT_GROUP_LIST = ({ setProductGroupList, token, onSuccess, 
   const options = {
     method: 'GET',
     url: API_URL + 'ProductGroups/GetProductGroupList',
-    headers: { Authorization: token }
+    headers: { Authorization:  `Bearer ${token}`, }
   };
 
   axios.request(options).then(function (response) {

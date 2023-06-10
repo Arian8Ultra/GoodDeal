@@ -38,7 +38,7 @@ const SignIn = () => {
         setError(true);
       },
     });
-    setUser('آرین','رضایی','123456789')
+    // setUser('آرین','رضایی','123456789')
   };
   return (
     <Form onSubmit={handleSignIn}>

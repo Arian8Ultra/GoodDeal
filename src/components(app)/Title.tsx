@@ -7,7 +7,7 @@ interface TitleProps {
 }
 const Title = (props: TitleProps) => {
   return (
-    <Stack direction={"row"} columnGap={2}>
+    <Stack direction={"row"} columnGap={2} width={'100%'}>
       <Center>
         <svg
           width='27'
