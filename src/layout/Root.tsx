@@ -7,7 +7,10 @@ function Root() {
   const navigate = useNavigate()
   useEffect(() => {
     if (token) {
-      navigate("/home")
+      // check if loacation is login or register
+      if (window.location.pathname === "/login" || window.location.pathname === "/register") {
+        navigate("/home")
+      }
     } else {
       navigate("/login")
     }

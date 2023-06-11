@@ -102,7 +102,7 @@ export const GET_SUBREGION_LIST_BY_REGIONID = ({ setSubRegionList,regionId, toke
 export const GET_SHOP_LIST_BY_CITYID = ({ setShopList,cityId, token, onSuccess, onFail }) => {
   const options = {
     method: 'GET',
-    url: API_URL + 'Shops/GetShopsByCityId',
+    url: API_URL + 'Shops/GetShopListByCityId',
     params: { cityId: cityId },
     headers: { Authorization:  `Bearer ${token}`, }
   };
@@ -121,7 +121,7 @@ export const GET_SHOP_LIST_BY_CITYID = ({ setShopList,cityId, token, onSuccess, 
 export const GET_SHOP_LIST_BY_REGIONID = ({ setShopList,regionId, token, onSuccess, onFail }) => {
   const options = {
     method: 'GET',
-    url: API_URL + 'Shops/GetShopsByRegionId',
+    url: API_URL + 'Shops/GetShopListBySubregionId',
     params: { regionId: regionId },
     headers: { Authorization:  `Bearer ${token}`, }
   };
@@ -140,7 +140,7 @@ export const GET_SHOP_LIST_BY_REGIONID = ({ setShopList,regionId, token, onSucce
 export const GET_SHOP_LIST_BY_SUBREGIONID = ({ setShopList,subRegionId, token, onSuccess, onFail }) => {
   const options = {
     method: 'GET',
-    url: API_URL + 'Shops/GetShopsBySubRegionId',
+    url: API_URL + 'Shops/GetShopListBySubRegionId',
     params: { subRegionId: subRegionId },
     headers: { Authorization:  `Bearer ${token}`, }
   };
