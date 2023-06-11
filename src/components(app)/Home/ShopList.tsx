@@ -4,6 +4,7 @@ import { Stack } from "@mui/system";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import IButton from "../../components/IButton";
+import useLayoutStore from "../../stores/layoutStore";
 
 interface Props {
   children?: React.ReactNode;
@@ -16,6 +17,7 @@ interface Props {
 }
 const ShopList = (props: Props) => {
   let stores = props.stores ? props.stores : [];
+  const changePageName = useLayoutStore((state) => state.changePageName);
   const navigate = useNavigate()
   return (
     <Stack width={"100%"} spacing={'1rem'}>
@@ -53,7 +55,8 @@ const ShopList = (props: Props) => {
             {store.address}
           </Typography>
           <IButton pageTitle={store.name} backgroundColor={'transparent'} width={'100%'} fun={()=>{
-            navigate(`/home/shop/${store.id}`)
+            navigate(`/home/shop/${store.id}`,{state:{store:store}})
+            changePageName(store.name)
           }}>
             <MenuRounded />
           </IButton>

@@ -5,6 +5,7 @@ import SignIn from "../pages/Login/SignIn/SignIn";
 import MainLayout from "../layout/MainLayout";
 import Home from "../pages/Home/Home";
 import Shop from "../pages/Shop/Shop";
+import Admin from "../pages/Admin/Admin";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -14,9 +15,10 @@ const router = createBrowserRouter(
       </Route>
       <Route path='home' element={<MainLayout/>} >
         <Route path='' element={<Home/>} />
-        <Route path='shop/:id' element={<Shop/>} >
-          <Route path='category/:id' element={<Shop/>} />
+        <Route path='shop/:shopId' element={<Shop/>} >
+          <Route path='category/:categoryId' element={<Shop/>} />
         </Route>
+        <Route path='admin' element={<Admin/>} />
       </Route>
     </Route>,
   ),
