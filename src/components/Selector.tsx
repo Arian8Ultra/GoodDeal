@@ -31,6 +31,7 @@ interface SelectorProps {
   fontSize?: number | undefined;
   size?: "small" | "medium" | undefined;
   disabled?: boolean | undefined;
+  menuHeight?: string | undefined;
 }
 
 export default function Selector(props: SelectorProps) {
@@ -52,6 +53,7 @@ export default function Selector(props: SelectorProps) {
   let display =props. display != null ? props.display : "flex";
   let fontSize =props. fontSize != null ? props.fontSize : 16;
   let size =props. size != null ? props.size : "small";
+  let menuHeight =props. menuHeight != null ? props.menuHeight : "30%";
   const [value, setValue] = React.useState(firstValue);
 
   const handleChange = (event: {
@@ -99,7 +101,20 @@ export default function Selector(props: SelectorProps) {
         // disableUnderline={variant === "standard" ? true : false}
         // change icon color of the select component
         MenuProps={{
+          anchorOrigin:{
+            vertical: "bottom",
+            horizontal: "center",
+          },
+          transformOrigin:{
+            vertical: "top",
+            horizontal: "center",
+          },
+          anchorPosition:{
+            top: 0,
+            left: 0,
+          },
           style: {
+            height: menuHeight,
             zIndex: 35001,
             borderRadius: borderRadiuosTextField,
           },

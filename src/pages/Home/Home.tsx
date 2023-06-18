@@ -1,6 +1,5 @@
-import { Box, Button, Stack, Typography } from "@mui/material";
+import { Box, Button, Stack } from "@mui/material";
 import Title from "../../components(app)/Title";
-import Selector from "../../components/Selector";
 import { useEffect, useState } from "react";
 import {
   GET_CITY_LIST_BY_OSTANID,
@@ -11,6 +10,7 @@ import {
 } from "../../api/api";
 import { usePersistStore } from "../../stores/PersistStore";
 import ShopList from "../../components(app)/Home/ShopList";
+import { SelectBar } from "../../components(app)/Home/SelectBar";
 
 const Home = () => {
   const [ostans, setOstans] = useState([]);
@@ -82,175 +82,25 @@ const Home = () => {
     });
   }, [regionId]);
 
-
-  useEffect(()=>{
+  useEffect(() => {
     GET_SHOP_LIST_BY_SUBREGIONID({
-      token:token,
-      subRegionId:neighborhoodId,
-      setShopList:setStores,
-      onSuccess:(res:{data:any})=>{
-        console.log(res)
+      token: token,
+      subRegionId: neighborhoodId,
+      setShopList: setStores,
+      onSuccess: (res: { data: any }) => {
+        console.log(res);
       },
-      onFail:(err:any)=>{
-        console.log(err)
-      }
-    })
-
-  },[neighborhoodId])
+      onFail: (err: any) => {
+        console.log(err);
+      },
+    });
+  }, [neighborhoodId]);
 
   return (
     <Stack my={6} alignItems={"center"}>
       <Title title={"صفحه اصلی"} />
-      <Box
-        height={"80px"}
-        sx={{
-          display: "flex",
-          justifyContent: "space-evenly",
-          alignItems: "end",
-          position: "relative",
-          width: "80%",
-          backgroundColor:"rgba(233, 235, 255, 0.38)",
-          border: "1px solid #ccc",
-          boxShadow: "0 0 10px #ccc",
-          borderRadius: "25px",
-        }}
-      >
-        <Box
-          height={"100%"}
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            position: "relative",
-          }}
-        >
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-              position: "absolute",
-              bottom: "-25%",
-            }}
-          >
-            <Typography variant="h6" component="h6" sx={{ mb: 1 }}>
-              استان
-            </Typography>
-            <Selector
-              items={ostans}
-              width="10vw"
-              fullWidth={true}
-              getValue={setOstanId}
-              backgroundColor="#fff"
-              borderRadius={"15px"}
-            />
-          </Box>
-        </Box>
-        <Box
-          height={"100%"}
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            position: "relative",
-          }}
-        >
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-              position: "absolute",
-              bottom: "-25%",
-            }}
-          >
-            <Typography variant="h6" component="h6" sx={{ mb: 1 }}>
-              شهر
-            </Typography>
-            <Selector
-              items={cities}
-              width="10vw"
-              fullWidth={true}
-              getValue={setCityId}
-              backgroundColor="#fff"
-              borderRadius={"15px"}
-              disabled={ostanId?false:true}
-            />
-          </Box>
-        </Box>
-        <Box
-          height={"100%"}
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            position: "relative",
-          }}
-        >
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-              position: "absolute",
-              bottom: "-25%",
-            }}
-          >
-            <Typography variant="h6" component="h6" sx={{ mb: 1 }}>
-              منطقه
-            </Typography>
-            <Selector
-              items={regions}
-              width="10vw"
-              fullWidth={true}
-              getValue={setRegionId}
-              backgroundColor="#fff"
-              borderRadius={"15px"}
-              disabled={cityId?false:true}
-            />
-          </Box>
-        </Box>
-        <Box
-          height={"100%"}
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            position: "relative",
-          }}
-        >
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-              position: "absolute",
-              bottom: "-25%",
-            }}
-          >
-            <Typography variant="h6" component="h6" sx={{ mb: 1 }}>
-              محله
-            </Typography>
-            <Selector
-              items={neighborhoods}
-              width="10vw"
-              fullWidth={true}
-              getValue={setNeighborhoodId}
-              backgroundColor="#fff"
-              borderRadius={"15px"}
-              disabled={regionId?false:true}
-            />
-          </Box>
-        </Box>
-      </Box>
+      {SelectBar(
+        { ostans, setOstanId, cities, setCityId, ostanId, regions, setRegionId, cityId, neighborhoods, setNeighborhoodId, regionId }      )}
       <Box
         sx={{
           marginTop: "50px",
@@ -259,19 +109,16 @@ const Home = () => {
           alignItems: "end",
           position: "relative",
           width: "100%",
-          padding:'2rem',
-          boxSizing:'border-box',
-          backgroundColor:"rgba(255, 255, 255, 0.7)",
+          padding: "2rem",
+          boxSizing: "border-box",
+          backgroundColor: "rgba(255, 255, 255, 0.7)",
           backdropFilter: "blur(10px)",
           border: "1px solid #ccc",
           boxShadow: "0 0 10px #ccc",
           borderRadius: "25px",
         }}
       >
-        <ShopList stores={stores}>
-
-        </ShopList>
-
+        <ShopList stores={stores} />
       </Box>
     </Stack>
   );
