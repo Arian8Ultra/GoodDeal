@@ -1,0 +1,154 @@
+import { gql } from "@apollo/client";
+
+export const GET_PROVINCES = gql`
+query province_getProvinces {
+  province_getProvinces {
+    result {
+      items {
+        name
+        cities {
+          provinceId
+          name
+        }
+      }
+    }
+  }
+}`
+
+export const GET_CITIES = gql`
+query city_getCities {
+  city_getCities {
+    result {
+      items {
+        provinceId
+        name
+        id
+        regions {
+          name
+          id
+          cityId
+        }
+      }
+    }
+  }
+}`
+
+export const GET_CITIES_BY_PROVINCE_ID = gql`
+query city_getCities_by_provinceId($id: Int!) {
+  city_getCities {
+    result(where: { provinceId: { eq: $id } }) {
+      items {
+        provinceId
+        name
+        id
+        regions {
+          name
+          id
+          cityId
+        }
+      }
+    }
+    status
+    __typename
+  }
+}`
+
+
+
+export const GET_REGIONS = gql`
+query region_getRegions {
+  region_getRegions {
+    result {
+      items {
+        cityId
+        regionCode
+        name
+        id
+        subregions {
+          subregionName
+          subregionCode
+          id
+          regionId
+        }
+      }
+    }
+    status
+    __typename
+  }
+}`
+
+
+export const GET_REGIONS_BY_CITY_ID = gql`
+query region_getRegions_by_city_ID($id: Int!) {
+  region_getRegions {
+    result(where: { cityId: { eq: $id } }) {
+      items {
+        cityId
+        regionCode
+        name
+        id
+        subregions {
+          subregionName
+          subregionCode
+          id
+          regionId
+        }
+      }
+    }
+    status
+    __typename
+  }
+}`
+
+
+
+export const GET_SUBREGIONS = gql`
+query subregion_getSubregions {
+  subregion_getSubregions {
+    result {
+      items {
+        subregionName
+        subregionCode
+        regionId
+        shops {
+          goodsType
+          name
+          ownerFullName
+          phoneNumber
+          plaque
+          fullAddress
+          imageName
+        }
+      }
+    }
+    status
+    __typename
+  }
+}`
+
+
+
+export const GET_SUBREGIONS_BY_REGION_ID = gql`
+query subregion_getSubregions_By_region_ID($id: Int!) {
+  subregion_getSubregions {
+    result(where: { regionId: { eq: $id } }) {
+      items {
+        subregionName
+        subregionCode
+        regionId
+        shops {
+          goodsType
+          name
+          ownerFullName
+          phoneNumber
+          plaque
+          fullAddress
+          imageName
+        }
+      }
+    }
+    status
+    __typename
+  }
+}
+`

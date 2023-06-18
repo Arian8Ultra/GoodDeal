@@ -27,3 +27,32 @@ export const USER_SIGNUP = gql`
     }
   }
 `;
+
+export const USER_SIGNIN = gql`
+  mutation USER_SIGNIN($userName: String!, $password: String!) {
+    user_signIn(input: { userName: $userName, password: $password }) {
+      result {
+        user {
+          firstName
+          lastName
+          userName
+          email
+          userRoles {
+            roleType
+            id
+          }
+          phoneNumber
+          id
+        }
+        token
+        expireDate
+        __typename
+      }
+      status {
+        code
+        value
+      }
+      __typename
+    }
+  }
+`;
