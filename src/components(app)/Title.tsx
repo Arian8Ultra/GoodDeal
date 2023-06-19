@@ -29,8 +29,8 @@ const Title = (props: TitleProps) => {
               y2='28.5'
               gradientUnits='userSpaceOnUse'
             >
-              <stop stop-color='#4763E4' />
-              <stop offset='1' stop-color='#3FA1E1' />
+              <stop stopColor='#4763E4' />
+              <stop offset='1' stopColor='#3FA1E1' />
             </linearGradient>
           </defs>
         </svg>

@@ -56,3 +56,37 @@ export const USER_SIGNIN = gql`
     }
   }
 `;
+
+export const CHANGE_PASSWORD = gql`
+  mutation CHANGE_PASSWORD(
+    $oldPassword: String!
+    $newPassword: String!
+    $confirmPassword: String!
+    $userId: String!
+  ) {
+    user_changePassword(
+      input: {
+        confirmPassword: $confirmPassword
+        currentPassword: $oldPassword
+        newPassword: $newPassword
+        userId: $userId
+      }
+    ) {
+      code
+      value
+      __typename
+    }
+  }
+`;
+
+export const DELETE_USER = gql`
+  mutation DELETE_USER(
+    $userId: String!
+  ) {
+    user_deleteUser(userId: $userId){
+      code
+      value
+      __typename
+    }
+  }
+  `;

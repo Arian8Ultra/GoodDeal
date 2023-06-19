@@ -38,6 +38,7 @@ const ShopList = (props: Props) => {
       {stores.map((store: any) => (
         <Box
           display={"grid"}
+          key={store.id}
           gridTemplateColumns={"repeat(5, 1fr)"}
           gap={"1rem"}
           padding={"1rem"}

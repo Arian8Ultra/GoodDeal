@@ -1,31 +1,103 @@
+import { useLazyQuery, useQuery } from "@apollo/client";
 import { Box, Typography } from "@mui/material";
+import {SetStateAction, useEffect, useState } from "react";
+import {
+  GET_CITIES_BY_PROVINCE_ID,
+  GET_PROVINCES,
+  GET_REGIONS_BY_CITY_ID,
+  GET_SUBREGIONS_BY_REGION_ID,
+} from "../../GraphQL/QueriesLocation";
 import Selector from "../../components/Selector";
 
-export function SelectBar({
-  ostans,
-  setOstanId,
-  cities,
-  setCityId,
-  ostanId,
-  regions,
-  setRegionId,
-  cityId,
-  neighborhoods,
-  setNeighborhoodId,
-  regionId,
-}: {
-  ostans: never[];
-  setOstanId: Function | undefined;
-  cities: never[];
-  setCityId: Function | undefined;
-  ostanId: number;
-  regions: never[];
-  setRegionId: Function | undefined;
-  cityId: number;
-  neighborhoods: never[];
-  setNeighborhoodId: Function | undefined;
-  regionId: number;
-}) {
+interface SelectBarProps {
+  getPronvinceId: (id: number) => void;
+  getCityId: (id: number) => void;
+  getRegionId: (id: number) => void;
+  getNeighborhoodId: (id: number) => void;
+  className?: string;
+  children?: React.ReactNode;
+}
+export function SelectBar(props: SelectBarProps) {
+  const [provinces, setProvinces] = useState([]);
+  const [cities, setCities] = useState([]);
+  const [regions, setRegions] = useState([]);
+  const [neighborhoods, setNeighborhoods] = useState([]);
+  const [provinceId, setProvinceId] = useState();
+  const [cityId, setCityId] = useState();
+  const [regionId, setRegionId] = useState();
+  const [neighborhoodId, setNeighborhoodId] = useState();
+
+  const { loading, error } = useQuery(GET_PROVINCES, {
+    onCompleted: (data) => {
+      console.log(data.province_getProvinces);
+      setProvinces(data.province_getProvinces.result.items);
+    },
+    onError: (e) => {
+      console.log(e);
+    },
+  });
+
+  const [getCities, { loading: loadingCities, error: errorCities }] =
+    useLazyQuery(GET_CITIES_BY_PROVINCE_ID, {
+      variables: {
+        id: provinceId,
+      },
+      onCompleted: (data) => {
+        console.log(data);
+        setCities(data.province_getProvinces.result.items);
+      },
+    });
+
+  const [
+    getRegions,
+    { loading: loadingRegions, error: errorRegions },
+  ] = useLazyQuery(GET_REGIONS_BY_CITY_ID, {
+    variables: {
+      id: cityId,
+    },
+    onCompleted: (data) => {
+      console.log(data);
+      setRegions(data.province_getRegions.result.items);
+    },
+    onError: (e) => {
+      console.log(e);
+    },
+  });
+
+  const [
+    getNeighborhoods,
+    { loading: loadingNeighborhoods, error: errorNeighborhoods },
+  ] = useLazyQuery(GET_SUBREGIONS_BY_REGION_ID, {
+    variables: {
+      id: regionId,
+    },
+    onCompleted: (data) => {
+      console.log(data);
+      setNeighborhoods(data.province_getSubRegions.result.items);
+    },
+    onError: (e) => {
+      console.log(e);
+    },
+  });
+
+  useEffect(() => {
+    if (provinceId) {
+      getCities();
+    }
+  }, [provinceId]);
+
+  useEffect(() => {
+    if (cityId) {
+      getRegions();
+    }
+  }, [cityId]);
+
+  useEffect(() => {
+    if (regionId) {
+      getNeighborhoods();
+    }
+  }, [regionId]);
+
   return (
     <Box
       height={"80px"}
@@ -65,10 +137,13 @@ export function SelectBar({
             استان
           </Typography>
           <Selector
-            items={ostans}
+            items={provinces}
             width="10vw"
             fullWidth={true}
-            getValue={setOstanId}
+            getValue={(id: any | SetStateAction<undefined>) => {
+              setProvinceId(id);
+              props.getPronvinceId(id);
+            }}
             backgroundColor="#fff"
             borderRadius={"15px"}
           />
@@ -101,10 +176,13 @@ export function SelectBar({
             items={cities}
             width="10vw"
             fullWidth={true}
-            getValue={setCityId}
+            getValue={(id: any | SetStateAction<undefined>) => {
+              setCityId(id);
+              props.getCityId(id);
+            }}
             backgroundColor="#fff"
             borderRadius={"15px"}
-            disabled={ostanId ? false : true}
+            disabled={provinceId ? false : true}
           />
         </Box>
       </Box>
@@ -135,7 +213,10 @@ export function SelectBar({
             items={regions}
             width="10vw"
             fullWidth={true}
-            getValue={setRegionId}
+            getValue={(id: any | SetStateAction<undefined>) => {
+              setRegionId(id);
+              props.getRegionId(id);
+            }}
             backgroundColor="#fff"
             borderRadius={"15px"}
             disabled={cityId ? false : true}
@@ -169,7 +250,10 @@ export function SelectBar({
             items={neighborhoods}
             width="10vw"
             fullWidth={true}
-            getValue={setNeighborhoodId}
+            getValue={(id: any | SetStateAction<undefined>) => {
+              setNeighborhoodId(id);
+              props.getNeighborhoodId(id);
+            }}
             backgroundColor="#fff"
             borderRadius={"15px"}
             disabled={regionId ? false : true}
