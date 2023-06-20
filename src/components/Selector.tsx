@@ -17,7 +17,7 @@ interface SelectorProps {
   items?: string[] | object[] | undefined;
   getValue?: Function;
   fullWidth?: boolean | undefined;
-  width?: string | undefined;
+  width?: string | object | undefined;
   height?: string | undefined;
   variant?: "standard" | "outlined" | "filled" | undefined;
   fontColor?: string | undefined;
@@ -76,7 +76,7 @@ export default function Selector(props: SelectorProps) {
         value={value}
         label={label}
         onChange={handleChange}
-        defaultValue={firstValue}
+        // defaultValue={firstValue}
         disabled={props.disabled}
         // without any border
         sx={{

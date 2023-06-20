@@ -11,6 +11,7 @@ import {
 import { usePersistStore } from "../../stores/PersistStore";
 import ShopList from "../../components(app)/Home/ShopList";
 import { SelectBar } from "../../components(app)/Home/SelectBar";
+import useLayoutStore from "../../stores/layoutStore";
 
 const Home = () => {
   const [ostanId, setOstanId] = useState(0);
@@ -19,20 +20,25 @@ const Home = () => {
   const [neighborhoodId, setNeighborhoodId] = useState(0);
   const [stores, setStores] = useState([]);
   const token = usePersistStore((state) => state.token);
+  const changePageName = useLayoutStore((state) => state.changePageName);
 
-  useEffect(() => {
-    GET_SHOP_LIST_BY_SUBREGIONID({
-      token: token,
-      subRegionId: neighborhoodId,
-      setShopList: setStores,
-      onSuccess: (res: { data: any }) => {
-        console.log(res);
-      },
-      onFail: (err: any) => {
-        console.log(err);
-      },
-    });
-  }, [neighborhoodId]);
+  // useEffect(() => {
+  //   GET_SHOP_LIST_BY_SUBREGIONID({
+  //     token: token,
+  //     subRegionId: neighborhoodId,
+  //     setShopList: setStores,
+  //     onSuccess: (res: { data: any }) => {
+  //       console.log(res);
+  //     },
+  //     onFail: (err: any) => {
+  //       console.log(err);
+  //     },
+  //   });
+  // }, [neighborhoodId]);
+
+  useEffect(()=>{
+    changePageName("صفحه اصلی")
+  },[])
 
   return (
     <Stack my={6} alignItems={"center"}>

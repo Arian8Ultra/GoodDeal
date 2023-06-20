@@ -1,6 +1,6 @@
 export const primary = "#4762e3"; /* "#4657F3" */
-export const primaryLight = 'rgb(121, 134, 203)';/* '#7D8AF7' */
-export const primaryLighter = 'rgb(197, 202, 233)';/* '#7D8AF7' */
+export const primaryLight = 'rgb(3, 169, 244)';/* '#7D8AF7' */
+export const primaryLighter = 'rgb(77, 208, 225)';/* '#7D8AF7' */
 export const primaryLightTransparent = 'rgb(121, 134, 203,0.2)';/* '#f57c00' */
 export const primaryDark = "rgb(49, 27, 146)";
 export const secondary = "rgb(255, 179, 0)"; /*#CBAA57*/
@@ -20,8 +20,6 @@ export const backgroundDark = "#F2F2F2";
 export const backgroundPrimary = "#e5e8fd";
 export const cardBackground = "rgba(255,255,255,0.09)";
 export const modalBackground = "#202020";
-
-
 
 export const textPrimary = "#000000";
 export const textSecondary = "#757575";

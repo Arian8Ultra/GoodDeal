@@ -6,7 +6,7 @@ import { onSecondary, secondary } from "../theme/Colors";
 interface IButtonProps {
   text?: string;
   link?: string;
-  pageTitle: string;
+  pageTitle?: string;
   disabled?: boolean;
   fontSize?: number;
   height?: string|number|object;

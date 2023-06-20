@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { GET_CATEGORIES } from '../../../GraphQL/Queries.shop'
+import { GET_CATEGORIES } from '../../../GraphQL/QueriesShop'
 import { useQuery } from '@apollo/client';
 import { Box } from '@mui/material';
 

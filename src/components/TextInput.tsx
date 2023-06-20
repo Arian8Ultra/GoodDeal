@@ -161,7 +161,7 @@ function TextInput(props: TextInputProps) {
         name={props.name}
         label={props.label}
         fullWidth={fullWidth}
-        defaultValue={defaultValue}
+        // defaultValue={defaultValue}
         value={textValue}
         autoComplete={autoComplete}
         variant='outlined'

@@ -21,3 +21,22 @@ export const GET_CURRENT_USER = gql`
     }
   }
 `;
+
+
+export const GET_USERS = gql`
+query user_getUsers{
+  user_getUsers {
+    result {
+      items{
+        firstName
+        lastName
+        id
+        userName
+        email
+        phoneNumber
+        userType
+      }
+    }
+    status
+  }
+}`

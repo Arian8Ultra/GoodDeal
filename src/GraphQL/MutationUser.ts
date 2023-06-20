@@ -9,15 +9,19 @@ export const USER_SIGNUP = gql`
     $confirmPassword: String!
     $nationalCode: String!
     $userType: UserType!
+    $phoneNumber: String!
+    $userName: String!
   ) {
     user_signUp(
       input: {
         email: $email
+        confirmPassword: $confirmPassword
         firstName: $firstName
         lastName: $lastName
-        password: $password
-        confirmPassword: $confirmPassword
         nationalCode: $nationalCode
+        password: $password
+        phoneNumber: $phoneNumber
+        userName: $userName
         userType: $userType
       }
     ) {
@@ -46,13 +50,11 @@ export const USER_SIGNIN = gql`
         }
         token
         expireDate
-        __typename
       }
       status {
         code
         value
       }
-      __typename
     }
   }
 `;
@@ -80,13 +82,39 @@ export const CHANGE_PASSWORD = gql`
 `;
 
 export const DELETE_USER = gql`
-  mutation DELETE_USER(
-    $userId: String!
-  ) {
-    user_deleteUser(userId: $userId){
+  mutation DELETE_USER($id: String!) {
+    user_deleteUser(userId: $id) {
       code
       value
       __typename
     }
   }
-  `;
+`;
+
+export const UPDATE_USER = gql`
+  mutation UPDATE_USER(
+    $firstName: String!
+    $lastName: String!
+    $nationalCode: String!
+    $userName: String!
+  ) {
+    user_updateProfile(
+      input: {
+        userName: $userName
+        firstName: $firstName
+        lastName: $lastName
+        nationalCode: $nationalCode
+      }
+    ) {
+      result {
+        firstName
+        lastName
+        email
+      }
+      status {
+        code
+        value
+      }
+    }
+  }
+`;

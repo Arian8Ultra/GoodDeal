@@ -11,6 +11,11 @@ import Home from "../pages/Home/Home";
 import Shop from "../pages/Shop/Shop";
 import Admin from "../pages/Admin/Admin";
 import Categories from "../pages/Shop/Categories/Categories";
+import AdminLayout from "../layout/AdminLayout";
+import ShopManager from "../pages/Admin/ShopManager/ShopManager";
+import ProductManager from "../pages/Admin/ProductManager/ProductManager";
+import LocationManager from "../pages/Admin/LocationManager/LocationManager";
+import UserManager from "../pages/Admin/UserManager/UserManager";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -27,7 +32,14 @@ const router = createBrowserRouter(
             element={<Categories />}
           />
         </Route>
-        <Route path="admin" element={<Admin />} />
+      </Route>
+      <Route path="admin" element={<AdminLayout />} >
+        <Route path="" element={<Admin />} />
+        <Route path="shopManager" element={<ShopManager />}/>
+        <Route path="productManager" element={<ProductManager />}/>
+        <Route path="locationManager" element={<LocationManager />}/>
+        <Route path="userManager" element={<UserManager />}/>
+
       </Route>
     </Route>
   )

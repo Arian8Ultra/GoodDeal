@@ -1,6 +1,6 @@
 import { useLazyQuery, useQuery } from "@apollo/client";
 import { Box, Typography } from "@mui/material";
-import {SetStateAction, useEffect, useState } from "react";
+import { SetStateAction, useEffect, useState } from "react";
 import {
   GET_CITIES_BY_PROVINCE_ID,
   GET_PROVINCES,
@@ -44,7 +44,7 @@ export function SelectBar(props: SelectBarProps) {
       },
       onCompleted: (data) => {
         console.log(data);
-        setCities(data.province_getProvinces.result.items);
+        setCities(data.city_getCities.result.items);
       },
     });
 
@@ -57,7 +57,7 @@ export function SelectBar(props: SelectBarProps) {
     },
     onCompleted: (data) => {
       console.log(data);
-      setRegions(data.province_getRegions.result.items);
+      setRegions(data.region_getRegions.result.items);
     },
     onError: (e) => {
       console.log(e);
@@ -100,14 +100,25 @@ export function SelectBar(props: SelectBarProps) {
 
   return (
     <Box
-      height={"80px"}
+      height={{
+        xs: "auto",
+        sm: "auto",
+        md: "90px",
+        lg: "90px",
+      }}
       sx={{
-        display: "flex",
-        justifyContent: "space-evenly",
-        alignItems: "end",
+        display: "grid",
+        gridTemplateColumns: {
+          xs: "1fr",
+          sm: "1fr",
+          md: "1fr 1fr 1fr 1fr",
+          lg: "1fr 1fr 1fr 1fr",
+        },
+        // alignItems: "end",
         position: "relative",
         width: "80%",
-        backgroundColor: "rgba(233, 235, 255, 0.38)",
+        backgroundColor: "rgba(255, 255, 255, 0.7)",
+        backdropFilter: "blur(10px)",
         border: "1px solid #ccc",
         boxShadow: "0 0 10px #ccc",
         borderRadius: "25px",
@@ -115,6 +126,7 @@ export function SelectBar(props: SelectBarProps) {
     >
       <Box
         height={"100%"}
+        width={"100%"}
         sx={{
           display: "flex",
           flexDirection: "column",
@@ -129,7 +141,11 @@ export function SelectBar(props: SelectBarProps) {
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
-            position: "absolute",
+            position: {
+              xs: "relative",
+              sm: "relative",
+              md: "absolute",
+            },
             bottom: "-25%",
           }}
         >
@@ -138,7 +154,12 @@ export function SelectBar(props: SelectBarProps) {
           </Typography>
           <Selector
             items={provinces}
-            width="10vw"
+            width={{
+              xs: "50vw",
+              sm: "40vw",
+              md: "10vw",
+              lg: "10vw",
+            }}
             fullWidth={true}
             getValue={(id: any | SetStateAction<undefined>) => {
               setProvinceId(id);
@@ -165,7 +186,11 @@ export function SelectBar(props: SelectBarProps) {
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
-            position: "absolute",
+            position: {
+              xs: "relative",
+              sm: "relative",
+              md: "absolute",
+            },
             bottom: "-25%",
           }}
         >
@@ -174,7 +199,12 @@ export function SelectBar(props: SelectBarProps) {
           </Typography>
           <Selector
             items={cities}
-            width="10vw"
+            width={{
+              xs: "50vw",
+              sm: "40vw",
+              md: "10vw",
+              lg: "10vw",
+            }}
             fullWidth={true}
             getValue={(id: any | SetStateAction<undefined>) => {
               setCityId(id);
@@ -202,7 +232,11 @@ export function SelectBar(props: SelectBarProps) {
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
-            position: "absolute",
+            position: {
+              xs: "relative",
+              sm: "relative",
+              md: "absolute",
+            },
             bottom: "-25%",
           }}
         >
@@ -211,7 +245,12 @@ export function SelectBar(props: SelectBarProps) {
           </Typography>
           <Selector
             items={regions}
-            width="10vw"
+            width={{
+              xs: "50vw",
+              sm: "40vw",
+              md: "10vw",
+              lg: "10vw",
+            }}
             fullWidth={true}
             getValue={(id: any | SetStateAction<undefined>) => {
               setRegionId(id);
@@ -234,12 +273,17 @@ export function SelectBar(props: SelectBarProps) {
         }}
       >
         <Box
+          width={"100%"}
           sx={{
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
-            position: "absolute",
+            position: {
+              xs: "relative",
+              sm: "relative",
+              md: "absolute",
+            },
             bottom: "-25%",
           }}
         >
@@ -248,8 +292,13 @@ export function SelectBar(props: SelectBarProps) {
           </Typography>
           <Selector
             items={neighborhoods}
-            width="10vw"
-            fullWidth={true}
+            width={{
+              xs: "50vw",
+              sm: "40vw",
+              md: "10vw",
+              lg: "10vw",
+            }}
+            // fullWidth={true}
             getValue={(id: any | SetStateAction<undefined>) => {
               setNeighborhoodId(id);
               props.getNeighborhoodId(id);
