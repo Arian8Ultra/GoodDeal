@@ -1,6 +1,6 @@
 import { Center, Image } from "@chakra-ui/react";
 import { AccountCircleRounded, ArrowCircleLeftRounded } from "@mui/icons-material";
-import { Box, IconButton, Stack, Typography } from "@mui/material";
+import { Box, IconButton, Menu, MenuItem, Stack, Typography } from "@mui/material";
 import { Outlet, useNavigate } from "react-router-dom";
 import headerImage from "../assets/header.svg";
 import mainLayoutBackground from "../assets/mainLayoutBackground.svg";
@@ -8,6 +8,8 @@ import { usePersistStore } from "../stores/PersistStore";
 import useLayoutStore from "../stores/layoutStore";
 import { onPrimary, primary, primaryLight, secondary } from "../theme/Colors";
 import { borderRadiuos } from "../theme/Themes";
+import { useState } from "react";
+import CAN from "../components/CAN";
 
 function MainLayout() {
   let pageName = useLayoutStore((state) => state.pageName);
@@ -18,6 +20,16 @@ function MainLayout() {
   role = role === "admin" ? "مدیر" : "کاربر";
   pageName = pageName ? pageName : "صفحه اصلی";
   const navigate = useNavigate();
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
+
+  const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   return (
     <Box
       boxSizing={"border-box"}
@@ -94,6 +106,7 @@ function MainLayout() {
                   height: "50px",
                   padding: 0,
                 }}
+                onClick={handleMenu}
               >
                 <AccountCircleRounded
                   sx={{
@@ -103,6 +116,30 @@ function MainLayout() {
                   }}
                 />
               </IconButton>
+              <Menu
+                  id="menu-appbar"
+                  anchorEl={anchorEl}
+                  anchorOrigin={{
+                    vertical: "bottom",
+                    horizontal: "center",
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  open={Boolean(anchorEl)}
+                  onClose={handleClose}
+                >
+                  <MenuItem onClick={()=>{}}>
+                    تغییر رمزعبور
+                  </MenuItem>
+                  <CAN permissionNeeded="admin">
+                    <MenuItem onClick={()=>{}}>
+                      افزودن کاربر
+                    </MenuItem>
+                  </CAN>
+                </Menu>
               <Center>
                 {window.location.pathname === "/home" ? (
                   <IconButton
