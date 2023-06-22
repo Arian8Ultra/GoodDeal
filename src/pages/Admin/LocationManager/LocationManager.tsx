@@ -1,8 +1,11 @@
 import React from 'react'
+import LocationList from '../../../components(app)/Admin/LocationManager/LocationList'
 
 const LocationManager = () => {
   return (
-    <div>LocationManager</div>
+    <div>
+      <LocationList/>
+    </div>
   )
 }
 

@@ -46,7 +46,7 @@ const UserManager = () => {
         }}
       />
       <NewModal
-        name='افزودن کاربر جدید'
+        name="افزودن کاربر جدید"
         open={newUserModal.open}
         changeModal={() =>
           setNewUserModal({
@@ -58,9 +58,11 @@ const UserManager = () => {
         backgroundColor={onPrimary}
         color={primaryDark}
       >
-        <Stack spacing={2} width={'100%'}>
+        <Stack spacing={2} width={"80%"}>
           <TextInput
-            placeholder='نام کاربری'
+            width={"100%"}
+            label="نام کاربری"
+            placeholder="نام کاربری"
             getText={(text: string) =>
               setNewUserModal({
                 ...newUserModal,
@@ -68,8 +70,38 @@ const UserManager = () => {
               })
             }
           />
+
           <TextInput
-            placeholder='ایمیل'
+            width={"100%"}
+            label="رمز عبور"
+            placeholder="رمز عبور"
+            autoComplete="password"
+            type="password"
+            getText={(text: string) =>
+              setNewUserModal({
+                ...newUserModal,
+                password: text,
+              })
+            }
+          />
+
+          <TextInput
+            width={"100%"}
+            type="password"
+            label="تکرار رمز عبور"
+            placeholder="تکرار رمز عبور"
+            getText={(text: string) =>
+              setNewUserModal({
+                ...newUserModal,
+                confirmPassword: text,
+              })
+            }
+          />
+
+          <TextInput
+            width={"100%"}
+            label="ایمیل"
+            placeholder="ایمیل"
             getText={(text: string) =>
               setNewUserModal({
                 ...newUserModal,
@@ -79,7 +111,9 @@ const UserManager = () => {
           />
 
           <TextInput
-            placeholder='نام'
+            width={"100%"}
+            label="نام"
+            placeholder="نام"
             getText={(text: string) =>
               setNewUserModal({
                 ...newUserModal,
@@ -89,7 +123,9 @@ const UserManager = () => {
           />
 
           <TextInput
-            placeholder='نام خانوادگی'
+            width={"100%"}
+            label="نام خانوادگی"
+            placeholder="نام خانوادگی"
             getText={(text: string) =>
               setNewUserModal({
                 ...newUserModal,
@@ -99,33 +135,39 @@ const UserManager = () => {
           />
 
           <TextInput
-            placeholder='کد ملی'
+            width={"100%"}
+            label="کد ملی"
+            placeholder="کد ملی"
             getText={(text: string) =>
               setNewUserModal({
                 ...newUserModal,
                 nationalCode: text,
               })
             }
-            type='number'
+            type="number"
           />
 
           <TextInput
-            placeholder='شماره تلفن'
+            width={"100%"}
+            placeholder="شماره تلفن"
+            label="شماره تلفن"
             getText={(text: string) =>
               setNewUserModal({
                 ...newUserModal,
                 phoneNumber: text,
               })
             }
-            type='number'
+            type="number"
           />
 
           <Selector
-            label='نوع کاربر'
-            itemType="string"
+            label="نوع کاربر"
+            itemType="object"
+            valueOut="value"
             items={[
-              { label: "مدیر", value: "superviser" },
-              { label: "کاربر", value: "" },
+              { name: "مدیر", value: "SUPERVISOR" },
+              { name: "مامور", value: "AGENT" },
+              { name: "کاربر معمولی", value: "USER" },
             ]}
             getValue={(value: string) =>
               setNewUserModal({
@@ -134,8 +176,8 @@ const UserManager = () => {
               })
             }
           />
-          <LinkButton onClick={
-            () => {
+          <LinkButton
+            onClick={() => {
               userSignUp({
                 variables: {
                   userName: newUserModal.userName,
@@ -144,13 +186,17 @@ const UserManager = () => {
                   lastName: newUserModal.lastName,
                   nationalCode: newUserModal.nationalCode,
                   phoneNumber: newUserModal.phoneNumber,
-                  userType: newUserModal.userType,
+                  userType:
+                    newUserModal.userType != "USER"
+                      ? newUserModal.userType
+                      : undefined,
+                  password: newUserModal.password,
+                  confirmPassword: newUserModal.confirmPassword,
                 },
               });
-            }
-          }
-          backgroundColor={primaryDark}
-          textColor={onPrimary}
+            }}
+            backgroundColor={primaryDark}
+            textColor={onPrimary}
           >
             ثبت کاربر
           </LinkButton>

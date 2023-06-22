@@ -14,7 +14,16 @@ import { borderRadiuosTextField } from "../theme/Themes";
 interface SelectorProps {
   id?: string | undefined;
   label?: string | undefined;
-  items?: string[] | object[] | { value: string; label: string }[] | undefined;
+  items?:
+    | string[]
+    | object[]
+    | {
+        id: string | number | readonly string[] | undefined;
+        name: string;
+        value: string | number | readonly string[] | undefined;
+        label: React.ReactNode;
+      }[]
+    | undefined;
   getValue?: Function;
   fullWidth?: boolean | undefined;
   width?: string | object | undefined;
@@ -33,28 +42,35 @@ interface SelectorProps {
   disabled?: boolean | undefined;
   menuHeight?: string | undefined;
   itemType?: "string" | "object" | undefined;
+  valueOut?: "value" | "id" | undefined;
 }
 
 export default function Selector(props: SelectorProps) {
-  const id =props. id != null ? props.id : "";
-  const label =props. label != null ? props.label : "";
-  const items =props. items != null ? props.items : [];
-  const getValue =props. getValue != null ? props.getValue : () => {};
-  const fullWidth =props. fullWidth != null ? props.fullWidth : false;
-  const width =props. width != null ? props.width : {};
-  const height =props. height != null ? props.height : "max-content";
-  const variant =props. variant != null ? props.variant : "outlined";
-  const fontColor =props. fontColor != null ? props.fontColor : "black";
-  const border =props. border != null ? props.border : "none";
-  const firstValue =props. firstValue != null ? props.firstValue : "";
-  const mt =props. mt != null ? props.mt : 0;
-  const mb =props. mb != null ? props.mb : 0;
-  const backgroundColor =props.backgroundColor != null ? props.backgroundColor : "transparent";
-  const borderRadius =props.borderRadius != null ? props.borderRadius : borderRadiuosTextField;
-  const display =props. display != null ? props.display : "flex";
-  const fontSize =props. fontSize != null ? props.fontSize : 16;
-  const size =props. size != null ? props.size : "small";
-  const menuHeight =props. menuHeight != null ? props.menuHeight : "30%";
+  const id = props.id != null ? props.id : "";
+  const label = props.label != null ? props.label : "";
+  const items = props.items != null ? props.items : [];
+  const getValue = props.getValue != null ? props.getValue : () => {};
+  const fullWidth = props.fullWidth != null ? props.fullWidth : false;
+  const width = props.width != null ? props.width : {};
+  const height = props.height != null ? props.height : "max-content";
+  const variant = props.variant != null ? props.variant : "outlined";
+  const fontColor =
+    props.fontColor != null ? props.fontColor : "black";
+  const border = props.border != null ? props.border : "none";
+  const firstValue = props.firstValue != null ? props.firstValue : "";
+  const mt = props.mt != null ? props.mt : 0;
+  const mb = props.mb != null ? props.mb : 0;
+  const backgroundColor =
+    props.backgroundColor != null
+      ? props.backgroundColor
+      : "transparent";
+  const borderRadius =
+    props.borderRadius != null ? props.borderRadius : "15px";
+  const display = props.display != null ? props.display : "flex";
+  const fontSize = props.fontSize != null ? props.fontSize : 16;
+  const size = props.size != null ? props.size : "small";
+  const menuHeight =
+    props.menuHeight != null ? props.menuHeight : "30%";
   const [value, setValue] = React.useState(firstValue);
 
   const handleChange = (event: {
@@ -102,15 +118,15 @@ export default function Selector(props: SelectorProps) {
         // disableUnderline={variant === "standard" ? true : false}
         // change icon color of the select component
         MenuProps={{
-          anchorOrigin:{
+          anchorOrigin: {
             vertical: "bottom",
             horizontal: "center",
           },
-          transformOrigin:{
+          transformOrigin: {
             vertical: "top",
             horizontal: "center",
           },
-          anchorPosition:{
+          anchorPosition: {
             top: 0,
             left: 0,
           },
@@ -167,9 +183,13 @@ export default function Selector(props: SelectorProps) {
               }) => (
                 // @ts-ignore
                 <MenuItem
-                // @ts-ignore
+                  // @ts-ignore
                   key={option.id}
-                  value={option.id}
+                  value={
+                    props.valueOut === "value"
+                      ? option.value
+                      : option.id
+                  }
                   sx={{ zIndex: 20 }}
                 >
                   {option.name}

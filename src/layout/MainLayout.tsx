@@ -126,17 +126,16 @@ function MainLayout() {
                   keepMounted
                   transformOrigin={{
                     vertical: "top",
-                    horizontal: "right",
+                    horizontal: "center",
                   }}
                   open={Boolean(anchorEl)}
                   onClose={handleClose}
                 >
-                  <MenuItem onClick={()=>{}}>
-                    تغییر رمزعبور
-                  </MenuItem>
-                  <CAN permissionNeeded="admin">
-                    <MenuItem onClick={()=>{}}>
-                      افزودن کاربر
+                  <CAN permissionNeeded="edit">
+                    <MenuItem onClick={()=>{
+                      navigate("/admin")
+                    }}>
+                      پنل مدیریت
                     </MenuItem>
                   </CAN>
                 </Menu>

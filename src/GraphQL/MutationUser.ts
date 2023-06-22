@@ -8,7 +8,7 @@ export const USER_SIGNUP = gql`
     $password: String!
     $confirmPassword: String!
     $nationalCode: String!
-    $userType: UserType!
+    $userType: UserType
     $phoneNumber: String!
     $userName: String!
   ) {

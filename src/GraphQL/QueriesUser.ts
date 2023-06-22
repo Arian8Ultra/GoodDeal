@@ -8,6 +8,7 @@ export const GET_CURRENT_USER = gql`
           firstName
           lastName
           userName
+          isDeleted
           userRoles {
             roleType
             id
@@ -35,6 +36,7 @@ query user_getUsers{
         email
         phoneNumber
         userType
+        isDeleted
       }
     }
     status

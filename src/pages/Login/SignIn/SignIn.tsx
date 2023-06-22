@@ -5,8 +5,15 @@ import LinkButton from "../../../components/LinkButton";
 import { Center, Image } from "@chakra-ui/react";
 import logo from "../../../assets/logo.svg";
 import { useState } from "react";
-import { VisibilityOffRounded, VisibilityRounded } from "@mui/icons-material";
-import { primary, primaryLightTransparent, secondary } from "../../../theme/Colors";
+import {
+  VisibilityOffRounded,
+  VisibilityRounded,
+} from "@mui/icons-material";
+import {
+  primary,
+  primaryLightTransparent,
+  secondary,
+} from "../../../theme/Colors";
 import { SIGNIN } from "../../../api/api";
 import { usePersistStore } from "../../../stores/PersistStore";
 import { useMutation } from "@apollo/client";
@@ -22,19 +29,24 @@ const SignIn = () => {
   const lastName = usePersistStore((state) => state.lastName);
   const token = usePersistStore((state) => state.token);
 
-  const [SignIn,{loading,error}] = useMutation(USER_SIGNIN,{
-    variables:{
-      userName:userName,
-      password:password
+  const [SignIn, { loading, error }] = useMutation(USER_SIGNIN, {
+    variables: {
+      userName: userName,
+      password: password,
     },
-    onCompleted:(data)=>{
+    onCompleted: (data) => {
       console.log(data);
-      setUser(data.user_signIn.result.user?.firstName,data.user_signIn.result.user?.lastName,data.user_signIn.result?.token)
+      setUser(
+        data.user_signIn.result.user?.firstName,
+        data.user_signIn.result.user?.lastName,
+        data.user_signIn.result?.token
+      );
+      sessionStorage.setItem("token", data.user_signIn.result?.token);
     },
-    onError:(err)=>{
+    onError: (err) => {
       console.log(err);
-    }
-  })
+    },
+  });
 
   const handleSignIn = () => {
     // SIGNIN({
@@ -48,7 +60,7 @@ const SignIn = () => {
     //     console.log(err);
     //   },
     // });
-    SignIn()
+    SignIn();
     // setUser('آرین','رضایی','123456789')
   };
   return (
@@ -57,7 +69,7 @@ const SignIn = () => {
         <Center>
           <Image
             src={logo}
-            width={'70%'}
+            width={"70%"}
             objectFit={"cover"}
             objectPosition={"center"}
             alt={"user profile picture"}
@@ -92,15 +104,23 @@ const SignIn = () => {
             xl: "20vmax",
           }}
           hasIcon
-          icon={showPassword ? <VisibilityOffRounded /> : <VisibilityRounded />}
+          icon={
+            showPassword ? (
+              <VisibilityOffRounded />
+            ) : (
+              <VisibilityRounded />
+            )
+          }
           iconClick={() => setShowPassword(!showPassword)}
           iconColor={primary}
         />
-        <LinkButton width={'100%'} type="submit">ورود</LinkButton>
+        <LinkButton width={"100%"} type="submit">
+          ورود
+        </LinkButton>
         <LinkButton
           backgroundColor="transparent"
           textColor={primary}
-          width={'100%'}
+          width={"100%"}
           hoverColor={primaryLightTransparent}
           link="/signup"
         >
