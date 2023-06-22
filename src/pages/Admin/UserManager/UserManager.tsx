@@ -6,6 +6,7 @@ import TextInput from "../../../components/TextInput";
 import Selector from "../../../components/Selector";
 import { useMutation } from "@apollo/client";
 import { USER_SIGNUP } from "../../../GraphQL/MutationUser";
+import { Stack } from "@mui/system";
 
 const UserManager = () => {
   const [newUserModal, setNewUserModal] = React.useState({
@@ -22,18 +23,16 @@ const UserManager = () => {
     userType: "",
   });
 
-  const [userSignUp,{loading}] = useMutation(USER_SIGNUP, {
+  const [userSignUp, { loading }] = useMutation(USER_SIGNUP, {
     onCompleted(data, clientOptions) {
       console.log(data);
       alert("کاربر با موفقیت اضافه شد");
-
     },
     onError(error) {
       console.log(error);
-    }
-  })
+    },
+  });
 
-  
   return (
     <div>
       <UserList
@@ -55,81 +54,82 @@ const UserManager = () => {
         }
         isCloseable={true}
       >
-        <TextInput
-          placeholder='نام کاربری'
-          getText={(text: string) =>
-            setNewUserModal({
-              ...newUserModal,
-              userName: text,
-            })
-          }
-        />
-        <TextInput
-          placeholder='ایمیل'
-          getText={(text: string) =>
-            setNewUserModal({
-              ...newUserModal,
-              email: text,
-            })
-          }
-        />
+        <Stack spacing={2}>
+          <TextInput
+            placeholder='نام کاربری'
+            getText={(text: string) =>
+              setNewUserModal({
+                ...newUserModal,
+                userName: text,
+              })
+            }
+          />
+          <TextInput
+            placeholder='ایمیل'
+            getText={(text: string) =>
+              setNewUserModal({
+                ...newUserModal,
+                email: text,
+              })
+            }
+          />
 
-        <TextInput
-          placeholder='نام'
-          getText={(text: string) =>
-            setNewUserModal({
-              ...newUserModal,
-              firstName: text,
-            })
-          }
-        />
+          <TextInput
+            placeholder='نام'
+            getText={(text: string) =>
+              setNewUserModal({
+                ...newUserModal,
+                firstName: text,
+              })
+            }
+          />
 
-        <TextInput
-          placeholder='نام خانوادگی'
-          getText={(text: string) =>
-            setNewUserModal({
-              ...newUserModal,
-              lastName: text,
-            })
-          }
-        />
+          <TextInput
+            placeholder='نام خانوادگی'
+            getText={(text: string) =>
+              setNewUserModal({
+                ...newUserModal,
+                lastName: text,
+              })
+            }
+          />
 
-        <TextInput
-          placeholder='کد ملی'
-          getText={(text: string) =>
-            setNewUserModal({
-              ...newUserModal,
-              nationalCode: text,
-            })
-          }
-          type='number'
-        />
+          <TextInput
+            placeholder='کد ملی'
+            getText={(text: string) =>
+              setNewUserModal({
+                ...newUserModal,
+                nationalCode: text,
+              })
+            }
+            type='number'
+          />
 
-        <TextInput
-          placeholder='شماره تلفن'
-          getText={(text: string) =>
-            setNewUserModal({
-              ...newUserModal,
-              phoneNumber: text,
-            })
-          }
-          type='number'
-        />
+          <TextInput
+            placeholder='شماره تلفن'
+            getText={(text: string) =>
+              setNewUserModal({
+                ...newUserModal,
+                phoneNumber: text,
+              })
+            }
+            type='number'
+          />
 
-        {/* @ts-ignore */}
-        <Selector
-          label='نوع کاربر'
-          items={[
-            { label: "مدیر", value: "superviser" },
-            { label: "کاربر", value: "" },
-          ]}
-          getValue={(value: string) =>
-            setNewUserModal({
-              ...newUserModal,
-              userType: value,
-            })
-          }
-        />
+          <Selector
+            label='نوع کاربر'
+            items={[
+              { label: "مدیر", value: "superviser" },
+              { label: "کاربر", value: "" },
+            ]}
+            getValue={(value: string) =>
+              setNewUserModal({
+                ...newUserModal,
+                userType: value,
+              })
+            }
+          />
+        </Stack>
       </NewModal>
     </div>
   );
