@@ -1,25 +1,32 @@
+/* eslint-disable @typescript-eslint/ban-types */
 import { useQuery } from "@apollo/client";
 import { Stack } from "@chakra-ui/react";
-import { Box, Typography } from "@mui/material";
-import React, { useState } from "react";
-import { GET_USERS } from "../../../GraphQL/QueriesUser";
-import IButton from "../../../components/IButton";
 import {
   AddRounded,
-  Delete,
   DeleteRounded,
   EditRounded,
 } from "@mui/icons-material";
+import { Box, Skeleton, Typography } from "@mui/material";
+import { useState } from "react";
+import { GET_USERS } from "../../../GraphQL/QueriesUser";
+import IButton from "../../../components/IButton";
 import {
   Green,
   GreenLight,
   Red,
-  RedLight,
   primary,
   primaryLight,
 } from "../../../theme/Colors";
 
-const UserList = () => {
+interface Props {
+  id?: string;
+  className?: string;
+  openModal?: Function;
+  deleteUser?: (id: string) => void;
+  editUser?: (user: object) => void;
+}
+
+const UserList = (props: Props) => {
   const [users, setUsers] = useState([]);
   const { data, loading, error } = useQuery(GET_USERS, {
     onCompleted: (data) => {
@@ -29,7 +36,46 @@ const UserList = () => {
     onError: (error) => {
       console.log(error);
     },
+    refetchWritePolicy: "overwrite",
   });
+
+  if (loading) {
+    return (
+      <Stack
+        spacing={8}
+        bgColor={"rgba(255,255,255,0.5)"}
+        padding={"2rem"}
+        borderRadius={"25px"}
+        style={{
+          backdropFilter: "blur(10px)",
+          boxShadow: "0 0 10px rgba(0,0,0,0.2)",
+        }}
+      >
+        <Skeleton
+          variant='rectangular'
+          width={"100%"}
+          height={"100px"}
+        />
+      </Stack>
+    );
+  }
+
+  if (error) {
+    return (
+      <Stack
+        spacing={8}
+        bgColor={"rgba(255,255,255,0.5)"}
+        padding={"2rem"}
+        borderRadius={"25px"}
+        style={{
+          backdropFilter: "blur(10px)",
+          boxShadow: "0 0 10px rgba(0,0,0,0.2)",
+        }}
+      >
+        <Typography sx={{ color: "red" }}>{error.message}</Typography>
+      </Stack>
+    );
+  }
   return (
     <Stack
       spacing={8}
@@ -46,7 +92,13 @@ const UserList = () => {
         justifyContent={"start"}
         alignItems={"center"}
       >
-        <IButton backgroundColor={Green} hoverColor={GreenLight}>
+        <IButton
+          backgroundColor={Green}
+          hoverColor={GreenLight}
+          fun={() => {
+            props.openModal && props.openModal();
+          }}
+        >
           <AddRounded />
         </IButton>
       </Box>
@@ -159,9 +211,9 @@ const UserList = () => {
             borderRadius={"25px"}
             bgcolor={"rgba(255,255,255,0.5)"}
             sx={{
-              transition: "all 0.1s ease-in-out",
-              boxShadow: "0 0 10px rgba(0,0,0,0.2)",
-              backdropFilter: "blur(10px)",
+              "transition": "all 0.1s ease-in-out",
+              "boxShadow": "0 0 10px rgba(0,0,0,0.2)",
+              "backdropFilter": "blur(10px)",
               "&:hover": {
                 backgroundColor: "rgba(220,220,220,0.5)",
                 cursor: "pointer",
@@ -224,7 +276,13 @@ const UserList = () => {
                 alignItems={"center"}
                 width={"100%"}
               >
-                <IButton backgroundColor={Red} hoverColor={"#ff0000"}>
+                <IButton
+                  backgroundColor={Red}
+                  hoverColor={"#ff0000"}
+                  fun={() => {
+                    props.deleteUser && props.deleteUser(user.id);
+                  }}
+                >
                   <DeleteRounded
                     sx={{
                       color: "white",
@@ -234,6 +292,9 @@ const UserList = () => {
                 <IButton
                   backgroundColor={primary}
                   hoverColor={primaryLight}
+                  fun={() => {
+                    props.editUser && props.editUser(user);
+                  }}
                 >
                   <EditRounded
                     sx={{

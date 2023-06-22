@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
