@@ -32,6 +32,7 @@ interface SelectorProps {
   size?: "small" | "medium" | undefined;
   disabled?: boolean | undefined;
   menuHeight?: string | undefined;
+  itemType?: "string" | "object" | undefined;
 }
 
 export default function Selector(props: SelectorProps) {
@@ -141,7 +142,7 @@ export default function Selector(props: SelectorProps) {
       >
         {/* check if the items are object or string */}
 
-        {typeof items[0] === "string"
+        {props.itemType === "string"
           ? items.map((option) => (
               // @ts-ignore
               <MenuItem

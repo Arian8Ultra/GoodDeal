@@ -7,6 +7,8 @@ import Selector from "../../../components/Selector";
 import { useMutation } from "@apollo/client";
 import { USER_SIGNUP } from "../../../GraphQL/MutationUser";
 import { Stack } from "@mui/system";
+import { onPrimary, primaryDark } from "../../../theme/Colors";
+import LinkButton from "../../../components/LinkButton";
 
 const UserManager = () => {
   const [newUserModal, setNewUserModal] = React.useState({
@@ -53,8 +55,10 @@ const UserManager = () => {
           })
         }
         isCloseable={true}
+        backgroundColor={onPrimary}
+        color={primaryDark}
       >
-        <Stack spacing={2}>
+        <Stack spacing={2} width={'100%'}>
           <TextInput
             placeholder='نام کاربری'
             getText={(text: string) =>
@@ -118,6 +122,7 @@ const UserManager = () => {
 
           <Selector
             label='نوع کاربر'
+            itemType="string"
             items={[
               { label: "مدیر", value: "superviser" },
               { label: "کاربر", value: "" },
@@ -129,6 +134,26 @@ const UserManager = () => {
               })
             }
           />
+          <LinkButton onClick={
+            () => {
+              userSignUp({
+                variables: {
+                  userName: newUserModal.userName,
+                  email: newUserModal.email,
+                  firstName: newUserModal.firstName,
+                  lastName: newUserModal.lastName,
+                  nationalCode: newUserModal.nationalCode,
+                  phoneNumber: newUserModal.phoneNumber,
+                  userType: newUserModal.userType,
+                },
+              });
+            }
+          }
+          backgroundColor={primaryDark}
+          textColor={onPrimary}
+          >
+            ثبت کاربر
+          </LinkButton>
         </Stack>
       </NewModal>
     </div>
