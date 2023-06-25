@@ -1,15 +1,14 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import React, { useMemo, useRef, useState } from "react";
-import NewModal from "../../../components/Modals";
-import {
-  CircleMarker,
-  MapContainer,
-  Marker,
-  Popup,
-  TileLayer,
-  useMap,
-} from "react-leaflet";
 import { Box } from "@mui/system";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+    MapContainer,
+    Marker,
+    TileLayer
+} from "react-leaflet";
+import NewModal from "../../../components/Modals";
+import { onPrimary, primary } from "../../../theme/Colors";
 interface Props {
   children?: React.ReactNode;
   open: boolean;
@@ -30,12 +29,26 @@ interface Props {
   setYCoordinate?: (value: string) => void;
 }
 const AddShopModal = (props: Props) => {
-  const map = useRef(null);
   const [center, setCenter] = useState([
     35.689720986449565, 51.47891772707084,
   ]);
+  const [map, setMap] = useState(null)
+
   const [position, setPosition] = useState(center);
   const markerRef = useRef(null);
+  const onMove = useCallback(() => {
+    // @ts-ignore
+    setPosition(map?.getCenter())
+  }, [map])
+
+  useEffect(() => {
+    // @ts-ignore
+    map?.on('move', onMove)
+    return () => {
+        // @ts-ignore
+      map?.off('move', onMove)
+    }
+  }, [map, onMove])
   const eventHandlers = useMemo(
     () => ({
       dragend() {
@@ -45,6 +58,8 @@ const AddShopModal = (props: Props) => {
           setPosition(marker.getLatLng());
           // @ts-ignore
           setCenter(marker.getLatLng());
+            // @ts-ignore
+          map.setView(center, 13)
         }
       },
     }),
@@ -55,6 +70,9 @@ const AddShopModal = (props: Props) => {
       name='افزودن فروشگاه'
       open={props.open}
       changeModal={props.changeModal}
+      backgroundColor={onPrimary}
+      color={primary}
+      isCloseable={true}
     >
       <Box
         display={"flex"}
@@ -75,7 +93,7 @@ const AddShopModal = (props: Props) => {
           center={center}
           zoom={13}
           scrollWheelZoom={true}
-          ref={map}
+          ref={setMap}
           style={{
             border: " 2px solid #4763E4",
             width: "100%",
@@ -91,10 +109,12 @@ const AddShopModal = (props: Props) => {
           }}
         >
           <TileLayer
+        //   @ts-ignore
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
           />
           <Marker
+        //   @ts-ignore
             draggable={true}
             eventHandlers={eventHandlers}
             // @ts-ignore
