@@ -4,6 +4,8 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import NewModal from "../../../components/Modals";
 import { onPrimary, primary } from "../../../theme/Colors";
 import { SelectMap } from "./SelectMap";
+import { Stack } from "@chakra-ui/layout";
+import TextInput from "../../../components/TextInput";
 interface Props {
   children?: React.ReactNode;
   open: boolean;
@@ -34,6 +36,10 @@ const AddShopModal = (props: Props) => {
   const onMove = useCallback(() => {
     // @ts-ignore
     setPosition(map?.getCenter())
+    // @ts-ignore
+    props.setXCoordinate && props.setXCoordinate(map?.getCenter().lat)
+    // @ts-ignore
+    props.setYCoordinate && props.setYCoordinate(map?.getCenter().lng)
   }, [map])
 
   useEffect(() => {
@@ -44,22 +50,7 @@ const AddShopModal = (props: Props) => {
       map?.off('move', onMove)
     }
   }, [map, onMove])
-  // const eventHandlers = useMemo(
-  //   () => ({
-  //     dragend() {
-  //       const marker = markerRef.current;
-  //       if (marker != null) {
-  //         // @ts-ignore
-  //         setPosition(marker.getLatLng());
-  //         // @ts-ignore
-  //         setCenter(marker.getLatLng());
-  //           // @ts-ignore
-  //         map.setView(center, 13)
-  //       }
-  //     },
-  //   }),
-  //   [],
-  // );
+
   return (
     <NewModal
       name='افزودن فروشگاه'
@@ -67,9 +58,86 @@ const AddShopModal = (props: Props) => {
       changeModal={props.changeModal}
       backgroundColor={onPrimary}
       color={primary}
+      height={'80dvh'}
       isCloseable={true}
     >
+        <Stack spacing={'1rem'} width={'100%'}>
       {SelectMap(center, setMap, position, markerRef)}
+      <TextInput
+        label="نام فروشگاه"
+        width={"100%"}
+        getText={
+            props.setName
+        }
+        />
+        <TextInput
+        label="نام و نام خانوادگی مالک"
+        width={"100%"}
+        getText={
+            props.setOwnerFullName
+        }
+        />
+        <TextInput
+        label="شماره تلفن"
+        width={"100%"}
+        getText={
+            props.setPhoneNumber
+        }
+        />
+
+        <TextInput
+        label="کد پستی"
+        width={"100%"}
+        type="number"
+        getText={
+            props.setPostalCode
+        }
+        />
+        <TextInput
+        label="آدرس کامل"
+        width={"100%"}
+        multiline={true}
+        rows={4}
+        getText={
+            props.setFullAddress
+        }
+        />
+        <TextInput
+        label="شماره پلاک"
+        width={"100%"}
+        type="number"
+        getText={
+            props.setPlaque
+        }
+        />
+
+        <TextInput
+        label="نوع کالا"
+        width={"100%"}
+
+        getText={
+            props.setGoodsType
+        }
+        />
+
+        <TextInput
+        label="نام تصویر"
+        width={"100%"}
+        getText={
+            props.setImageName
+        }
+        />
+
+        <TextInput
+        label="شناسه استان"
+        width={"100%"}
+        type="number"
+        getText={
+            props.setProvinceId
+        }
+        />
+
+        </Stack>
       {props.children}
     </NewModal>
   );

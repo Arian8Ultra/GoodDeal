@@ -11,6 +11,7 @@ import { borderRadiuosMenu } from "../theme/Themes";
 
 interface NewModalProps {
   width?: string | number | object;
+  height?: string | number | object;
   color?: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   children?: any;
@@ -23,7 +24,7 @@ interface NewModalProps {
 }
 
 export default function NewModal(props: NewModalProps) {
-  let { width, color, name, backgroundColor, isCloseable, dividerColor, ...rest } = props;
+  let { width,height, color, name, backgroundColor, isCloseable, dividerColor, ...rest } = props;
   name = props.name != null ? props.name : "عنوان";
   width = props.width != null ? props.width : "30vmax";
   backgroundColor = props.backgroundColor != null ? props.backgroundColor : primaryLightTransparent;
@@ -41,11 +42,13 @@ export default function NewModal(props: NewModalProps) {
           left: "50%",
           transform: "translate(-50%, -50%)",
           width: width,
+          maxHeight: height,
           bgcolor: backgroundColor,
           boxShadow: 24,
           borderRadius: borderRadiuosMenu,
           backdropFilter: "blur(5px)",
           p: 4,
+          overflow: "auto",
         }}
         {...rest}
       >
