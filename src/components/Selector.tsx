@@ -83,7 +83,7 @@ export default function Selector(props: SelectorProps) {
   return (
     <FormControl
       fullWidth={fullWidth}
-      sx={{ borderRadius: borderRadiuosTextField }}
+      sx={{ borderRadius: borderRadiuosTextField,width:width,height:height }}
       variant={variant}
     >
       <InputLabel id={label}>{label}</InputLabel>
