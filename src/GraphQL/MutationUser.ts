@@ -118,3 +118,28 @@ export const UPDATE_USER = gql`
     }
   }
 `;
+
+export const ADD_ROLE_TO_USER = gql`
+  mutation ADD_ROLE_TO_USER($roleType: RoleType!, $userId: String!) {
+    userRole_addUserToRole(roleType: $roleType, userId: $userId) {
+      code
+      value
+    }
+  }
+`;
+
+// export const REMOVE_ROLE_FROM_USER = gql`
+//   mutation REMOVE_ROLE_FROM_USER($roleType: RoleType!, $userId: String!) {
+//     userRole_removeUserFromRole(roleType: $roleType, userId: $userId) {
+//       code
+//       value
+//     }
+//   }
+// `;
+
+
+export interface IAddRoleToUser {
+  roleType: "SUPER_ADMIN" | "ADMIN" | "NORMAL" | "EDITOR";
+  userId: string;
+}
+

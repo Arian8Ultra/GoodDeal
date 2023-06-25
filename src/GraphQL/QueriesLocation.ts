@@ -62,12 +62,12 @@ query region_getRegions {
     result {
       items {
         cityId
-        regionCode
+        code
         name
         id
         subregions {
-          subregionName
-          subregionCode
+          name
+          code
           id
           regionId
         }
@@ -85,12 +85,12 @@ query region_getRegions_by_city_ID($id: Int!) {
     result(where: { cityId: { eq: $id } },take: 1000) {
       items {
         cityId
-        regionCode
+        code
         name
         id
         subregions {
-          subregionName
-          subregionCode
+          name
+          code
           id
           regionId
         }
@@ -108,8 +108,8 @@ query subregion_getSubregions {
   subregion_getSubregions {
     result {
       items {
-        subregionName
-        subregionCode
+        name
+        code
         regionId
         shops {
           goodsType
@@ -134,8 +134,9 @@ query subregion_getSubregions_By_region_ID($id: Int!) {
   subregion_getSubregions {
     result(where: { regionId: { eq: $id } },take: 1000) {
       items {
-        subregionName
-        subregionCode
+        name
+        code
+        id
         regionId
         shops {
           goodsType

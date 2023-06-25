@@ -1,4 +1,5 @@
-import { MenuBook, MenuBookRounded, MenuRounded } from "@mui/icons-material";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { MenuRounded } from "@mui/icons-material";
 import { Box, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
 import React from "react";
@@ -16,7 +17,7 @@ interface Props {
   style?: React.CSSProperties;
 }
 const ShopList = (props: Props) => {
-  let stores = props.stores ? props.stores : [];
+  const stores = props.stores ? props.stores : [];
   const changePageName = useLayoutStore((state) => state.changePageName);
   const navigate = useNavigate()
   return (

@@ -12,6 +12,8 @@ import { usePersistStore } from "../../stores/PersistStore";
 import ShopList from "../../components(app)/Home/ShopList";
 import { SelectBar } from "../../components(app)/Home/SelectBar";
 import useLayoutStore from "../../stores/layoutStore";
+import { GET_SHOPS_BY_SUBREGION_ID } from "../../GraphQL/QueriesShop";
+import { useLazyQuery } from "@apollo/client";
 
 const Home = () => {
   const [ostanId, setOstanId] = useState(0);
@@ -21,20 +23,20 @@ const Home = () => {
   const [stores, setStores] = useState([]);
   const token = usePersistStore((state) => state.token);
   const changePageName = useLayoutStore((state) => state.changePageName);
+  const [getShops, { loading, error ,refetch}] = useLazyQuery(GET_SHOPS_BY_SUBREGION_ID, {
+    variables: {
+      id: neighborhoodId,
+    },
+    onCompleted: (data) => {
+      console.log(data);
+      setStores(data.shop_getShops.result.items);
+    }
+  });
 
-  // useEffect(() => {
-  //   GET_SHOP_LIST_BY_SUBREGIONID({
-  //     token: token,
-  //     subRegionId: neighborhoodId,
-  //     setShopList: setStores,
-  //     onSuccess: (res: { data: any }) => {
-  //       console.log(res);
-  //     },
-  //     onFail: (err: any) => {
-  //       console.log(err);
-  //     },
-  //   });
-  // }, [neighborhoodId]);
+  useEffect(() => {
+    console.log('getting shops');
+    getShops()
+  }, [getShops, neighborhoodId]);
 
   useEffect(()=>{
     changePageName("صفحه اصلی")

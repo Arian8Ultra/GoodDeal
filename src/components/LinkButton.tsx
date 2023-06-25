@@ -11,7 +11,7 @@ interface LinkButtonProps {
   link?: string;
   pageTitle?: string;
   disabled?: boolean;
-  fontSize?: number;
+  fontSize?: number | string;
   height?: object | number | string;
   width?: object | number | string;
   minWidth?: object | number | string;
@@ -38,7 +38,7 @@ interface LinkButtonProps {
   children?: ReactNode | object | any;
   fun?: Function;
   fullWidth?: boolean;
-  icon?: string;
+  icon?: string | ReactNode | Element;
   Endicon?: string;
   borderRadius?: string;
   boxShadow?: object | number | string;
@@ -112,6 +112,7 @@ export default function LinkButton(props: LinkButtonProps) {
     <Button
       variant={props.variant}
       type={type}
+      // @ts-ignore
       startIcon={props.icon}
       endIcon={props.Endicon}
       sx={{

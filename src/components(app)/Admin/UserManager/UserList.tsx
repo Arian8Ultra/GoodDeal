@@ -2,9 +2,12 @@
 import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
 import { Stack } from "@chakra-ui/react";
 import {
+  AccessibilityNew,
   AddRounded,
   DeleteRounded,
   EditRounded,
+  KeyOffRounded,
+  KeyRounded,
 } from "@mui/icons-material";
 import { Box, Skeleton, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
@@ -18,6 +21,7 @@ import {
   primaryLight,
 } from "../../../theme/Colors";
 import { DELETE_USER } from "../../../GraphQL/MutationUser";
+import { convertRoleToPersian } from "../../../functions/function";
 
 interface Props {
   id?: string;
@@ -25,6 +29,7 @@ interface Props {
   openModal?: Function;
   deleteUser?: (id: string) => void;
   editUser?: (user: object) => void;
+  addRole?: (user: object) => void;
 }
 
 const UserList = (props: Props) => {
@@ -52,7 +57,11 @@ const UserList = (props: Props) => {
     {
       onCompleted: (data) => {
         console.log(data);
-        alert("کاربر با موفقیت حذف شد");
+        if (data.user_deleteUser.code === 1) {
+          alert("کاربر با موفقیت حذف شد");
+        }else{
+          alert(data.user_deleteUser.value + "کاربر حذف نشد \n")
+        }
         getUsers();
       },
       onError: (error) => {
@@ -219,7 +228,7 @@ const UserList = (props: Props) => {
       {users?.map((user: any) => {
         if (user.isDeleted === false)
           return (
-            <a>
+            <a key={user.id}>
               <Box
                 display={"grid"}
                 gridTemplateColumns={{
@@ -271,10 +280,16 @@ const UserList = (props: Props) => {
                   display={"flex"}
                   justifyContent={"center"}
                   alignItems={"center"}
+                  flexDirection={"column"}
                 >
-                  <Typography sx={{ color: "black" }}>
-                    {user.userType ? user.userType : "کاربر عادی"}
-                  </Typography>
+                  {user.userRoles && user.userRoles.map((role: any) => (
+                    <Typography sx={{ color: "black" }}>
+                      {convertRoleToPersian(role.roleType)}
+                    </Typography>
+                  ))}
+                  {/* <Typography sx={{ color: "black" }}>
+                    {user.userRoles && convertRoleToPersian(user.userRoles[0]?.roleType)}
+                  </Typography> */}
                 </Box>
 
                 <Box
@@ -318,7 +333,7 @@ const UserList = (props: Props) => {
                         }}
                       />
                     </IButton>
-                    <IButton
+                    {/* <IButton
                       backgroundColor={primary}
                       hoverColor={primaryLight}
                       fun={() => {
@@ -326,6 +341,19 @@ const UserList = (props: Props) => {
                       }}
                     >
                       <EditRounded
+                        sx={{
+                          color: "white",
+                        }}
+                      />
+                    </IButton> */}
+                    <IButton
+                      backgroundColor={primary}
+                      hoverColor={primaryLight}
+                      fun={() => {
+                        props.addRole && props.addRole(user);
+                      }}
+                    >
+                      <KeyRounded
                         sx={{
                           color: "white",
                         }}

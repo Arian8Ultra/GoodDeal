@@ -18,6 +18,8 @@ import { SIGNIN } from "../../../api/api";
 import { usePersistStore } from "../../../stores/PersistStore";
 import { useMutation } from "@apollo/client";
 import { USER_SIGNIN } from "../../../GraphQL/MutationUser";
+import { convertRoleToPersian } from "../../../functions/function";
+import useAbilityStore from "../../../stores/abilityStore";
 
 const SignIn = () => {
   const [userName, setUserName] = useState("");
@@ -28,6 +30,7 @@ const SignIn = () => {
   const firstName = usePersistStore((state) => state.firstName);
   const lastName = usePersistStore((state) => state.lastName);
   const token = usePersistStore((state) => state.token);
+  const addAbility = useAbilityStore((state) => state.addAbility);
 
   const [SignIn, { loading, error }] = useMutation(USER_SIGNIN, {
     variables: {
@@ -36,11 +39,25 @@ const SignIn = () => {
     },
     onCompleted: (data) => {
       console.log(data);
+      addAbility('edit');
+      console.log("permission added");
       setUser(
         data.user_signIn.result.user?.firstName,
         data.user_signIn.result.user?.lastName,
-        data.user_signIn.result?.token
+        data.user_signIn.result?.token,
+        data.user_signIn.result.user?.userRoles
+          ? convertRoleToPersian(
+              data.user_signIn.result.user?.userRoles[0].roleType
+            )
+          : ""
       );
+      data.user_signIn.result.user?.userRoles &&
+        data.user_signIn.result.user?.userRoles.map(
+          (role: any) => {
+            addAbility(role.roleType);
+            console.log(role.roleType);
+          }
+        );
       sessionStorage.setItem("token", data.user_signIn.result?.token);
     },
     onError: (err) => {
@@ -117,7 +134,7 @@ const SignIn = () => {
         <LinkButton width={"100%"} type="submit">
           ورود
         </LinkButton>
-        <LinkButton
+        {/* <LinkButton
           backgroundColor="transparent"
           textColor={primary}
           width={"100%"}
@@ -125,7 +142,7 @@ const SignIn = () => {
           link="/signup"
         >
           ثبت نام
-        </LinkButton>
+        </LinkButton> */}
       </Stack>
     </Form>
   );

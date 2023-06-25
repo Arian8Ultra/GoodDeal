@@ -35,7 +35,7 @@ export const DELETE_PROVINCE = gql`
 
 export const CREATE_CITY = gql`
   mutation createCity($name: String!, $provinceId: Int!) {
-    city_addCity(input: { name: $name, provinceId: $provinceId }) {
+    city_addCity(input: { name: $name, provinceId: $provinceId}) {
       result {
         name
         provinceId
@@ -65,8 +65,8 @@ export const DELETE_CITY = gql`
 `;
 
 export const CREATE_REGION = gql`
-  mutation createRegion($name: String!, $cityId: Int!) {
-    region_addRegion(input: { name: $name, cityId: $cityId }) {
+  mutation createRegion($name: String!, $cityId: Int! ,$code: Int!) {
+    region_addRegion(input: { name: $name, cityId: $cityId, code: $code}) {
       result {
         name
         cityId
@@ -96,14 +96,14 @@ export const DELETE_REGION = gql`
 `;
 
 export const CREATE_SUBREGION = gql`
-  mutation createSubRegion($name: String!, $regionId: Int!) {
+  mutation createSubRegion($name: String!, $regionId: Int!, $code: Int!) {
     subregion_addSubregion(
-      input: { subregionName: $name, regionId: $regionId }
+      input: { name: $name, regionId: $regionId,code: $code }
     ) {
       result {
         regionId
         id
-        subregionName
+        name
       }
       status {
         code
@@ -118,7 +118,7 @@ export const DELETE_SUBREGION = gql`
     subregion_deleteSubregion(entityId: $id) {
       result {
         id
-        subregionName
+        name
       }
       status {
         code

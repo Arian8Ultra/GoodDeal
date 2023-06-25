@@ -1,28 +1,18 @@
-import React from "react";
-import { Outlet, useLocation, useParams } from "react-router-dom";
-import {
-  MenuBook,
-  MenuBookRounded,
-  MenuRounded,
-} from "@mui/icons-material";
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { Box, Typography } from "@mui/material";
-import { Stack } from "@mui/system";
-import { useNavigate } from "react-router-dom";
-import IButton from "../../components/IButton";
+import "leaflet/dist/leaflet.css";
 import {
   MapContainer,
-  Marker,
-  Popup,
-  TileLayer,
+  TileLayer
 } from "react-leaflet";
-import "./Shop.css";
-import "leaflet/dist/leaflet.css";
+import { Outlet, useLocation, useParams } from "react-router-dom";
 import { primary } from "../../theme/Colors";
+import "./Shop.css";
 
 
 const Shop = () => {
-  let { shopId, categoryId } = useParams();
-  let shop = useLocation().state.shop;
+  const { shopId, categoryId } = useParams();
+  const shop = useLocation().state?.shop;
   return (
     <Box
       display={"grid"}
@@ -100,14 +90,13 @@ const Shop = () => {
         position={"relative"}
       >
         <MapContainer
-          className="map-container"
           // @ts-ignore
           center={[35.689720986449565, 51.47891772707084]}
           zoom={13}
           scrollWheelZoom={true}
           style={{
             border: " 2px solid #4763E4",
-            width: "80%",
+            width: "100%",
             height: "100%",
             borderRadius: "15px",
             zIndex: 0,

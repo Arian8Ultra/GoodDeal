@@ -8,8 +8,9 @@ import { usePersistStore } from "../stores/PersistStore";
 import useLayoutStore from "../stores/layoutStore";
 import { onPrimary, primary, primaryLight, secondary } from "../theme/Colors";
 import { borderRadiuos } from "../theme/Themes";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CAN from "../components/CAN";
+import useAbilityStore from "../stores/abilityStore";
 
 function MainLayout() {
   let pageName = useLayoutStore((state) => state.pageName);
@@ -21,6 +22,17 @@ function MainLayout() {
   pageName = pageName ? pageName : "صفحه اصلی";
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const token = usePersistStore((state) => state.token);
+  const clearAbilities = useAbilityStore(
+    (state) => state.clearAbilities
+  );
+  
+  useEffect(() => {
+    if (!token) {
+      clearAbilities();
+      logout();
+    }
+  }, [token, logout]);
 
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {

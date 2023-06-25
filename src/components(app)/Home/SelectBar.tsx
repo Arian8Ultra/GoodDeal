@@ -73,7 +73,7 @@ export function SelectBar(props: SelectBarProps) {
     },
     onCompleted: (data) => {
       console.log(data);
-      setNeighborhoods(data.province_getSubRegions.result.items);
+      setNeighborhoods(data.subregion_getSubregions.result.items);
     },
     onError: (e) => {
       console.log(e);

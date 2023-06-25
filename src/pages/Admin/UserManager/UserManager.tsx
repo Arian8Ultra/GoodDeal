@@ -5,10 +5,14 @@ import NewModal from "../../../components/Modals";
 import TextInput from "../../../components/TextInput";
 import Selector from "../../../components/Selector";
 import { useMutation } from "@apollo/client";
-import { USER_SIGNUP } from "../../../GraphQL/MutationUser";
+import {
+  ADD_ROLE_TO_USER,
+  USER_SIGNUP,
+} from "../../../GraphQL/MutationUser";
 import { Stack } from "@mui/system";
 import { onPrimary, primaryDark } from "../../../theme/Colors";
 import LinkButton from "../../../components/LinkButton";
+import { Typography } from "@mui/material";
 
 const UserManager = () => {
   const [newUserModal, setNewUserModal] = React.useState({
@@ -25,6 +29,19 @@ const UserManager = () => {
     userType: "",
   });
 
+  const [roleModal, setRoleModal] = React.useState({
+    open: false,
+    name: "افزودن نقش به کاربر",
+    roleType: "",
+    userId: "",
+    user:{
+      firstName:"",
+      lastName:"",
+      userName:"",
+      id:"",
+    }
+  });
+
   const [userSignUp, { loading }] = useMutation(USER_SIGNUP, {
     onCompleted(data, clientOptions) {
       console.log(data);
@@ -35,6 +52,9 @@ const UserManager = () => {
     },
   });
 
+  const [addRoleToUser, { loading: loadingAddUserToRole }] =
+    useMutation(ADD_ROLE_TO_USER);
+
   return (
     <div>
       <UserList
@@ -42,6 +62,14 @@ const UserManager = () => {
           setNewUserModal({
             ...newUserModal,
             open: !newUserModal.open,
+          });
+        }}
+        addRole={(user: any) => {
+          setRoleModal({
+            ...roleModal,
+            open: !roleModal.open,
+            userId: user.id,
+            user:user
           });
         }}
       />
@@ -165,9 +193,10 @@ const UserManager = () => {
             itemType="object"
             valueOut="value"
             items={[
-              { name: "مدیر", value: "SUPERVISOR" },
-              { name: "مامور", value: "AGENT" },
-              { name: "کاربر معمولی", value: "USER" },
+              { name: "مدیر", value: "SUPER_ADMIN" },
+              { name: "مامور", value: "ADMIN" },
+              { name: "ادیتور", value: "EDITOR" },
+              { name: "کاربر معمولی", value: "NORMAL" },
             ]}
             getValue={(value: string) =>
               setNewUserModal({
@@ -186,12 +215,15 @@ const UserManager = () => {
                   lastName: newUserModal.lastName,
                   nationalCode: newUserModal.nationalCode,
                   phoneNumber: newUserModal.phoneNumber,
-                  userType:
-                    newUserModal.userType != "USER"
-                      ? newUserModal.userType
-                      : undefined,
                   password: newUserModal.password,
                   confirmPassword: newUserModal.confirmPassword,
+                },
+                onCompleted(data, clientOptions) {
+                  console.log(data);
+                  alert("کاربر با موفقیت اضافه شد");
+                },
+                onError(error) {
+                  console.log(error);
                 },
               });
             }}
@@ -199,6 +231,65 @@ const UserManager = () => {
             textColor={onPrimary}
           >
             ثبت کاربر
+          </LinkButton>
+        </Stack>
+      </NewModal>
+
+      <NewModal
+        name={"افزودن نقش به کاربر"}
+        open={roleModal.open}
+        changeModal={() =>
+          setRoleModal({
+            ...roleModal,
+            open: !roleModal.open,
+          })
+        }
+        isCloseable={true}
+        backgroundColor={onPrimary}
+        color={primaryDark}
+      >
+        <Stack spacing={2} width={"80%"}>
+          <Typography variant="h6" color="textPrimary">
+            {roleModal.user.firstName + " " + roleModal.user.lastName}
+          </Typography>
+          <Selector
+            label="نوع نقش"
+            itemType="object"
+            valueOut="value"
+            items={[
+              { name: "مدیر ارشد", value: "SUPER_ADMIN" },
+              { name: "مدیر", value: "ADMIN" },
+              { name: "ادیتور", value: "EDITOR" },
+              { name: "کاربر معمولی", value: "NORMAL" },
+            ]}
+            getValue={(value: string) =>
+              setRoleModal({
+                ...roleModal,
+                roleType: value,
+              })
+            }
+          />
+          <LinkButton
+            onClick={() => {
+              addRoleToUser({
+                variables: {
+                  userId: roleModal.userId,
+                  roleType: roleModal.roleType,
+                },
+                onCompleted(data, clientOptions) {
+                  console.log(data);
+                  alert("نقش با موفقیت اضافه شد");
+                  window.location.reload();
+                },
+                onError(error) {
+                  console.log(error);
+                },
+              });
+            }}
+            backgroundColor={primaryDark}
+            textColor={onPrimary}
+          >
+            افزودن نقش
           </LinkButton>
         </Stack>
       </NewModal>
