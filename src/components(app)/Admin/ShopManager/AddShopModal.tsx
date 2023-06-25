@@ -1,14 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { Box } from "@mui/system";
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import {
-    MapContainer,
-    Marker,
-    TileLayer
-} from "react-leaflet";
 import NewModal from "../../../components/Modals";
 import { onPrimary, primary } from "../../../theme/Colors";
+import { SelectMap } from "./SelectMap";
 interface Props {
   children?: React.ReactNode;
   open: boolean;
@@ -49,22 +44,22 @@ const AddShopModal = (props: Props) => {
       map?.off('move', onMove)
     }
   }, [map, onMove])
-  const eventHandlers = useMemo(
-    () => ({
-      dragend() {
-        const marker = markerRef.current;
-        if (marker != null) {
-          // @ts-ignore
-          setPosition(marker.getLatLng());
-          // @ts-ignore
-          setCenter(marker.getLatLng());
-            // @ts-ignore
-          map.setView(center, 13)
-        }
-      },
-    }),
-    [],
-  );
+  // const eventHandlers = useMemo(
+  //   () => ({
+  //     dragend() {
+  //       const marker = markerRef.current;
+  //       if (marker != null) {
+  //         // @ts-ignore
+  //         setPosition(marker.getLatLng());
+  //         // @ts-ignore
+  //         setCenter(marker.getLatLng());
+  //           // @ts-ignore
+  //         map.setView(center, 13)
+  //       }
+  //     },
+  //   }),
+  //   [],
+  // );
   return (
     <NewModal
       name='افزودن فروشگاه'
@@ -74,59 +69,12 @@ const AddShopModal = (props: Props) => {
       color={primary}
       isCloseable={true}
     >
-      <Box
-        display={"flex"}
-        justifyContent={"center"}
-        alignItems={"center"}
-        width={"100%"}
-        height={{
-          xs: "50vh",
-          sm: "50vh",
-          md: "50vh",
-          lg: "40vh",
-          xl: "40vh",
-        }}
-        position={"relative"}
-      >
-        <MapContainer
-          // @ts-ignore
-          center={center}
-          zoom={13}
-          scrollWheelZoom={true}
-          ref={setMap}
-          style={{
-            border: " 2px solid #4763E4",
-            width: "100%",
-            height: "100%",
-            borderRadius: "15px",
-            zIndex: 0,
-            backgroundColor: "rgba(255,255,255,0.5)",
-            backdropFilter: "blur(10px)",
-            position: "absolute",
-            top: 0,
-            left: 0,
-            transform: "translate(0,0)",
-          }}
-        >
-          <TileLayer
-        //   @ts-ignore
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
-          />
-          <Marker
-        //   @ts-ignore
-            draggable={true}
-            eventHandlers={eventHandlers}
-            // @ts-ignore
-            position={position}
-            ref={markerRef}
-          >
-          </Marker>
-        </MapContainer>
-      </Box>
+      {SelectMap(center, setMap, position, markerRef)}
       {props.children}
     </NewModal>
   );
 };
 
 export default AddShopModal;
+
+
