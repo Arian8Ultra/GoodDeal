@@ -3,6 +3,7 @@ import { Box, Typography } from "@mui/material";
 import "leaflet/dist/leaflet.css";
 import {
   MapContainer,
+  Marker,
   TileLayer
 } from "react-leaflet";
 import { Outlet, useLocation, useParams } from "react-router-dom";
@@ -12,7 +13,9 @@ import "./Shop.css";
 
 const Shop = () => {
   const { shopId, categoryId } = useParams();
-  const shop = useLocation().state?.shop;
+  const shop = useLocation().state?.store;
+  const center = shop?.xCoordinate && shop?.yCoordinate ? [shop.xCoordinate, shop.yCoordinate] : [35.689720986449565, 51.47891772707084];
+  console.log(shop);
   return (
     <Box
       display={"grid"}
@@ -39,22 +42,24 @@ const Shop = () => {
       >
         <Box
           display={"flex"}
-          justifyContent={"start"}
-          alignItems={"center"}
+          justifyContent={"center"}
+          alignItems={"start"}
+          flexDirection={"column"}
         >
-          <Typography variant={"h6"} component={"h6"}>
+          <Typography variant={"h5"} component={"h6"}>
             نام فروشگاه :
           </Typography>
-          <Typography variant={"h6"} component={"h6"}>
+          <Typography variant={"h6"} component={"h6"} fontStyle={'bold'}>
             {shop?.name}
           </Typography>
         </Box>
         <Box
           display={"flex"}
-          justifyContent={"start"}
-          alignItems={"center"}
+          justifyContent={"center"}
+          alignItems={"start"}
+          flexDirection={"column"}
         >
-          <Typography variant={"h6"} component={"h6"}>
+          <Typography variant={"h5"} component={"h6"}>
             نام صاحب فروشگاه :
           </Typography>
           <Typography variant={"h6"} component={"h6"}>
@@ -63,14 +68,28 @@ const Shop = () => {
         </Box>
         <Box
           display={"flex"}
-          justifyContent={"start"}
-          alignItems={"center"}
+          justifyContent={"center"}
+          alignItems={"start"}
+          flexDirection={"column"}
         >
-          <Typography variant={"h6"} component={"h6"}>
+          <Typography variant={"h5"} component={"h6"}>
             آدرس :
           </Typography>
           <Typography variant={"h6"} component={"h6"}>
-            {shop?.address}
+            {shop?.fullAddress}
+          </Typography>
+        </Box>
+        <Box
+          display={"flex"}
+          justifyContent={"center"}
+          alignItems={"start"}
+          flexDirection={"column"}
+        >
+          <Typography variant={"h5"} component={"h6"}>
+            شماره تماس :
+          </Typography>
+          <Typography variant={"h6"} component={"h6"}>
+            {shop?.phoneNumber}
           </Typography>
         </Box>
       </Box>
@@ -91,7 +110,7 @@ const Shop = () => {
       >
         <MapContainer
           // @ts-ignore
-          center={[35.689720986449565, 51.47891772707084]}
+          center={center}
           zoom={13}
           scrollWheelZoom={true}
           style={{
@@ -113,6 +132,7 @@ const Shop = () => {
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
+          <Marker position={center} />
         </MapContainer>
       </Box>
 

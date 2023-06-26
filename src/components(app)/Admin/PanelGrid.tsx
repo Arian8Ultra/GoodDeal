@@ -10,8 +10,8 @@ const PanelGrid = () => {
       gridTemplateColumns={{
         xs: "1fr",
         sm: "1fr",
-        md: "repeat(4, 1fr)",
-        lg: "repeat(4, 1fr)",
+        md: "repeat(5, 1fr)",
+        lg: "repeat(5, 1fr)",
       }}
       padding={"2rem"}
       justifyContent={"center"}
@@ -48,6 +48,16 @@ const PanelGrid = () => {
       >
         <LinkButton padding={"2rem"} link="shopManager">
           مدیریت فروشگاه ها
+        </LinkButton>
+      </Box>
+      <Box
+        width={"100%"}
+        display={"flex"}
+        justifyContent={"center"}
+        alignItems={"center"}
+      >
+        <LinkButton padding={"2rem"} link="categoryManager">
+          مدیریت دسته بندی ها
         </LinkButton>
       </Box>
       <Box

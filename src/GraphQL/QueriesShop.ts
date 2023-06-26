@@ -26,6 +26,8 @@ export const GET_SHOPS_BY_SUBREGION_ID = gql`
     shop_getShops {
       result(where: { subregionId: { eq: $id } }) {
         items {
+          cityId
+          regionId
           subregionId
           goodsType
           id
@@ -34,6 +36,15 @@ export const GET_SHOPS_BY_SUBREGION_ID = gql`
           yCoordinate
           xCoordinate
           phoneNumber
+          name
+          shopCategories{
+            category{
+              title
+              id
+              imageName
+            }
+            isDeleted
+          }
         }
       }
       status
@@ -42,9 +53,69 @@ export const GET_SHOPS_BY_SUBREGION_ID = gql`
   }
 `;
 
+export const GET_SHOPS_BY_CITY_ID = gql`
+  query shop_getShops_by_cityId($id: Int!) {
+    shop_getShops {
+      result(where: { cityId: { eq: $id } }) {
+        items {
+          cityId
+          regionId
+          subregionId
+          goodsType
+          id
+          name
+          ownerFullName
+          fullAddress
+          yCoordinate
+          xCoordinate
+          phoneNumber
+          shopCategories{
+            category{
+              title
+              id
+              imageName
+            }
+            isDeleted
+          }
+        }
+      }
+      status
+      __typename
+    }
+  }
+`;
 
-
-
+export const GET_SHOPS_BY_REGION_ID = gql`
+  query shop_getShops_by_regionId($id: Int!) {
+    shop_getShops {
+      result(where: { regionId: { eq: $id } }) {
+        items {
+          cityId
+          regionId
+          subregionId
+          goodsType
+          id
+          name
+          ownerFullName
+          fullAddress
+          yCoordinate
+          xCoordinate
+          phoneNumber
+          shopCategories{
+            category{
+              title
+              id
+              imageName
+            }
+            isDeleted
+          }
+        }
+      }
+      status
+      __typename
+    }
+  }
+`;
 
 export const GET_CATEGORIES = gql`
   query category_getCategories {
@@ -53,6 +124,7 @@ export const GET_CATEGORIES = gql`
         items {
           title
           id
+          imageName
           products {
             name
             unit
@@ -96,3 +168,29 @@ export const GET_PRODUCTS_BY_CATEGORY_ID = gql`
     }
   }
 `;
+
+
+export const GET_SHOP_CATEGORY = gql`
+query shopCategory_getShopCategory($id: Int!) {
+  shopCategory_getShopCategory(entityId: $id){
+    result{
+      shopId
+      categoryId
+      category{
+        title
+        imageName
+        products{
+          name
+          unit
+          description
+        }
+        id
+      }
+      id
+    }
+    status{
+      code
+      value
+    }
+  }
+}`

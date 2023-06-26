@@ -27,3 +27,20 @@ body {
 text{
   font-family: "Shabnam-Light";
 }
+
+
+/* change scroll bar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #4762e3;
+  border-radius: 10px;
+}

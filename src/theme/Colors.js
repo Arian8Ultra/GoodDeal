@@ -4,6 +4,7 @@ export const primaryLighter = 'rgb(77, 208, 225)';/* '#7D8AF7' */
 export const primaryLightTransparent = 'rgb(121, 134, 203,0.2)';/* '#f57c00' */
 export const primaryDark = "rgb(49, 27, 146)";
 export const secondary = "rgb(255, 179, 0)"; /*#CBAA57*/
+export const secondaryTransparent = "rgba(255, 179, 0,0.4)"; /*#CBAA57*/
 export const secondaryLight = "rgb(255, 213, 79)";
 export const secondaryDark = "rgb(255, 111, 0)";
 export const secondaryGreen = "#76CCD3";

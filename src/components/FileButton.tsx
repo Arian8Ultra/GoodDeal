@@ -6,7 +6,7 @@ import { Button } from "@mui/material";
 import * as React from "react";
 import {
   onPrimary,
-  secondary,
+  primary,
   secondaryLight
 } from "../theme/Colors";
 import { borderRadiuosButton } from "../theme/Themes";
@@ -14,7 +14,6 @@ import { borderRadiuosButton } from "../theme/Themes";
 interface FileButtonProps {
   text?: string;
   link?: string;
-  pageTitle: string;
   disabled?: boolean;
   fontSize?: number | object | string;
   height?: string | number | object;
@@ -56,7 +55,6 @@ interface FileButtonProps {
   multiple?: boolean;
   setFiles?: Function;
   fileType?: string;
-  [x: string]: any;
 }
 
 function FileButton(props: FileButtonProps) {
@@ -65,7 +63,7 @@ function FileButton(props: FileButtonProps) {
   const width = props.width != null ? props.width : "max-content";
   const minWidth = props.minWidth != null ? props.minWidth : "max-content";
   const textColor = props.textColor != null ? props.textColor : onPrimary;
-  const backgroundColor = props.backgroundColor != null ? props.backgroundColor : secondary;
+  const backgroundColor = props.backgroundColor != null ? props.backgroundColor : primary;
   const hoverColor = props.hoverColor != null ? props.hoverColor : secondaryLight;
   const position = props.position != null ? props.position : {};
   const bottom = props.bottom != null ? props.bottom : {};
@@ -100,7 +98,7 @@ function FileButton(props: FileButtonProps) {
     const files = e.target.files;
     setFile(files[0]);
     props.setFiles && props.setFiles(files);
-    setFileName(files[0].name);
+    setFileName(files[0].name);    
   };
 
   return (

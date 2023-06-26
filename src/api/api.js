@@ -1,209 +1,45 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-nocheck
 import axios from "axios";
+import { API_URL_UPLOAD } from "../../config";
 // const API_URL = "http://172.16.37.85:54112/api/"
-export const API_URL = "http://172.17.139.18/api/"
+// export const API_URL = "http://172.17.139.18/api/"
 
-export const SIGNIN = ({ username, password, onSuccess, onFail }) => {
+
+
+
+export function UPLOAD_FILE({ file, token, onSuccess, onFail }) {
+  const formData = new FormData();
+  formData.append('images', file);
+
+
+
   const options = {
-    method: "POST",
-    url: API_URL + "Users/Login",
-    data: {
-      username: username,
-      password: password,
-    },
+      method: "POST",
+      url: API_URL_UPLOAD,
+      data: formData,
+      headers: {
+          Authorization: token ? `Bearer ${token}` : "",
+          "content-type": "multipart/form-data",
+      },
   };
+  console.log(options);
 
   axios
-    .request(options)
-    .then(function (response) {
-      console.log(response.data);
-      onSuccess ? onSuccess(response.data) : () => { };
-      return response.data;
-    })
-    .catch(function (error) {
-      onFail ? onFail(error) : () => { };
-      console.error(error);
-    });
-};
+      .request(options)
+      .then(function (response) {
+          console.log(response);
+          if (response.data.status.code === 1) {
+              onSuccess != null ? onSuccess(response.data.result[0].newFileName) : {};
+          } else {
+              onFail != null ? onFail(response.data.status.value) : {};
+          }
+          return response;
+      })
+      .catch(function (error) {
+          console.error(error);
+          onFail != null ? onFail(error) : {};
+          return error;
+      });
 
-
-export const GET_OSTAN_LIST = ({ setOstanList, token, onSuccess, onFail }) => {
-  const options = {
-    method: 'GET',
-    url: API_URL + 'Ostans/GetOstanList',
-    headers: { Authorization:  `Bearer ${token}`, }
-  };
-
-  axios.request(options).then(function (response) {
-    onSuccess ? onSuccess(response.data) : () => { };
-    setOstanList(response.data);
-    console.log(response.data);
-  }).catch(function (error) {
-    onFail ? onFail(error) : () => { };
-    console.error(error);
-  });
 }
-
-
-export const GET_CITY_LIST_BY_OSTANID = ({ setCityList,ostanId, token, onSuccess, onFail }) => {
-  const options = {
-    method: 'GET',
-    url: API_URL + 'Cities/GetCitiesByOstanId',
-    params: { ostanId: ostanId },
-    headers: { Authorization:  `Bearer ${token}`, }
-  };
-
-  axios.request(options).then(function (response) {
-    onSuccess ? onSuccess(response.data) : () => { };
-    setCityList(response.data);
-    console.log(response.data);
-  }).catch(function (error) {
-    onFail ? onFail(error) : () => { };
-    console.error(error);
-  });
-}
-
-export const GET_REGION_LIST_BY_CITYID = ({ setRegionList,cityId, token, onSuccess, onFail }) => {
-  const options = {
-    method: 'GET',
-    url: API_URL + 'Regions/GetRegionsByCityId',
-    params: { cityId: cityId },
-    headers: { Authorization:  `Bearer ${token}`, }
-  };
-
-  axios.request(options).then(function (response) {
-    onSuccess ? onSuccess(response.data) : () => { };
-    setRegionList(response.data);
-    console.log(response.data);
-  }).catch(function (error) {
-    onFail ? onFail(error) : () => { };
-    console.error(error);
-  });
-}
-
-export const GET_SUBREGION_LIST_BY_REGIONID = ({ setSubRegionList,regionId, token, onSuccess, onFail }) => {
-  const options = {
-    method: 'GET',
-    url: API_URL + 'Subregions/GetRegionsByRegionId',
-    params: { regionId: regionId },
-    headers: { Authorization:  `Bearer ${token}`, }
-  };
-
-  axios.request(options).then(function (response) {
-    onSuccess ? onSuccess(response.data) : () => { };
-    setSubRegionList(response.data);
-    console.log(response.data);
-  }).catch(function (error) {
-    onFail ? onFail(error) : () => { };
-    console.error(error);
-  });
-}
-
-export const GET_SHOP_LIST_BY_CITYID = ({ setShopList,cityId, token, onSuccess, onFail }) => {
-  const options = {
-    method: 'GET',
-    url: API_URL + 'Shops/GetShopListByCityId',
-    params: { cityId: cityId },
-    headers: { Authorization:  `Bearer ${token}`, }
-  };
-
-  axios.request(options).then(function (response) {
-    onSuccess ? onSuccess(response.data) : () => { };
-    setShopList(response.data);
-    console.log(response.data);
-  }).catch(function (error) {
-    onFail ? onFail(error) : () => { };
-    console.error(error);
-  });
-}
-
-
-export const GET_SHOP_LIST_BY_REGIONID = ({ setShopList,regionId, token, onSuccess, onFail }) => {
-  const options = {
-    method: 'GET',
-    url: API_URL + 'Shops/GetShopListBySubregionId',
-    params: { regionId: regionId },
-    headers: { Authorization:  `Bearer ${token}`, }
-  };
-
-  axios.request(options).then(function (response) {
-    onSuccess ? onSuccess(response.data) : () => { };
-    setShopList(response.data);
-    console.log(response.data);
-  }).catch(function (error) {
-    onFail ? onFail(error) : () => { };
-    console.error(error);
-  });
-}
-
-
-export const GET_SHOP_LIST_BY_SUBREGIONID = ({ setShopList,subRegionId, token, onSuccess, onFail }) => {
-  const options = {
-    method: 'GET',
-    url: API_URL + 'Shops/GetShopListBySubRegionId',
-    params: { subRegionId: subRegionId },
-    headers: { Authorization:  `Bearer ${token}`, }
-  };
-
-  axios.request(options).then(function (response) {
-    onSuccess ? onSuccess(response.data) : () => { };
-    setShopList(response.data);
-    console.log(response.data);
-  }).catch(function (error) {
-    onFail ? onFail(error) : () => { };
-    console.error(error);
-  });
-}
-
-
-export const GET_PRODUCT_GROUP_LIST = ({ setProductGroupList, token, onSuccess, onFail }) => {
-  const options = {
-    method: 'GET',
-    url: API_URL + 'ProductGroups/GetProductGroupList',
-    headers: { Authorization:  `Bearer ${token}`, }
-  };
-
-  axios.request(options).then(function (response) {
-    onSuccess ? onSuccess(response.data) : () => { };
-    setProductGroupList(response.data);
-    console.log(response.data);
-  }).catch(function (error) {
-    onFail ? onFail(error) : () => { };
-    console.error(error);
-  });
-}
-
-
-export const GET_PRODUCT_LIST_BY_GROUPID = ({ setProductList,groupId, token, onSuccess, onFail }) => {
-  const options = {
-    method: 'GET',
-    url: API_URL + 'Products/SearchProductByProductGroupid',
-    params: { groupId: groupId },
-    headers: { Authorization: token }
-  };
-
-  axios.request(options).then(function (response) {
-    onSuccess ? onSuccess(response.data) : () => { };
-    setProductList(response.data);
-    console.log(response.data);
-  }).catch(function (error) {
-    onFail ? onFail(error) : () => { };
-    console.error(error);
-  });
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

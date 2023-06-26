@@ -16,6 +16,8 @@ import ShopManager from "../pages/Admin/ShopManager/ShopManager";
 import ProductManager from "../pages/Admin/ProductManager/ProductManager";
 import LocationManager from "../pages/Admin/LocationManager/LocationManager";
 import UserManager from "../pages/Admin/UserManager/UserManager";
+import CategoryManager from "../pages/Admin/CategoryManager/CategoryManager";
+import Category from "../pages/Shop/Categories/Category/Category";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -29,7 +31,7 @@ const router = createBrowserRouter(
           <Route path="" element={<Categories />} />
           <Route
             path="category/:categoryId"
-            element={<Categories />}
+            element={<Category />}
           />
         </Route>
       </Route>
@@ -39,6 +41,7 @@ const router = createBrowserRouter(
         <Route path="productManager" element={<ProductManager />}/>
         <Route path="locationManager" element={<LocationManager />}/>
         <Route path="userManager" element={<UserManager />}/>
+        <Route path="categoryManager" element={<CategoryManager />}/>
 
       </Route>
     </Route>

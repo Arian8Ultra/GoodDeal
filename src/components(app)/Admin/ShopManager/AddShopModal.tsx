@@ -19,43 +19,72 @@ import {
   GET_REGIONS_BY_CITY_ID,
   GET_SUBREGIONS_BY_REGION_ID,
 } from "../../../GraphQL/QueriesLocation";
-import { useLazyQuery, useQuery } from "@apollo/client";
+import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
 import Selector from "../../../components/Selector";
 import { Typography } from "@mui/material";
+import LinkButton from "../../../components/LinkButton";
+import { AddRounded } from "@mui/icons-material";
+import { ADD_SHOP } from "../../../GraphQL/MutationShop";
 interface Props {
   children?: React.ReactNode;
   open: boolean;
-  changeModal: () => void;
-  setCityId?: (value: string) => void;
-  setFullAddress?: (value: string) => void;
-  setGoodsType?: (value: string) => void;
-  setPlaque?: (value: string) => void;
-  setImageName?: (value: string) => void;
-  setName?: (value: string) => void;
-  setOwnerFullName?: (value: string) => void;
-  setPhoneNumber?: (value: string) => void;
-  setPostalCode?: (value: string) => void;
-  setProvinceId?: (value: string) => void;
-  setRegionId?: (value: string) => void;
-  setSubregionId?: (value: string) => void;
-  setXCoordinate?: (value: string) => void;
-  setYCoordinate?: (value: string) => void;
+  onClose: () => void;
 }
 const AddShopModal = (props: Props) => {
   const [center, setCenter] = useState([
     35.689720986449565, 51.47891772707084,
   ]);
   const [map, setMap] = useState(null);
-  const [position, setPosition] = useState(center);
+  const [position, setPosition] = useState({
+    lat: 35.689720986449565,
+    lng: 51.47891772707084,
+  });
+  const [input, setInput] = useState({
+    cityId: 0,
+    fullAddress: "",
+    goodsType: "",
+    plaque: 0,
+    name: "",
+    ownerFullName: "",
+    phoneNumber: "",
+    postalCode: "",
+    provinceId: "",
+    regionId: "",
+    subregionId: "",
+    xCoordinate: "",
+    yCoordinate: "",
+  });
   const markerRef = useRef(null);
   const onMove = useCallback(() => {
     // @ts-ignore
-    setPosition(map?.getCenter());
-    // @ts-ignore
-    props.setXCoordinate && props.setXCoordinate(map?.getCenter().lat);
-    // @ts-ignore
-    props.setYCoordinate && props.setYCoordinate(map?.getCenter().lng);
+    setPosition(map?.getCenter());    
   }, [map]);
+
+  const [addShop] = useMutation(ADD_SHOP, {
+    variables: {
+      cityId: input.cityId,
+      fullAddress: input.fullAddress,
+      goodsType: input.goodsType,
+      plaque: input.plaque,
+      name: input.name,
+      ownerFullName: input.ownerFullName,
+      phoneNumber: input.phoneNumber,
+      postalCode: input.postalCode,
+      provinceId: input.provinceId,
+      regionId: input.regionId,
+      subregionId: input.subregionId,
+      xCoordinate: position.lat,
+      yCoordinate: position.lng,
+    },
+    onCompleted: (data) => {
+      console.log(data);
+      alert("فروشگاه با موفقیت اضافه شد");
+    },
+    onError: (e) => {
+      console.log(e);
+      alert("خطایی رخ داده است" + e);
+    },
+  });
 
   useEffect(() => {
     // @ts-ignore
@@ -146,11 +175,36 @@ const AddShopModal = (props: Props) => {
     }
   }, [regionId]);
 
+
+
+
+
+
+  const checkInput = () => {
+    if (
+      input.cityId &&
+      input.fullAddress &&
+      input.name &&
+      input.ownerFullName &&
+      input.phoneNumber &&
+      input.xCoordinate &&
+      input.yCoordinate
+    ) {
+      console.log(position);
+      
+      return true;
+    } else {
+      console.log(input);
+      
+      return false;
+    }
+  }
+
   return (
     <NewModal
-      name='افزودن فروشگاه'
+      name="افزودن فروشگاه"
       open={props.open}
-      changeModal={props.changeModal}
+      onClose={props.onClose}
       backgroundColor={onPrimary}
       color={primary}
       height={"80dvh"}
@@ -159,136 +213,137 @@ const AddShopModal = (props: Props) => {
       <Stack spacing={"1rem"} width={"100%"}>
         {SelectMap(center, setMap, position, markerRef)}
         <TextInput
-          label='نام فروشگاه'
+          label="نام فروشگاه"
           width={"100%"}
-          getText={props.setName}
+          getText={(text:string) => {
+            setInput({ ...input, name: text });
+          }}
         />
         <TextInput
-          label='نام و نام خانوادگی مالک'
+          label="نام و نام خانوادگی مالک"
           width={"100%"}
-          getText={props.setOwnerFullName}
+          getText={(text:string) => {
+            setInput({ ...input, ownerFullName: text });
+          }}
         />
         <TextInput
-          label='شماره تلفن'
+          label="شماره تلفن"
           width={"100%"}
-          getText={props.setPhoneNumber}
+          type="number"
+          autoComplete="phone"
+          getText={(text:string) => {
+            setInput({ ...input, phoneNumber: text });
+          }}        
+          />
+
+        <TextInput
+          label="کد پستی"
+          width={"100%"}
+          type="number"
+          getText={(text:string) => {
+            setInput({ ...input, postalCode: text });
+          }}
+        />
+        <TextInput
+          label="آدرس کامل"
+          width={"100%"}
+          // multiline={true}
+          // rows={4}
+          getText={(text:string) => {
+            setInput({ ...input, fullAddress: text });
+          }}
+        />
+        <TextInput
+          label="شماره پلاک"
+          width={"100%"}
+          type="number"
+          getText={(text:string) => {
+            setInput({ ...input, plaque: parseFloat(text) });
+          }}
         />
 
         <TextInput
-          label='کد پستی'
+          label="نوع کالا"
           width={"100%"}
-          type='number'
-          getText={props.setPostalCode}
+          getText={(text:string) => {
+            setInput({ ...input, goodsType: text });
+          }}
         />
-        <TextInput
-          label='آدرس کامل'
-          width={"100%"}
-          multiline={true}
-          rows={4}
-          getText={props.setFullAddress}
-        />
-        <TextInput
-          label='شماره پلاک'
-          width={"100%"}
-          type='number'
-          getText={props.setPlaque}
-        />
-
-        <TextInput
-          label='نوع کالا'
-          width={"100%"}
-          getText={props.setGoodsType}
-        />
-
-        <TextInput
-          label='نام تصویر'
-          width={"100%"}
-          getText={props.setImageName}
-        />
-          <Typography variant="h6" component="h6" sx={{ mb: 1 }}>
-            استان
-          </Typography>
+        <Typography variant="h6" component="h6" sx={{ mb: 1 }}>
+          استان
+        </Typography>
         <Selector
           items={provinces}
-          width={{
-            xs: "50vw",
-            sm: "40vw",
-            md: "10vw",
-            lg: "10vw",
-          }}
+          width={"100%"}
           fullWidth={true}
           getValue={(id: any | SetStateAction<undefined>) => {
             setProvinceId(id);
-            props.setProvinceId && props.setProvinceId(id);
+            setInput({ ...input, provinceId: id });
           }}
-          backgroundColor='#fff'
+          backgroundColor="#fff"
           borderRadius={"15px"}
         />
 
-        <Typography variant='h6' component='h6' sx={{ mb: 1 }}>
+        <Typography variant="h6" component="h6" sx={{ mb: 1 }}>
           شهر
         </Typography>
         <Selector
           items={cities}
-          width={{
-            xs: "50vw",
-            sm: "40vw",
-            md: "10vw",
-            lg: "10vw",
-          }}
+          width={"100%"}
           fullWidth={true}
           getValue={(id: any | SetStateAction<undefined>) => {
             setCityId(id);
-            props.setCityId && props.setCityId(id);
+            setInput({ ...input, cityId: id });
+
           }}
-          backgroundColor='#fff'
+          backgroundColor="#fff"
           borderRadius={"15px"}
           disabled={provinceId ? false : true}
         />
 
+        <Typography variant="h6" component="h6" sx={{ mb: 1 }}>
+          منطقه
+        </Typography>
+        <Selector
+          items={regions}
+          width={"100%"}
+          fullWidth={true}
+          getValue={(id: any | SetStateAction<undefined>) => {
+            setRegionId(id);
+            setInput({ ...input, regionId: id });
 
-          <Typography variant="h6" component="h6" sx={{ mb: 1 }}>
-            منطقه
-          </Typography>
-          <Selector
-            items={regions}
-            width={{
-              xs: "50vw",
-              sm: "40vw",
-              md: "10vw",
-              lg: "10vw",
-            }}
-            fullWidth={true}
-            getValue={(id: any | SetStateAction<undefined>) => {
-              setRegionId(id);
-              props.setRegionId && props.setRegionId(id);
-            }}
-            backgroundColor="#fff"
-            borderRadius={"15px"}
-            disabled={cityId ? false : true}
-          />
+          }}
+          backgroundColor="#fff"
+          borderRadius={"15px"}
+          disabled={cityId ? false : true}
+        />
 
+        <Typography variant="h6" component="h6" sx={{ mb: 1 }}>
+          محله
+        </Typography>
+        <Selector
+          items={neighborhoods}
+          width={"100%"}
+          // fullWidth={true}
+          getValue={(id: any | SetStateAction<undefined>) => {
+            setNeighborhoodId(id);
+            setInput({ ...input, subregionId: id });
+          }}
+          backgroundColor="#fff"
+          borderRadius={"15px"}
+          disabled={regionId ? false : true}
+        />
 
-          <Typography variant="h6" component="h6" sx={{ mb: 1 }}>
-            محله
-          </Typography>
-          <Selector
-            items={neighborhoods}
-            width={{
-              xs: "50vw",
-              sm: "40vw",
-              md: "10vw",
-              lg: "10vw",
-            }}
-            // fullWidth={true}
-            getValue={(id: any | SetStateAction<undefined>) => {
-              setNeighborhoodId(id);
-              props.setSubregionId && props.setSubregionId(id);
-            }}
-            backgroundColor="#fff"
-            borderRadius={"15px"}
-            disabled={regionId ? false : true}
-          />
+        <LinkButton backgroundColor={primary} icon={<AddRounded />} onClick={()=>{
+          if(checkInput()){
+            console.log(input);
+            addShop();
+          }else{
+            alert("لطفا تمامی فیلد ها را پر کنید")
+          }
+        }}>
+          افزودن فروشگاه
+        </LinkButton>
       </Stack>
       {props.children}
     </NewModal>

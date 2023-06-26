@@ -490,7 +490,7 @@ const LocationAccordion = (props: LocationAccordionProps) => {
       </AccordionDetails>
       <NewModal
         open={addModal.open}
-        changeModal={() => {
+        onClose={() => {
           setAddModal({ ...addModal, open: !addModal.open });
         }}
         backgroundColor={onPrimary}

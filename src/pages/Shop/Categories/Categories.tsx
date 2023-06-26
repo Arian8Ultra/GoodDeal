@@ -1,38 +1,58 @@
-import React, { useState } from 'react'
-import { GET_CATEGORIES } from '../../../GraphQL/QueriesShop'
-import { useQuery } from '@apollo/client';
-import { Box } from '@mui/material';
+import React, { useState } from "react";
+import {
+  GET_CATEGORIES,
+  GET_SHOP_CATEGORY,
+} from "../../../GraphQL/QueriesShop";
+import { useQuery } from "@apollo/client";
+import { Box } from "@mui/material";
+import { useLocation, useParams } from "react-router-dom";
+import CategoryCard from "../../../components(app)/Category/CategoryCard";
 
 const Categories = () => {
-    const [categories, setCategories] = useState([]);
-    const {loading , error} = useQuery(GET_CATEGORIES, {
-        onCompleted: (data) => {
-            console.log(data);
-            setCategories(data.shop_getCategories.result.items);
-        },
-        onError: (e) => {
-            console.log(e);
-        },
-    })
+  const [categories, setCategories] = useState([]);
+  const { shopId, categoryId } = useParams();
+  const shop = useLocation().state?.store;
+
+  const { loading, error } = useQuery(GET_SHOP_CATEGORY, {
+    variables: {
+      id: shopId,
+    },
+    onCompleted: (data) => {
+      console.log(data);
+      setCategories(data.shop_getCategories.result.items);
+    },
+    onError: (e) => {
+      console.log(e);
+    },
+  });
   return (
-    <Box display={"grid"} 
-    gridTemplateColumns={{
+    <Box
+      display={"grid"}
+      gridTemplateColumns={{
         xs: "repeat(1, 1fr)",
-        sm: "repeat(1, 1fr)",
-        md: "repeat(1, 1fr)",
-        lg: "repeat(1, 1fr)",
-        xl: "repeat(1, 1fr)",
+        sm: "repeat(2, 1fr)",
+        md: "repeat(3, 1fr)",
+        lg: "repeat(4, 1fr)",
+        xl: "repeat(5, 1fr)",
       }}
-      gap={"1rem"}
-      padding={"1rem"}>
-        {categories.map((category:any)=>(
-            <Box key={category.id}>
-                <h1>{category.name}</h1>
-            </Box>
-        ))}
-      </Box>
+      gap={"2rem"}
+      justifyContent={"center"}
+      alignItems={"center"}
+      padding={"1rem"}
+    >
+      {shop.shopCategories.map((category: any) => (
+        // <Box key={category.category.id}>
+        //     <h1>{category.category.title}</h1>
+        // </Box>
+        <CategoryCard
+          imageName={category.category.imageName}
+          title={category.category.title}
+          id={category.category.id}
+          key={category.category.id}
+        />
+      ))}
+    </Box>
+  );
+};
 
-  )
-}
-
-export default Categories
+export default Categories;

@@ -7,12 +7,17 @@ import Selector from "../../../components/Selector";
 import { useMutation } from "@apollo/client";
 import {
   ADD_ROLE_TO_USER,
+  REMOVE_ROLE_FROM_USER,
   USER_SIGNUP,
 } from "../../../GraphQL/MutationUser";
 import { Stack } from "@mui/system";
-import { onPrimary, primaryDark } from "../../../theme/Colors";
+import { Red, onPrimary, primaryDark } from "../../../theme/Colors";
 import LinkButton from "../../../components/LinkButton";
-import { Typography } from "@mui/material";
+import { CircularProgress, Typography } from "@mui/material";
+import { Box } from "@chakra-ui/layout";
+import IButton from "../../../components/IButton";
+import { CancelRounded } from "@mui/icons-material";
+import { convertRoleToPersian } from "../../../functions/function";
 
 const UserManager = () => {
   const [newUserModal, setNewUserModal] = React.useState({
@@ -34,12 +39,13 @@ const UserManager = () => {
     name: "افزودن نقش به کاربر",
     roleType: "",
     userId: "",
-    user:{
-      firstName:"",
-      lastName:"",
-      userName:"",
-      id:"",
-    }
+    user: {
+      firstName: "",
+      lastName: "",
+      userName: "",
+      id: "",
+      userRoles: [],
+    },
   });
 
   const [userSignUp, { loading }] = useMutation(USER_SIGNUP, {
@@ -53,7 +59,20 @@ const UserManager = () => {
   });
 
   const [addRoleToUser, { loading: loadingAddUserToRole }] =
-    useMutation(ADD_ROLE_TO_USER);
+    useMutation(ADD_ROLE_TO_USER,{
+      onCompleted(data, clientOptions) {
+        console.log(data);
+        alert("نقش با موفقیت به کاربر اضافه شد");
+      },
+      onError(error) {
+        console.log(error);
+        alert("خطا در اضافه کردن نقش به کاربر");
+      }
+    });
+
+  const [removeRole, { loading: loadingRemoveRole }] = useMutation(
+    REMOVE_ROLE_FROM_USER
+  );
 
   return (
     <div>
@@ -69,14 +88,14 @@ const UserManager = () => {
             ...roleModal,
             open: !roleModal.open,
             userId: user.id,
-            user:user
+            user: user,
           });
         }}
       />
       <NewModal
         name="افزودن کاربر جدید"
         open={newUserModal.open}
-        changeModal={() =>
+        onClose={() =>
           setNewUserModal({
             ...newUserModal,
             open: !newUserModal.open,
@@ -236,9 +255,9 @@ const UserManager = () => {
       </NewModal>
 
       <NewModal
-        name={"افزودن نقش به کاربر"}
+        name={"مدیریت نقش ها"}
         open={roleModal.open}
-        changeModal={() =>
+        onClose={() =>
           setRoleModal({
             ...roleModal,
             open: !roleModal.open,
@@ -251,6 +270,49 @@ const UserManager = () => {
         <Stack spacing={2} width={"80%"}>
           <Typography variant="h6" color="textPrimary">
             {roleModal.user.firstName + " " + roleModal.user.lastName}
+          </Typography>
+
+          <Typography variant="h6" color="textPrimary">
+            نقش ها
+          </Typography>
+          {roleModal.user.userRoles?.map((role: any) => (
+            <Box
+              display={"grid"}
+              gridTemplateColumns={"1fr 1fr"}
+              gridGap={2}
+              width={"100%"}
+              alignItems={"center"}
+            >
+              <Typography variant="body1" color="textPrimary">
+                {convertRoleToPersian(role.roleType)}
+              </Typography>
+
+              <IButton
+                backgroundColor="transparent"
+                color={Red}
+                fun={() => {
+                  removeRole({
+                    variables: {
+                      Id: role.id,
+                    },
+                    onCompleted(data, clientOptions) {
+                      console.log(data);
+                      alert("نقش با موفقیت حذف شد");
+                    },
+                    onError(error) {
+                      console.log(error);
+                    }
+                  });
+                }}
+              >
+                <CancelRounded sx={{ fontSize: 20 }} />
+                {loadingRemoveRole && <CircularProgress />}
+              </IButton>
+            </Box>
+          ))}
+
+          <Typography variant="h6" color="textPrimary">
+            افزودن نقش
           </Typography>
           <Selector
             label="نوع نقش"

@@ -1,19 +1,12 @@
-import { Box, Button, Stack } from "@mui/material";
-import Title from "../../components(app)/Title";
-import { useEffect, useState } from "react";
-import {
-  GET_CITY_LIST_BY_OSTANID,
-  GET_OSTAN_LIST,
-  GET_REGION_LIST_BY_CITYID,
-  GET_SHOP_LIST_BY_SUBREGIONID,
-  GET_SUBREGION_LIST_BY_REGIONID,
-} from "../../api/api";
-import { usePersistStore } from "../../stores/PersistStore";
-import ShopList from "../../components(app)/Home/ShopList";
-import { SelectBar } from "../../components(app)/Home/SelectBar";
-import useLayoutStore from "../../stores/layoutStore";
-import { GET_SHOPS_BY_SUBREGION_ID } from "../../GraphQL/QueriesShop";
 import { useLazyQuery } from "@apollo/client";
+import { Box, Stack } from "@mui/material";
+import { useEffect, useState } from "react";
+import { GET_SHOPS_BY_CITY_ID, GET_SHOPS_BY_REGION_ID, GET_SHOPS_BY_SUBREGION_ID } from "../../GraphQL/QueriesShop";
+import { SelectBar } from "../../components(app)/Home/SelectBar";
+import ShopList from "../../components(app)/Home/ShopList";
+import Title from "../../components(app)/Title";
+import { usePersistStore } from "../../stores/PersistStore";
+import useLayoutStore from "../../stores/layoutStore";
 
 const Home = () => {
   const [ostanId, setOstanId] = useState(0);
@@ -33,14 +26,44 @@ const Home = () => {
     }
   });
 
+  const [getShopsByCityId,{loading:loadingCity,error:errorCity}] = useLazyQuery(GET_SHOPS_BY_CITY_ID, {
+    variables: {
+      id: cityId,
+    },
+    onCompleted: (data) => {
+      console.log(data);
+      setStores(data.shop_getShops.result.items);
+    }
+  });
+
+  const [getShopsByRegionId,{loading:loadingRegion,error:errorRegion}] = useLazyQuery(GET_SHOPS_BY_REGION_ID,{
+    variables: {
+      id: regionId,
+    },
+    onCompleted: (data) => {
+      console.log(data);
+      setStores(data.shop_getShops.result.items);
+    }
+  })
+
   useEffect(() => {
     console.log('getting shops');
     getShops()
   }, [getShops, neighborhoodId]);
 
+  useEffect(() => {
+    console.log('getting shops with cityId of: '+cityId);
+    getShopsByCityId()
+  }, [cityId, getShopsByCityId]);
+
+  useEffect(() => {
+    console.log('getting shops with region id of: '+regionId);
+    getShopsByRegionId()
+  }, [getShopsByRegionId, regionId]);
+
   useEffect(()=>{
     changePageName("صفحه اصلی")
-  },[])
+  },[changePageName])
 
   return (
     <Stack my={6} alignItems={"center"}>

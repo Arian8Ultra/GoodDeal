@@ -283,7 +283,7 @@ const UserList = (props: Props) => {
                   flexDirection={"column"}
                 >
                   {user.userRoles && user.userRoles.map((role: any) => (
-                    <Typography sx={{ color: "black" }}>
+                    <Typography sx={{ color: "black" }} key={role.id}>
                       {convertRoleToPersian(role.roleType)}
                     </Typography>
                   ))}

@@ -20,6 +20,10 @@ import { CREATE_PROVINCE } from "../../../GraphQL/MutationLocation";
 interface LocationListProps {
   id?: string | undefined;
   className?: string | undefined;
+  provinceSearch?: string | undefined;
+  citySearch?: string | undefined;
+  regionSearch?: string | undefined;
+  neighborhoodSearch?: string | undefined;
 }
 
 const LocationList = () => {
@@ -90,10 +94,9 @@ const LocationList = () => {
       <NewModal
         name="افزودن استان"
         open={modal.open}
-        changeModal={() => setModal({ ...modal, open: modal.open ? false : true })}
+        onClose={() => setModal({ ...modal, open: modal.open ? false : true })}
         backgroundColor={onPrimary}
         isCloseable={true}
-        
         color={primaryDark}
       >
         <Stack gap={10} width={"80%"}>

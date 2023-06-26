@@ -42,7 +42,8 @@ const ShopList = (props: Props) => {
           key={store.id}
           gridTemplateColumns={"repeat(5, 1fr)"}
           gap={"1rem"}
-          padding={"1rem"}
+          padding={"0.5rem"}
+          alignItems={"center"}
           sx={{
             border: "1px solid #ccc",
             borderRadius: "1rem",
@@ -54,7 +55,7 @@ const ShopList = (props: Props) => {
             {store.name}
           </Typography>
           <Typography textAlign={"center"} gridColumn={"2/5"}>
-            {store.address}
+            {store.fullAddress}
           </Typography>
           <IButton pageTitle={store.name} backgroundColor={'transparent'} width={'100%'} fun={()=>{
             navigate(`/home/shop/${store.id}`,{state:{store:store}})

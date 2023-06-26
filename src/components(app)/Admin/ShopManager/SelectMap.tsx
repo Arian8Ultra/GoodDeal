@@ -7,7 +7,10 @@ export function SelectMap(
   center: number[],
   setMap: React.Dispatch<React.SetStateAction<null>>,
   // eventHandlers: { dragend(): void },
-  position: number[],
+  position: {
+    lat: number;
+    lng: number;
+  },
   markerRef: React.MutableRefObject<null>,
 ) {
   return (

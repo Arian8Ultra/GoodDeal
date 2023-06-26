@@ -128,14 +128,14 @@ export const ADD_ROLE_TO_USER = gql`
   }
 `;
 
-// export const REMOVE_ROLE_FROM_USER = gql`
-//   mutation REMOVE_ROLE_FROM_USER($roleType: RoleType!, $userId: String!) {
-//     userRole_removeUserFromRole(roleType: $roleType, userId: $userId) {
-//       code
-//       value
-//     }
-//   }
-// `;
+export const REMOVE_ROLE_FROM_USER = gql`
+  mutation REMOVE_ROLE_FROM_USER($Id: Int!) {
+    userRole_removeUserFromRole(entityId: $Id) {
+      code
+      value
+    }
+  }
+`;
 
 
 export interface IAddRoleToUser {
