@@ -7,6 +7,7 @@ import { useQuery } from "@apollo/client";
 import { Box } from "@mui/material";
 import { useLocation, useParams } from "react-router-dom";
 import CategoryCard from "../../../components(app)/Category/CategoryCard";
+import Title from "../../../components(app)/Title";
 
 const Categories = () => {
   const [categories, setCategories] = useState([]);
@@ -26,6 +27,8 @@ const Categories = () => {
     },
   });
   return (
+    <Box>
+      <Title title="دسته بندی ها"/>
     <Box
       display={"grid"}
       gridTemplateColumns={{
@@ -51,6 +54,7 @@ const Categories = () => {
           key={category.category.id}
         />
       ))}
+    </Box>
     </Box>
   );
 };

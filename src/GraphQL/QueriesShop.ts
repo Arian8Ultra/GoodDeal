@@ -139,35 +139,35 @@ export const GET_CATEGORIES = gql`
   }
 `;
 
-export const GET_PRODUCTS = gql`
-  query product_getProducts {
-    product_getProducts {
-      result {
-        items {
-          name
-          unit
-          categoryId
-        }
-      }
-    }
-  }
-`;
+// export const GET_PRODUCTS = gql`
+//   query product_getProducts {
+//     product_getProducts {
+//       result {
+//         items {
+//           name
+//           unit
+//           categoryId
+//         }
+//       }
+//     }
+//   }
+// `;
 
-export const GET_PRODUCTS_BY_CATEGORY_ID = gql`
-  query product_getProducts_by_categoryId($id: Int!) {
-    product_getProducts {
-      result(where: { categoryId: { eq: $id } }) {
-        items {
-          name
-          unit
-          categoryId
-        }
-      }
-      status
-      __typename
-    }
-  }
-`;
+// export const GET_PRODUCTS_BY_CATEGORY_ID = gql`
+//   query product_getProducts_by_categoryId($id: Int!) {
+//     product_getProducts {
+//       result(where: { categoryId: { eq: $id } }) {
+//         items {
+//           name
+//           unit
+//           categoryId
+//         }
+//       }
+//       status
+//       __typename
+//     }
+//   }
+// `;
 
 
 export const GET_SHOP_CATEGORY = gql`
