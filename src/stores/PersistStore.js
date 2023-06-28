@@ -8,17 +8,19 @@ export const usePersistStore = create(
       lastName: "",
       token: "",
       role: "",
+      id: "",
       setUser: (
         /** @type {string} */ firstName,
         /** @type {string} */ lastName,
         /** @type {string} */ token,
-        /** @type {string} */ role
-      ) => set({ firstName, lastName, token, role }),
-      logout: () => set({ firstName: "", lastName: "", token: "", role: "" }),
+        /** @type {string} */ role,
+        /** @type {string} */ id
+      ) => set({ firstName, lastName, token, role, id }),
+      logout: () => set({ firstName: "", lastName: "", token: "", role: "", id: "" }),
     }),
     {
       name: "persist-storage", // unique name
-      storage: createJSONStorage(() => sessionStorage), // (optional) by default, 'localStorage' is used
+      storage: createJSONStorage(() => localStorage), // (optional) by default, 'localStorage' is used
     }
   )
 );

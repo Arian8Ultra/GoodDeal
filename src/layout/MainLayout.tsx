@@ -143,7 +143,7 @@ function MainLayout() {
                   open={Boolean(anchorEl)}
                   onClose={handleClose}
                 >
-                  <CAN permissionNeeded="edit">
+                  <CAN permissionNeeded="ADMIN">
                     <MenuItem onClick={()=>{
                       navigate("/admin")
                     }}>
