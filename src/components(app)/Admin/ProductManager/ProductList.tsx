@@ -30,7 +30,7 @@ const ProductList = () => {
 
   const [categories, setCategories] = useState([]);
 
-  const { data, loading, error } = useQuery(GET_PRODUCTS, {
+  const { data, loading, error,refetch} = useQuery(GET_PRODUCTS, {
     onCompleted(data) {
       console.log(data);
     },
@@ -70,6 +70,7 @@ const ProductList = () => {
     onCompleted(data) {
       console.log(data);
       alert("محصول با موفقیت اضافه شد");
+      refetch();
     },
     onError(error) {
       console.log(error);
@@ -222,9 +223,9 @@ const ProductList = () => {
             flexDirection={"column"}
             width={"100%"}
           >
-            <Typography variant={"h6"}>نوضیجات محصول</Typography>
+            <Typography variant={"h6"}>توضیحات محصول</Typography>
             <TextInput
-              label="نوضیجات محصول"
+              label="توضیحات محصول"
               value={addModal.description}
               getText={(e: string) =>
                 setAddModal({ ...addModal, description: e })
