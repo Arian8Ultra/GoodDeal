@@ -27,3 +27,34 @@ mutation product_addProduct(
     }
 }
 `
+
+
+export const ADD_PRICE_RECORD = gql`
+mutation priceRecord_addPriceRecord (
+    $isApproved: Boolean!
+    $price: Decimal!
+    $productId: Int!
+    $shopId: Int!
+    $userId: String!
+
+){
+    priceRecord_addPriceRecord(input: {
+        isApproved:$isApproved
+        price:$price
+        productId:$productId
+        shopId:$shopId
+        userId:$userId
+    }){
+        result{
+            userId
+            id
+            isApproved
+            price          
+        }
+        status{
+            code
+            value
+        }
+        __typename
+    }
+}`

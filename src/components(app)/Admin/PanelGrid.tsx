@@ -1,6 +1,7 @@
 import { Box } from "@mui/material";
 import React from "react";
 import LinkButton from "../../components/LinkButton";
+import CAN from "../../components/CAN";
 
 const PanelGrid = () => {
   return (
@@ -20,16 +21,18 @@ const PanelGrid = () => {
       borderRadius={"25px"}
       bgcolor={"rgba(255,255,255,0.5)"}
     >
-      <Box
-        width={"100%"}
-        display={"flex"}
-        justifyContent={"center"}
-        alignItems={"center"}
-      >
-        <LinkButton padding={"2rem"} link="userManager">
-          مدیریت کاربران
-        </LinkButton>
-      </Box>
+      <CAN permissionNeeded="SUPER_ADMIN">
+        <Box
+          width={"100%"}
+          display={"flex"}
+          justifyContent={"center"}
+          alignItems={"center"}
+        >
+          <LinkButton padding={"2rem"} link="userManager">
+            مدیریت کاربران
+          </LinkButton>
+        </Box>
+      </CAN>
       <Box
         display={"flex"}
         width={"100%"}

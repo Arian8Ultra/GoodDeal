@@ -1,25 +1,20 @@
-import { Form } from "react-router-dom";
-import TextInput from "../../../components/TextInput";
-import { Stack } from "@mui/material";
-import LinkButton from "../../../components/LinkButton";
+import { useMutation } from "@apollo/client";
 import { Center, Image } from "@chakra-ui/react";
-import logo from "../../../assets/logo.svg";
-import { useState } from "react";
 import {
   VisibilityOffRounded,
   VisibilityRounded,
 } from "@mui/icons-material";
-import {
-  primary,
-  primaryLightTransparent,
-  secondary,
-} from "../../../theme/Colors";
-import { SIGNIN } from "../../../api/api";
-import { usePersistStore } from "../../../stores/PersistStore";
-import { useMutation } from "@apollo/client";
+import { Stack } from "@mui/material";
+import { useState } from "react";
+import { Form } from "react-router-dom";
 import { USER_SIGNIN } from "../../../GraphQL/MutationUser";
+import logo from "../../../assets/logo.svg";
+import LinkButton from "../../../components/LinkButton";
+import TextInput from "../../../components/TextInput";
 import { convertRoleToPersian } from "../../../functions/function";
+import { usePersistStore } from "../../../stores/PersistStore";
 import useAbilityStore from "../../../stores/abilityStore";
+import { primary } from "../../../theme/Colors";
 
 const SignIn = () => {
   const [userName, setUserName] = useState("");
@@ -39,26 +34,25 @@ const SignIn = () => {
     },
     onCompleted: (data) => {
       console.log(data);
-      addAbility('edit');
       console.log("permission added");
       setUser(
         data.user_signIn.result.user?.firstName,
         data.user_signIn.result.user?.lastName,
         data.user_signIn.result?.token,
-        data.user_signIn.result.user?.userRoles
+        data.user_signIn.result.user?.userRoles.length > 0
           ? convertRoleToPersian(
               data.user_signIn.result.user?.userRoles[0].roleType
             )
-          : ""
+          : "",
+        data.user_signIn.result.user?.id
       );
       data.user_signIn.result.user?.userRoles &&
-        data.user_signIn.result.user?.userRoles.map(
-          (role: any) => {
-            addAbility(role.roleType);
-            console.log(role.roleType);
-          }
-        );
+        data.user_signIn.result.user?.userRoles.map((role: any) => {
+          addAbility(role.roleType);
+          console.log(role.roleType);
+        });
       sessionStorage.setItem("token", data.user_signIn.result?.token);
+      sessionStorage.setItem("userId", data.user_signIn.result.user?.id);
     },
     onError: (err) => {
       console.log(err);
