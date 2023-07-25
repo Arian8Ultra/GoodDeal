@@ -32,7 +32,7 @@ function MainLayout() {
       clearAbilities();
       logout();
     }
-  }, [token, logout]);
+  }, [token, logout, clearAbilities]);
 
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {

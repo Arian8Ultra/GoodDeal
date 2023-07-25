@@ -52,7 +52,9 @@ const SignIn = () => {
           console.log(role.roleType);
         });
       sessionStorage.setItem("token", data.user_signIn.result?.token);
+      localStorage.setItem("token", data.user_signIn.result?.token);
       sessionStorage.setItem("userId", data.user_signIn.result.user?.id);
+      localStorage.setItem("userId", data.user_signIn.result.user?.id);
     },
     onError: (err) => {
       console.log(err);

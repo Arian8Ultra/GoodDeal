@@ -1,14 +1,22 @@
 import { Box } from "@mui/material";
 import gandonPattern from "../assets/Gandom.png";
 import { Image } from "@chakra-ui/react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { primary, primaryLight } from "../theme/Colors";
+import { useEffect } from "react";
 
 interface LoginLayoutProps {
   children?: React.ReactNode;
   id?: string;
 }
 const LoginLayout = (props: LoginLayoutProps) => {
+  const token = sessionStorage.getItem("token");
+  const navigate = useNavigate();
+  useEffect(()=>{
+    if(token){
+      navigate("/home")
+    }
+  },[navigate, token])
   return (
     <Box
       height={"100dvh"}

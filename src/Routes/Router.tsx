@@ -25,6 +25,9 @@ const router = createBrowserRouter(
       <Route path="login" element={<LoginLayout />}>
         <Route path="" element={<SignIn />} />
       </Route>
+      <Route path="" element={<LoginLayout />}>
+        <Route path="" element={<SignIn />} />
+      </Route>
       <Route path="home" element={<MainLayout />}>
         <Route path="" element={<Home />} />
         <Route path="shop/:shopId" element={<Shop />}>
