@@ -35,7 +35,7 @@ const CategoryCard = (props: Props) => {
         }}
       >
         <Image
-          src={`${IMAGE_URL}${props.imageName}`}
+          src={`${import.meta.env.REACT_APP_IMAGE_URL || IMAGE_URL}${props.imageName}`}
           loading="lazy"
           alt={props.title}
           width={"70%"}

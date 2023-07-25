@@ -121,7 +121,7 @@ const CategoryManager = () => {
           {thumbnail != null && (
             <Center>
               <Image
-                src={URL.createObjectURL(thumbnail[0])}
+                src={thumbnail[0] && URL.createObjectURL(thumbnail[0])}
                 fit={"contain"}
                 borderRadius={"15px"}
                 width={"90%"}

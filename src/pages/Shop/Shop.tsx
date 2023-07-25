@@ -106,6 +106,20 @@ const Shop = () => {
           lg: "40vh",
           xl: "40vh",
         }}
+        gridRow={{
+          xs:'2',
+          sm:'2',
+          md:'1',
+          lg:'1',
+        }}
+        gridColumn={
+          {
+            xs:'1/3',
+            sm:'1/3',
+            md:'2/3',
+            lg:'2/3',
+          }
+        }
         position={"relative"}
       >
         <MapContainer
@@ -132,16 +146,18 @@ const Shop = () => {
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
+          {/* @ts-ignore */}
           <Marker position={center} />
         </MapContainer>
       </Box>
 
-      <Box width={"100%"} gridColumn={"1/3"} padding={'2rem'} sx={{
+      <Box width={"100%"} gridColumn={'1/3'} padding={'1rem'} margin={'auto'} sx={{
         borderRadius: '15px',
         backgroundColor: "rgba(255,255,255,0.5)",
         backdropFilter: "blur(10px)",
         border: " 1px solid #4763E4",
-        borderColor:primary
+        borderColor:primary,
+        boxSizing: "border-box",
       }}>
         <Outlet />
       </Box>

@@ -51,31 +51,17 @@ const AddShopModal = (props: Props) => {
     provinceId: "",
     regionId: "",
     subregionId: "",
-    xCoordinate: "",
-    yCoordinate: "",
+    // xCoordinate: "",
+    // yCoordinate: "",
   });
   const markerRef = useRef(null);
   const onMove = useCallback(() => {
     // @ts-ignore
-    setPosition(map?.getCenter());    
+    setPosition(map?.getCenter());
   }, [map]);
 
   const [addShop] = useMutation(ADD_SHOP, {
-    variables: {
-      cityId: input.cityId,
-      fullAddress: input.fullAddress,
-      goodsType: input.goodsType,
-      plaque: input.plaque,
-      name: input.name,
-      ownerFullName: input.ownerFullName,
-      phoneNumber: input.phoneNumber,
-      postalCode: input.postalCode,
-      provinceId: input.provinceId,
-      regionId: input.regionId,
-      subregionId: input.subregionId,
-      xCoordinate: position.lat,
-      yCoordinate: position.lng,
-    },
+
     onCompleted: (data) => {
       console.log(data);
       alert("فروشگاه با موفقیت اضافه شد");
@@ -186,16 +172,12 @@ const AddShopModal = (props: Props) => {
       input.fullAddress &&
       input.name &&
       input.ownerFullName &&
-      input.phoneNumber &&
-      input.xCoordinate &&
-      input.yCoordinate
+      input.phoneNumber
     ) {
       console.log(position);
-      
       return true;
     } else {
       console.log(input);
-      
       return false;
     }
   }
@@ -337,7 +319,23 @@ const AddShopModal = (props: Props) => {
         <LinkButton backgroundColor={primary} icon={<AddRounded />} onClick={()=>{
           if(checkInput()){
             console.log(input);
-            addShop();
+            addShop({
+              variables: {
+                cityId: input.cityId,
+                fullAddress: input.fullAddress,
+                goodsType: input.goodsType,
+                plaque: input.plaque,
+                name: input.name,
+                ownerFullName: input.ownerFullName,
+                phoneNumber: input.phoneNumber,
+                postalCode: input.postalCode,
+                provinceId: input.provinceId,
+                regionId: input.regionId,
+                subregionId: input.subregionId,
+                xCoordinate: position.lat,
+                yCoordinate: position.lng,
+              },
+            });
           }else{
             alert("لطفا تمامی فیلد ها را پر کنید")
           }

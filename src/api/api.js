@@ -16,7 +16,7 @@ export function UPLOAD_FILE({ file, token, onSuccess, onFail }) {
 
   const options = {
       method: "POST",
-      url: API_URL_UPLOAD,
+      url: import.meta.env.REACT_APP_API_URL_UPLOAD || API_URL_UPLOAD,
       data: formData,
       headers: {
           Authorization: token ? `Bearer ${token}` : "",

@@ -59,8 +59,8 @@ const UserList = (props: Props) => {
         console.log(data);
         if (data.user_deleteUser.code === 1) {
           alert("کاربر با موفقیت حذف شد");
-        }else{
-          alert(data.user_deleteUser.value + "کاربر حذف نشد \n")
+        } else {
+          alert(data.user_deleteUser.value + "کاربر حذف نشد \n");
         }
         getUsers();
       },
@@ -282,11 +282,15 @@ const UserList = (props: Props) => {
                   alignItems={"center"}
                   flexDirection={"column"}
                 >
-                  {user.userRoles && user.userRoles.map((role: any) => (
-                    <Typography sx={{ color: "black" }} key={role.id}>
-                      {convertRoleToPersian(role.roleType)}
-                    </Typography>
-                  ))}
+                  {user.userRoles &&
+                    user.userRoles.map((role: any) => (
+                      <Typography
+                        sx={{ color: "black" }}
+                        key={role.id}
+                      >
+                        {convertRoleToPersian(role.roleType)}
+                      </Typography>
+                    ))}
                   {/* <Typography sx={{ color: "black" }}>
                     {user.userRoles && convertRoleToPersian(user.userRoles[0]?.roleType)}
                   </Typography> */}
@@ -320,11 +324,14 @@ const UserList = (props: Props) => {
                       hoverColor={"#ff0000"}
                       fun={() => {
                         props.deleteUser && props.deleteUser(user.id);
-                        deleteUser({
-                          variables: {
-                            id: user.id,
-                          },
-                        });
+                        confirm(
+                          "آیا از حذف این کاربر مطمئن هستید؟"
+                        ) &&
+                          deleteUser({
+                            variables: {
+                              id: user.id,
+                            },
+                          });
                       }}
                     >
                       <DeleteRounded

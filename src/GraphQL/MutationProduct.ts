@@ -29,6 +29,8 @@ mutation product_addProduct(
 `
 
 
+
+
 export const ADD_PRICE_RECORD = gql`
 mutation priceRecord_addPriceRecord (
     $isApproved: Boolean!
@@ -56,5 +58,21 @@ mutation priceRecord_addPriceRecord (
             value
         }
         __typename
+    }
+}`
+
+
+export const DELETE_PRODUCT = gql`
+mutation product_deleteProduct($id: Int!) {
+    product_deleteProduct(entityId: $id){
+        result{
+            name
+            unit
+            description
+        }
+        status{
+            code
+            value
+        }
     }
 }`

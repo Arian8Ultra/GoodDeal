@@ -20,7 +20,7 @@ const authLink = setContext((_, { headers }) => {
   });
 
   const httpLink = createHttpLink({
-    uri: GRAPHQL_URL,
+    uri: import.meta.env.REACT_APP_GRAPHQL_URL || GRAPHQL_URL,
   });
 
 const client = new ApolloClient({

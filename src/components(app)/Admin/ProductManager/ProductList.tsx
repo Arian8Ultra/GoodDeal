@@ -16,7 +16,7 @@ import { GET_CATEGORIES } from "../../../GraphQL/QueriesShop";
 import TextInput from "../../../components/TextInput";
 import Selector from "../../../components/Selector";
 import { Link } from "react-router-dom";
-import { ADD_PRODUCT } from "../../../GraphQL/MutationProduct";
+import { ADD_PRODUCT, DELETE_PRODUCT } from "../../../GraphQL/MutationProduct";
 import IButton from "../../../components/IButton";
 
 const ProductList = () => {
@@ -29,7 +29,7 @@ const ProductList = () => {
   });
 
   const [categories, setCategories] = useState([]);
-
+  const [deleteProduct]=useMutation(DELETE_PRODUCT)
   const { data, loading, error,refetch} = useQuery(GET_PRODUCTS, {
     onCompleted(data) {
       console.log(data);
@@ -47,7 +47,7 @@ const ProductList = () => {
     onCompleted: (data) => {
       console.log(data);
       setCategories(
-        data.category_getCategories.result.items.map(
+        data.category_getCategories.result?.items.map(
           (item: { id: any; title: any }) => {
             return { id: item.id, name: item.title };
           }
@@ -134,7 +134,7 @@ const ProductList = () => {
             </Box>
 
       {data &&
-        data.product_getProducts.result.items.map(
+        data.product_getProducts.result?.items?.map(
           (item: {
             id: any;
             name: any;
@@ -175,7 +175,19 @@ const ProductList = () => {
                   backgroundColor={Red}
                   hoverColor={"#ff0000"}
                   fun={() =>
-                    alert("آیا از حذف این محصول اطمینان دارید؟")
+                    confirm("آیا از حذف این محصول اطمینان دارید؟") &&
+                    deleteProduct({
+                      variables:{
+                        id:item.id
+                      },
+                      onCompleted(data){
+                        console.log(data)
+                        refetch()
+                      },
+                      onError(error){
+                        console.log(error)
+                      }
+                    })
                   }
                 >
                   <DeleteRounded sx={{

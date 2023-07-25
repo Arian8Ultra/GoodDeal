@@ -54,8 +54,18 @@ function MainLayout() {
         <Image src={headerImage} alt='header' width={"100%"} />
       </Box>
       <Box
-        width={"85%"}
-        padding={8}
+        width={{
+          xs: "100%",
+          sm: "100%",
+          md: "100%",
+          lg: "85%",
+        }}
+        padding={{
+          xs: 0,
+          sm: 0,
+          md: 4,
+          lg: 8
+        }}
         sx={{
           backgroundColor: onPrimary,
           backgroundImage: `url(${mainLayoutBackground})`,
@@ -67,6 +77,7 @@ function MainLayout() {
           top: "65%",
           borderRadius: borderRadiuos,
           border: "1px solid #E0E0E0",
+          boxSizing: "border-box",
         }}
       >
         <Box

@@ -86,7 +86,7 @@ const ShopCategoryList = (props: Props) => {
           <Image
             w={"30px"}
             aspectRatio={"1/1"}
-            src={`${IMAGE_URL}${category.imageName}`}
+            src={`${import.meta.env.REACT_APP_IMAGE_URL || IMAGE_URL}${category.imageName}`}
             loading="lazy"
             alt={category.title}
           />

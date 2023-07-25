@@ -98,7 +98,6 @@ const LocationAccordion = (props: LocationAccordionProps) => {
     },
     fetchPolicy: "network-only",
     refetchWritePolicy: "overwrite",
-
   });
 
   const [
@@ -216,8 +215,8 @@ const LocationAccordion = (props: LocationAccordionProps) => {
             name: "",
             code: "",
             open: false,
-            type : ""
-          })
+            type: "",
+          });
           window.location.reload();
         } else {
           alert("مشکلی در اضافه کردن شهر به وجود آمده است");
@@ -245,8 +244,8 @@ const LocationAccordion = (props: LocationAccordionProps) => {
           name: "",
           code: "",
           open: false,
-          type : ""
-        })
+          type: "",
+        });
         window.location.reload();
       } else {
         alert("مشکلی در اضافه کردن منطقه به وجود آمده است");
@@ -274,8 +273,8 @@ const LocationAccordion = (props: LocationAccordionProps) => {
           name: "",
           code: "",
           open: false,
-          type : ""
-        })
+          type: "",
+        });
         window.location.reload();
       } else {
         alert("مشکلی در اضافه کردن زیر منطقه به وجود آمده است");
@@ -424,7 +423,8 @@ const LocationAccordion = (props: LocationAccordionProps) => {
               hoverColor={"#ff0000"}
               height={"max-content"}
               fun={() => {
-                handleDelete();
+                confirm("آیا از حذف این مورد اطمینان دارید؟") &&
+                  handleDelete();
               }}
             >
               <DeleteRounded

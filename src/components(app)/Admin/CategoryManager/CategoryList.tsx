@@ -1,12 +1,12 @@
+import { useMutation } from "@apollo/client";
 import { Image, Stack } from "@chakra-ui/react";
+import { DeleteRounded } from "@mui/icons-material";
 import { Box, Typography } from "@mui/material";
 import React from "react";
 import { IMAGE_URL } from "../../../../config";
-import IButton from "../../../components/IButton";
-import { DeleteRounded, KeyRounded } from "@mui/icons-material";
-import { Red } from "../../../theme/Colors";
-import { useMutation } from "@apollo/client";
 import { DELETE_CATEGORY } from "../../../GraphQL/MutationShop";
+import IButton from "../../../components/IButton";
+import { Red } from "../../../theme/Colors";
 
 interface Props {
   categories: {
@@ -61,7 +61,7 @@ const CategoryList = (props: Props) => {
           <Image
             w={"50px"}
             aspectRatio={"1/1"}
-            src={`${IMAGE_URL}${category.imageName}`}
+            src={`${import.meta.env.REACT_APP_IMAGE_URL || IMAGE_URL}${category.imageName}`}
             loading="lazy"
             alt={category.title}
           />
@@ -72,6 +72,7 @@ const CategoryList = (props: Props) => {
             width={"100%"}
           >
             <IButton backgroundColor={Red} hoverColor={"#ff0000"} fun={()=>{
+              confirm("آیا از حذف این دسته بندی اطمینان دارید؟") &&
               deleteCategory({
                 variables:{
                   id:category.id
@@ -79,12 +80,10 @@ const CategoryList = (props: Props) => {
                 refetchQueries: ["GetCategories"],
                 onCompleted(data, clientOptions) {
                   console.log(data);
-                  alert("Category Deleted")
                   window.location.reload()
                 },
                 onError(err) {
                   console.log(err);
-                  alert("Category Not Deleted")
                 }
               })
             }}>
