@@ -99,7 +99,7 @@ function MainLayout() {
                 {pageName}
               </Typography>
             </Center>
-            <Box display={"flex"} flexDirection={"row"} gap={1}>
+            <Box display={"flex"} flexDirection={"row"} gap={1} alignItems={'center'}>
               <Stack mx={3}>
                 <Typography
                   sx={{

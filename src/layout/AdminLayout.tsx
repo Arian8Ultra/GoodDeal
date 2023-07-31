@@ -184,7 +184,7 @@ function AdminLayout() {
             </Box>
           </Stack>
         </Box>
-        <Box padding={2}>
+        <Box padding={1}>
           <Outlet />
         </Box>
       </Box>
