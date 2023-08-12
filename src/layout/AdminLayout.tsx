@@ -14,7 +14,7 @@ function AdminLayout() {
   let pageName = useLayoutStore((state) => state.pageName);
   const firstName = usePersistStore((state) => state.firstName);
   const lastName = usePersistStore((state) => state.lastName);
-  const logout = usePersistStore((state) => state.logout);
+  // const logout = usePersistStore((state) => state.logout);
   const changePageName = useLayoutStore((state) => state.changePageName);
   let role = usePersistStore((state) => state.role);
   role = role === "admin" ? "مدیر" : "کاربر";
@@ -22,7 +22,7 @@ function AdminLayout() {
   const navigate = useNavigate();
   useEffect(()=>{
     changePageName("پنل ادمین")
-  },[])
+  },[changePageName])
   return (
     <Box
       boxSizing={"border-box"}

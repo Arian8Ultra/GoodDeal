@@ -3,7 +3,7 @@ import { gql } from "@apollo/client";
 export const GET_PROVINCES = gql`
   query province_getProvinces{
     province_getProvinces {
-      result(take: 100) {
+      result(take: 1000) {
         items {
           name
           id
@@ -20,7 +20,7 @@ export const GET_PROVINCES = gql`
 export const GET_PROVINCES_SEARCH = gql`
 query province_getProvinces ($search: String){
   province_getProvinces {
-    result(take: 100 where: {name: {contains: $search}}) {
+    result(take: 1000 where: {name: {contains: $search}}) {
       items {
         name
         id

@@ -1,9 +1,9 @@
 import { gql } from "@apollo/client";
 
 export const GET_PRODUCTS = gql`
-  query poducts_getProducts($take: Int, $skip: Int) {
+  query poducts_getProducts($skip: Int) {
     product_getProducts {
-      result(take: $take, skip: $skip) {
+      result(take: 1000, skip: $skip, order: {createdDate:DESC}) {
         items {
           id
           name
@@ -28,15 +28,15 @@ export const GET_PRODUCTS = gql`
 
 export const GET_PRODUCTS_BY_CATEGORY = gql`
   query poducts_getProductsByCategory(
-    $take: Int
     $skip: Int
-    $categoryId: Int!
+    $categoryId: Int!,
   ) {
     product_getProducts {
       result(
-        take: $take
+        take: 1000
         skip: $skip
         where: { categoryId: { eq: $categoryId } }
+        order: {createdDate:DESC}
       ) {
         items {
           id
@@ -61,9 +61,9 @@ export const GET_PRODUCTS_BY_CATEGORY = gql`
 `;
 
 export const GET_TODAY_PRICE_RECORDS = gql`
-  query poducts_getTodayPriceRecords($take: Int, $skip: Int) {
+  query poducts_getTodayPriceRecords($skip: Int) {
     priceRecord_getTodayPriceRecords {
-      result(take: $take, skip: $skip) {
+      result(take: 1000, skip: $skip, order: {createdDate:DESC}) {
         items {
           id
           userId
@@ -86,7 +86,7 @@ export const GET_TODAY_PRICE_RECORDS = gql`
 
 export const GET_PRICE_RECORDS_BY_PRODUCT_AND_USER_AND_SHOP = gql`
   query poducts_getPriceRecordsByProductAndUserAndShop(
-    $take: Int
+    # $take: Int
     $skip: Int
     $productId: Int!
     $userId: String!
@@ -94,7 +94,7 @@ export const GET_PRICE_RECORDS_BY_PRODUCT_AND_USER_AND_SHOP = gql`
   ) {
     priceRecord_getTodayPriceRecords {
       result(
-        take: $take
+        take: 1000
         skip: $skip
         where: {
           productId: { eq: $productId }

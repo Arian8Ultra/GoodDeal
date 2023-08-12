@@ -1,1 +1,1 @@
-export const schema = 'http://172.16.23.50:9090/graphql/';
+export const schema = 'http://172.17.139.17:5137/graphql/';

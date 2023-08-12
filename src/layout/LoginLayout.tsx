@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import gandonPattern from "../assets/Gandom.png";
 import { Image } from "@chakra-ui/react";
 import { Outlet, useNavigate } from "react-router-dom";
@@ -62,6 +62,15 @@ const LoginLayout = (props: LoginLayoutProps) => {
         <Outlet/>
         {props.children}
       </Box>
+      <Typography sx={{
+        position:'fixed',
+        bottom:0,
+        right:0,
+        color:'black',
+        fontSize:'0.5rem'
+      }}>
+        v{import.meta.env.REACT_APP_VERSION ? import.meta.env.REACT_APP_VERSION : 1.6}
+      </Typography>
     </Box>
   );
 };

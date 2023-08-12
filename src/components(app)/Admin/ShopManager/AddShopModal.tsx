@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import React, {
@@ -40,7 +41,7 @@ const AddShopModal = (props: Props) => {
     lng: 51.47891772707084,
   });
   const [input, setInput] = useState({
-    cityId: 0,
+    cityId: null,
     fullAddress: "",
     goodsType: "",
     plaque: 0,
@@ -48,9 +49,9 @@ const AddShopModal = (props: Props) => {
     ownerFullName: "",
     phoneNumber: "",
     postalCode: "",
-    provinceId: "",
-    regionId: "",
-    subregionId: "",
+    provinceId: null,
+    regionId: null,
+    subregionId: null,
     // xCoordinate: "",
     // yCoordinate: "",
   });
@@ -58,13 +59,15 @@ const AddShopModal = (props: Props) => {
   const onMove = useCallback(() => {
     // @ts-ignore
     setPosition(map?.getCenter());
+    // @ts-ignore
+    console.log(map?.getCenter().lng);
   }, [map]);
 
   const [addShop] = useMutation(ADD_SHOP, {
-
     onCompleted: (data) => {
       console.log(data);
       alert("فروشگاه با موفقیت اضافه شد");
+      window.location.reload();
     },
     onError: (e) => {
       console.log(e);
@@ -161,11 +164,6 @@ const AddShopModal = (props: Props) => {
     }
   }, [regionId]);
 
-
-
-
-
-
   const checkInput = () => {
     if (
       input.cityId &&
@@ -180,7 +178,7 @@ const AddShopModal = (props: Props) => {
       console.log(input);
       return false;
     }
-  }
+  };
 
   return (
     <NewModal
@@ -197,14 +195,14 @@ const AddShopModal = (props: Props) => {
         <TextInput
           label="نام فروشگاه"
           width={"100%"}
-          getText={(text:string) => {
+          getText={(text: string) => {
             setInput({ ...input, name: text });
           }}
         />
         <TextInput
-          label="نام و نام خانوادگی مالک"
+          label="نام و نام خانوادگی مالک / کد ملی"
           width={"100%"}
-          getText={(text:string) => {
+          getText={(text: string) => {
             setInput({ ...input, ownerFullName: text });
           }}
         />
@@ -213,16 +211,16 @@ const AddShopModal = (props: Props) => {
           width={"100%"}
           type="number"
           autoComplete="phone"
-          getText={(text:string) => {
+          getText={(text: string) => {
             setInput({ ...input, phoneNumber: text });
-          }}        
-          />
+          }}
+        />
 
         <TextInput
           label="کد پستی"
           width={"100%"}
           type="number"
-          getText={(text:string) => {
+          getText={(text: string) => {
             setInput({ ...input, postalCode: text });
           }}
         />
@@ -231,7 +229,7 @@ const AddShopModal = (props: Props) => {
           width={"100%"}
           // multiline={true}
           // rows={4}
-          getText={(text:string) => {
+          getText={(text: string) => {
             setInput({ ...input, fullAddress: text });
           }}
         />
@@ -239,7 +237,7 @@ const AddShopModal = (props: Props) => {
           label="شماره پلاک"
           width={"100%"}
           type="number"
-          getText={(text:string) => {
+          getText={(text: string) => {
             setInput({ ...input, plaque: parseFloat(text) });
           }}
         />
@@ -247,7 +245,7 @@ const AddShopModal = (props: Props) => {
         <TextInput
           label="نوع کالا"
           width={"100%"}
-          getText={(text:string) => {
+          getText={(text: string) => {
             setInput({ ...input, goodsType: text });
           }}
         />
@@ -276,7 +274,6 @@ const AddShopModal = (props: Props) => {
           getValue={(id: any | SetStateAction<undefined>) => {
             setCityId(id);
             setInput({ ...input, cityId: id });
-
           }}
           backgroundColor="#fff"
           borderRadius={"15px"}
@@ -293,7 +290,6 @@ const AddShopModal = (props: Props) => {
           getValue={(id: any | SetStateAction<undefined>) => {
             setRegionId(id);
             setInput({ ...input, regionId: id });
-
           }}
           backgroundColor="#fff"
           borderRadius={"15px"}
@@ -316,30 +312,37 @@ const AddShopModal = (props: Props) => {
           disabled={regionId ? false : true}
         />
 
-        <LinkButton backgroundColor={primary} icon={<AddRounded />} onClick={()=>{
-          if(checkInput()){
-            console.log(input);
-            addShop({
-              variables: {
-                cityId: input.cityId,
-                fullAddress: input.fullAddress,
-                goodsType: input.goodsType,
-                plaque: input.plaque,
-                name: input.name,
-                ownerFullName: input.ownerFullName,
-                phoneNumber: input.phoneNumber,
-                postalCode: input.postalCode,
-                provinceId: input.provinceId,
-                regionId: input.regionId,
-                subregionId: input.subregionId,
-                xCoordinate: position.lat,
-                yCoordinate: position.lng,
-              },
-            });
-          }else{
-            alert("لطفا تمامی فیلد ها را پر کنید")
-          }
-        }}>
+        <LinkButton
+          backgroundColor={primary}
+          icon={<AddRounded />}
+          onClick={() => {
+            if (checkInput()) {
+              console.log(input);
+
+              addShop({
+                variables: {
+                  cityId: input.cityId,
+                  fullAddress: input.fullAddress,
+                  goodsType: input.goodsType,
+                  plaque: input.plaque,
+                  name: input.name,
+                  ownerFullName: input.ownerFullName,
+                  phoneNumber: input.phoneNumber,
+                  postalCode: input.postalCode,
+                  provinceId: input.provinceId,
+                  regionId: input.regionId,
+                  subregionId: input.subregionId,
+                  // @ts-ignore
+                  xCoordinate: map?.getCenter()?.lat ? map?.getCenter()?.lat : position.lat,
+                  // @ts-ignore
+                  yCoordinate: map?.getCenter()?.lng ? map?.getCenter()?.lng :position.lng
+                },
+              });
+            } else {
+              alert("لطفا تمامی فیلد ها را پر کنید");
+            }
+          }}
+        >
           افزودن فروشگاه
         </LinkButton>
       </Stack>

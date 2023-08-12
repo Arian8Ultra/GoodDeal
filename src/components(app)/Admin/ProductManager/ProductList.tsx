@@ -16,7 +16,10 @@ import { GET_CATEGORIES } from "../../../GraphQL/QueriesShop";
 import TextInput from "../../../components/TextInput";
 import Selector from "../../../components/Selector";
 import { Link } from "react-router-dom";
-import { ADD_PRODUCT, DELETE_PRODUCT } from "../../../GraphQL/MutationProduct";
+import {
+  ADD_PRODUCT,
+  DELETE_PRODUCT,
+} from "../../../GraphQL/MutationProduct";
 import IButton from "../../../components/IButton";
 
 const ProductList = () => {
@@ -28,9 +31,13 @@ const ProductList = () => {
     description: "",
   });
 
-  const [categories, setCategories] = useState([]);
-  const [deleteProduct]=useMutation(DELETE_PRODUCT)
-  const { data, loading, error,refetch} = useQuery(GET_PRODUCTS, {
+  const [categories, setCategories] = useState([{
+    id: -1,
+    name: "دسته بندی ها"
+  }]);
+  const [categoriesObj,setCategoriesObj] = useState([])
+  const [deleteProduct] = useMutation(DELETE_PRODUCT);
+  const { data, loading, error, refetch } = useQuery(GET_PRODUCTS, {
     onCompleted(data) {
       console.log(data);
     },
@@ -109,29 +116,63 @@ const ProductList = () => {
       </Box>
 
       <Box
-              display={"grid"}
-              gridTemplateColumns={{
-                xs: "repeat(3,1fr)",
-                md: "repeat(4,1fr)",
-              }}
-              justifyContent={"center"}
-              alignItems={"center"}
-              width={"90%"}
-              padding={"1rem"}
-              borderRadius={"15px"}
-              sx={{
-                backgroundColor: "rgba(200,200,200,0.5)",
-                backdropFilter: "blur(10px)",
-                boxShadow: "0 0 10px rgba(0,0,0,0.2)",
-
-              }}
-            >
-              <Typography variant={"h6"} textAlign={'center'}>نام محصول</Typography>
-              <Typography variant={"h6"} textAlign={'center'}>واحد</Typography>
-              <Typography variant={"h6"} textAlign={'center'}>دسته بندی</Typography>
-              <Typography variant={"h6"} textAlign={'center'}>عملیات ها</Typography>
-
-            </Box>
+        display={"grid"}
+        gridTemplateColumns={{
+          xs: "repeat(3,1fr)",
+          md: "repeat(4,1fr)",
+        }}
+        justifyContent={"center"}
+        alignItems={"center"}
+        width={"90%"}
+        padding={"1rem"}
+        borderRadius={"15px"}
+        sx={{
+          backgroundColor: "rgba(200,200,200,0.5)",
+          backdropFilter: "blur(10px)",
+          boxShadow: "0 0 10px rgba(0,0,0,0.2)",
+        }}
+      >
+        <Typography
+          variant={"h6"}
+          textAlign={"center"}
+          fontSize={{
+            xs: "0.9rem",
+            lg: "1rem",
+          }}
+        >
+          نام محصول
+        </Typography>
+        <Typography
+          variant={"h6"}
+          textAlign={"center"}
+          fontSize={{
+            xs: "0.9rem",
+            lg: "1rem",
+          }}
+        >
+          واحد
+        </Typography>
+        <Typography
+          variant={"h6"}
+          textAlign={"center"}
+          fontSize={{
+            xs: "0.9rem",
+            lg: "1rem",
+          }}
+        >
+          دسته بندی
+        </Typography>
+        <Typography
+          variant={"h6"}
+          textAlign={"center"}
+          fontSize={{
+            xs: "0.9rem",
+            lg: "1rem",
+          }}
+        >
+          عملیات ها
+        </Typography>
+      </Box>
 
       {data &&
         data.product_getProducts.result?.items?.map(
@@ -156,15 +197,39 @@ const ProductList = () => {
                 backgroundColor: "rgba(255,255,255,0.5)",
                 backdropFilter: "blur(10px)",
                 boxShadow: "0 0 10px rgba(0,0,0,0.2)",
-
               }}
-              padding={"1rem"}
+              padding={"0.5rem"}
               borderRadius={"15px"}
             >
-              <Typography variant={"h6"}>{item.name}</Typography>
-              <Typography variant={"h6"}textAlign={'center'}>{item.unit}</Typography>
-              <Typography variant={"h6"}textAlign={'center'}>
-                {item.categoryId}
+              <Typography
+                variant={"h6"}
+                fontSize={{
+                  xs: "0.9rem",
+                  lg: "1rem",
+                }}
+              >
+                {item.name}
+              </Typography>
+              <Typography
+                variant={"h6"}
+                textAlign={"center"}
+                fontSize={{
+                  xs: "0.9rem",
+                  lg: "1rem",
+                }}
+              >
+                {item.unit}
+              </Typography>
+              <Typography
+                variant={"h6"}
+                textAlign={"center"}
+                fontSize={{
+                  xs: "0.9rem",
+                  lg: "1rem",
+                }}
+              >
+                {categories?.find((cat) => cat.id === item.categoryId)
+                  ?.name}
               </Typography>
               <Box
                 display={"flex"}
@@ -177,22 +242,24 @@ const ProductList = () => {
                   fun={() =>
                     confirm("آیا از حذف این محصول اطمینان دارید؟") &&
                     deleteProduct({
-                      variables:{
-                        id:item.id
+                      variables: {
+                        id: item.id,
                       },
-                      onCompleted(data){
-                        console.log(data)
-                        refetch()
+                      onCompleted(data) {
+                        console.log(data);
+                        refetch();
                       },
-                      onError(error){
-                        console.log(error)
-                      }
+                      onError(error) {
+                        console.log(error);
+                      },
                     })
                   }
                 >
-                  <DeleteRounded sx={{
-                    color: "white",
-                  }} />
+                  <DeleteRounded
+                    sx={{
+                      color: "white",
+                    }}
+                  />
                 </IButton>
               </Box>
             </Box>

@@ -157,8 +157,8 @@ function FileButton(props: FileButtonProps) {
       <Center height={"100%"}>
         {props.text}
         {props.children}
-        {props.icon}
-        {fileName}
+        {/* {props.icon} */}
+        {/* {fileName} */}
       </Center>
     </Button>
   );

@@ -1,66 +1,77 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
+import { useMutation, useQuery } from "@apollo/client";
 import { Center, Image, Stack } from "@chakra-ui/react";
 import { AddRounded } from "@mui/icons-material";
 import { Box } from "@mui/material";
-import React from "react";
-import { UPLOAD_FILE } from "../../../api/api";
+import React, { useEffect } from "react";
+import { IMAGE_URL } from "../../../../config";
+import { ADD_CATEGORY } from "../../../GraphQL/MutationShop";
+import { GET_CATEGORIES } from "../../../GraphQL/QueriesShop";
 import CategoryList from "../../../components(app)/Admin/CategoryManager/CategoryList";
-import FileButton from "../../../components/FileButton";
+import GalleryModal from "../../../components(app)/Gallery/GalleryModal";
 import LinkButton from "../../../components/LinkButton";
 import NewModal from "../../../components/Modals";
 import TextInput from "../../../components/TextInput";
 import { usePersistStore } from "../../../stores/PersistStore";
-import {
-  Green,
-  onPrimary,
-  primary,
-} from "../../../theme/Colors";
-import { GET_CATEGORIES } from "../../../GraphQL/QueriesShop";
-import { useMutation, useQuery } from "@apollo/client";
-import { ADD_CATEGORY } from "../../../GraphQL/MutationShop";
+import { Green, onPrimary, primary } from "../../../theme/Colors";
 
 const CategoryManager = () => {
   const [thumbnail, setThumbnail] = React.useState();
+  const [image, setImage] = React.useState({
+    name: "",
+    id: "",
+  });
   const [addModal, setAddModal] = React.useState({
     open: false,
     title: "",
     imageName: "",
   });
-  const token = usePersistStore((state) => state.token);
+  const [galleryModal, setGalleryModal] = React.useState({
+    open: false,
+    id: "",
+    name: "",
+    photo: {
+      name: "",
+      id: "",
+    },
+  });
+  // const token = usePersistStore((state) => state.token);
   const [categories, setCategories] = React.useState([]);
 
-  const {loading, error, data,refetch} = useQuery(GET_CATEGORIES,{
+  const { refetch } = useQuery(GET_CATEGORIES, {
     onCompleted: (data) => {
-      console.log(data);
+      // console.log(data);
       setCategories(data.category_getCategories.result.items);
-    }
-  })
+    },
+  });
 
-
-  const [addCategory] = useMutation(ADD_CATEGORY,{
-    onCompleted(data, clientOptions) {
-      console.log(data);
-      alert('دسته بندی با موفقیت اضافه شد');
+  const [addCategory] = useMutation(ADD_CATEGORY, {
+    onCompleted() {
+      // console.log(data);
+      alert("دسته بندی با موفقیت اضافه شد");
       setAddModal({
-        open:false,
-        imageName : '',
-        title: ''
-      })
+        open: false,
+        imageName: "",
+        title: "",
+      });
       // @ts-ignore
-      setThumbnail([])
+      setThumbnail([]);
       refetch();
     },
     onError(error) {
       console.log(error);
-      alert('دسته بندی اضافه نشد');
-    }
-  })
+      alert("دسته بندی اضافه نشد");
+    },
+  });
+
+  useEffect(() => {
+    console.log(galleryModal.name);
+  }, [galleryModal.name]);
 
   return (
-    <Stack
-      width={"100%"}
-      alignItems={"center"}
-    >
+    <Stack width={"100%"} alignItems={"center"}>
       <Box
         width={"100%"}
         display="flex"
@@ -81,7 +92,7 @@ const CategoryManager = () => {
         </LinkButton>
       </Box>
 
-      <CategoryList categories={categories}/>
+      <CategoryList categories={categories} />
       <NewModal
         width={{
           xs: "90%",
@@ -106,31 +117,56 @@ const CategoryManager = () => {
           justifyContent={"center"}
           alignItems={"center"}
         >
-          <FileButton
-            pl={10}
-            pr={10}
-            width={"100%"}
-            borderRadius={"15px"}
-            setFiles={(files: any) => {
-              setThumbnail(files);
-              console.log(files);
-              
+          <LinkButton
+            onClick={() => {
+              setGalleryModal({
+                ...galleryModal,
+                open: !galleryModal.open,
+              });
             }}
-            text="انتخاب تصویر"
+            backgroundColor={Green}
+            icon={<AddRounded />}
+            margin={"1rem"}
+            width={"max-content"}
+          >
+            انتخاب از گالری
+          </LinkButton>
+
+          <GalleryModal
+            open={galleryModal.open}
+            onClose={() => {
+              setGalleryModal({
+                ...galleryModal,
+                open: !galleryModal.open,
+              });
+            }}
+            setId={(id: string) => {
+              setGalleryModal({ ...galleryModal, id: id });
+            }}
+            setName={(name: string) => {
+              setGalleryModal({ ...galleryModal, name: name });
+            }}
+            setPhoto={(photo: any) => {
+              console.log(photo);
+              setImage({ name: photo.name, id: photo.id });
+              setGalleryModal({ ...galleryModal, photo: photo });
+            }}
           />
           {thumbnail != null && (
             <Center>
-              <Image
-                src={thumbnail[0] && URL.createObjectURL(thumbnail[0])}
-                fit={"contain"}
-                borderRadius={"15px"}
-                width={"90%"}
-                border={`3px solid ${primary}`}
-                height={"400px"}
-              />
+              {image.name !== "" && (
+                <Image
+                  src={`${IMAGE_URL}/${image.name}`}
+                  fit={"contain"}
+                  borderRadius={"15px"}
+                  width={"90%"}
+                  border={`3px solid ${primary}`}
+                  height={"400px"}
+                />
+              )}
             </Center>
           )}
-          <Box width={'90%'}>
+          <Box width={"90%"}>
             <TextInput
               width={"100%"}
               fullWidth={true}
@@ -147,22 +183,28 @@ const CategoryManager = () => {
             width={"max-content"}
             onClick={() => {
               console.log(thumbnail);
-              UPLOAD_FILE({
-                file: thumbnail && thumbnail[0],
-                token: token,
-                onSuccess: (res: any) => {
-                  console.log(res);
-                  addCategory({
-                    variables:{
-                      imageName: res,
-                      title: addModal.title
-                    }
-                  })
-                },
-                onFail: (err: any) => {
-                  console.log(err);
+              addCategory({
+                variables: {
+                  imageName: image.name,
+                  title: addModal.title,
                 },
               });
+              // UPLOAD_FILE({
+              //   file: thumbnail && thumbnail[0],
+              //   token: token,
+              //   onSuccess: (res: any) => {
+              //     console.log(res);
+              //     addCategory({
+              //       variables: {
+              //         imageName: image.name,
+              //         title: addModal.title,
+              //       },
+              //     });
+              //   },
+              //   onFail: (err: any) => {
+              //     console.log(err);
+              //   },
+              // });
             }}
           >
             افزودن دسته بندی

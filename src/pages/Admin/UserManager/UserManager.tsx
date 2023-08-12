@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import React from "react";
 import UserList from "../../../components(app)/Admin/UserManager/UserList";
@@ -48,8 +49,8 @@ const UserManager = () => {
     },
   });
 
-  const [userSignUp, { loading }] = useMutation(USER_SIGNUP, {
-    onCompleted(data, clientOptions) {
+  const [userSignUp] = useMutation(USER_SIGNUP, {
+    onCompleted(data) {
       console.log(data);
       alert("کاربر با موفقیت اضافه شد");
     },
@@ -58,17 +59,16 @@ const UserManager = () => {
     },
   });
 
-  const [addRoleToUser, { loading: loadingAddUserToRole }] =
-    useMutation(ADD_ROLE_TO_USER,{
-      onCompleted(data, clientOptions) {
-        console.log(data);
-        alert("نقش با موفقیت به کاربر اضافه شد");
-      },
-      onError(error) {
-        console.log(error);
-        alert("خطا در اضافه کردن نقش به کاربر");
-      }
-    });
+  const [addRoleToUser] = useMutation(ADD_ROLE_TO_USER, {
+    onCompleted(data) {
+      console.log(data);
+      alert("نقش با موفقیت به کاربر اضافه شد");
+    },
+    onError(error) {
+      console.log(error);
+      alert("خطا در اضافه کردن نقش به کاربر");
+    },
+  });
 
   const [removeRole, { loading: loadingRemoveRole }] = useMutation(
     REMOVE_ROLE_FROM_USER
@@ -226,6 +226,28 @@ const UserManager = () => {
           />
           <LinkButton
             onClick={() => {
+              if (
+                newUserModal.password !== newUserModal.confirmPassword
+              ) {
+                alert("رمز عبور و تکرار آن یکسان نیستند");
+                return;
+              }
+              if (newUserModal.password.length < 8) {
+                alert("رمز عبور باید حداقل 8 کاراکتر باشد");
+                return;
+              }
+
+              if (
+                newUserModal.userName.length < 0 ||
+                newUserModal.email.length < 0 ||
+                newUserModal.firstName.length < 0 ||
+                newUserModal.lastName.length < 0 ||
+                newUserModal.nationalCode.length < 0 ||
+                newUserModal.phoneNumber.length < 0
+              ) {
+                alert("لطفا تمامی فیلد ها را پر کنید");
+                return;
+              }
               userSignUp({
                 variables: {
                   userName: newUserModal.userName,
@@ -237,7 +259,7 @@ const UserManager = () => {
                   password: newUserModal.password,
                   confirmPassword: newUserModal.confirmPassword,
                 },
-                onCompleted(data, clientOptions) {
+                onCompleted(data) {
                   console.log(data);
                   alert("کاربر با موفقیت اضافه شد");
                 },
@@ -295,13 +317,13 @@ const UserManager = () => {
                     variables: {
                       Id: role.id,
                     },
-                    onCompleted(data, clientOptions) {
+                    onCompleted(data) {
                       console.log(data);
                       alert("نقش با موفقیت حذف شد");
                     },
                     onError(error) {
                       console.log(error);
-                    }
+                    },
                   });
                 }}
               >
@@ -338,7 +360,7 @@ const UserManager = () => {
                   userId: roleModal.userId,
                   roleType: roleModal.roleType,
                 },
-                onCompleted(data, clientOptions) {
+                onCompleted(data) {
                   console.log(data);
                   alert("نقش با موفقیت اضافه شد");
                   window.location.reload();

@@ -1,20 +1,18 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { Box, Typography } from "@mui/material";
 import "leaflet/dist/leaflet.css";
-import {
-  MapContainer,
-  Marker,
-  TileLayer
-} from "react-leaflet";
+import { MapContainer, Marker, TileLayer } from "react-leaflet";
 import { Outlet, useLocation, useParams } from "react-router-dom";
 import { primary } from "../../theme/Colors";
 import "./Shop.css";
 
-
 const Shop = () => {
   const { shopId, categoryId } = useParams();
   const shop = useLocation().state?.store;
-  const center = shop?.xCoordinate && shop?.yCoordinate ? [shop.xCoordinate, shop.yCoordinate] : [35.689720986449565, 51.47891772707084];
+  const center =
+    shop?.xCoordinate && shop?.yCoordinate
+      ? [shop.xCoordinate, shop.yCoordinate]
+      : [35.689720986449565, 51.47891772707084];
   console.log(shop);
   return (
     <Box
@@ -46,10 +44,25 @@ const Shop = () => {
           alignItems={"start"}
           flexDirection={"column"}
         >
-          <Typography variant={"h5"} component={"h6"}>
+          <Typography
+            variant={"h5"}
+            component={"h6"}
+            fontSize={{
+              xs: "1rem",
+              lg: "1.1rem",
+            }}
+          >
             نام فروشگاه :
           </Typography>
-          <Typography variant={"h6"} component={"h6"} fontStyle={'bold'}>
+          <Typography
+            variant={"h6"}
+            component={"h6"}
+            fontStyle={"bold"}
+            fontSize={{
+              xs: "0.9rem",
+              lg: "1rem",
+            }}
+          >
             {shop?.name}
           </Typography>
         </Box>
@@ -59,10 +72,24 @@ const Shop = () => {
           alignItems={"start"}
           flexDirection={"column"}
         >
-          <Typography variant={"h5"} component={"h6"}>
-            نام صاحب فروشگاه :
+          <Typography
+            variant={"h5"}
+            component={"h6"}
+            fontSize={{
+              xs: "1rem",
+              lg: "1.1rem",
+            }}
+          >
+            نام/ کدملی صاحب فروشگاه :
           </Typography>
-          <Typography variant={"h6"} component={"h6"}>
+          <Typography
+            variant={"h6"}
+            component={"h6"}
+            fontSize={{
+              xs: "0.9rem",
+              lg: "1rem",
+            }}
+          >
             {shop?.ownerFullName}
           </Typography>
         </Box>
@@ -72,10 +99,24 @@ const Shop = () => {
           alignItems={"start"}
           flexDirection={"column"}
         >
-          <Typography variant={"h5"} component={"h6"}>
+          <Typography
+            variant={"h5"}
+            component={"h6"}
+            fontSize={{
+              xs: "1rem",
+              lg: "1.1rem",
+            }}
+          >
             آدرس :
           </Typography>
-          <Typography variant={"h6"} component={"h6"}>
+          <Typography
+            variant={"h6"}
+            component={"h6"}
+            fontSize={{
+              xs: "0.9rem",
+              lg: "1rem",
+            }}
+          >
             {shop?.fullAddress}
           </Typography>
         </Box>
@@ -85,10 +126,24 @@ const Shop = () => {
           alignItems={"start"}
           flexDirection={"column"}
         >
-          <Typography variant={"h5"} component={"h6"}>
+          <Typography
+            variant={"h5"}
+            component={"h6"}
+            fontSize={{
+              xs: "1rem",
+              lg: "1.1rem",
+            }}
+          >
             شماره تماس :
           </Typography>
-          <Typography variant={"h6"} component={"h6"}>
+          <Typography
+            variant={"h6"}
+            component={"h6"}
+            fontSize={{
+              xs: "0.9rem",
+              lg: "1rem",
+            }}
+          >
             {shop?.phoneNumber}
           </Typography>
         </Box>
@@ -107,19 +162,17 @@ const Shop = () => {
           xl: "40vh",
         }}
         gridRow={{
-          xs:'2',
-          sm:'2',
-          md:'1',
-          lg:'1',
+          xs: "2",
+          sm: "2",
+          md: "1",
+          lg: "1",
         }}
-        gridColumn={
-          {
-            xs:'1/3',
-            sm:'1/3',
-            md:'2/3',
-            lg:'2/3',
-          }
-        }
+        gridColumn={{
+          xs: "1/3",
+          sm: "1/3",
+          md: "2/3",
+          lg: "2/3",
+        }}
         position={"relative"}
       >
         <MapContainer
@@ -151,14 +204,20 @@ const Shop = () => {
         </MapContainer>
       </Box>
 
-      <Box width={"100%"} gridColumn={'1/3'} padding={'1rem'} margin={'auto'} sx={{
-        borderRadius: '15px',
-        backgroundColor: "rgba(255,255,255,0.5)",
-        backdropFilter: "blur(10px)",
-        border: " 1px solid #4763E4",
-        borderColor:primary,
-        boxSizing: "border-box",
-      }}>
+      <Box
+        width={"100%"}
+        gridColumn={"1/3"}
+        padding={"1rem"}
+        margin={"auto"}
+        sx={{
+          borderRadius: "15px",
+          backgroundColor: "rgba(255,255,255,0.5)",
+          backdropFilter: "blur(10px)",
+          border: " 1px solid #4763E4",
+          borderColor: primary,
+          boxSizing: "border-box",
+        }}
+      >
         <Outlet />
       </Box>
     </Box>

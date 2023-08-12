@@ -107,6 +107,7 @@ const ManageShopList = (props: Props) => {
               backgroundColor={Red}
               hoverColor={"#ff0000"}
               fun={() => {
+                if(confirm("آیا از حذف فروشگاه مطمئن هستید؟"))
                 deleteShop({
                   variables: {
                     id: store.id,

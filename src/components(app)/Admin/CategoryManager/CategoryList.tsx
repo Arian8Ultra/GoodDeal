@@ -1,12 +1,30 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 import { useMutation } from "@apollo/client";
 import { Image, Stack } from "@chakra-ui/react";
-import { DeleteRounded } from "@mui/icons-material";
+import {
+  AddRounded,
+  DeleteRounded,
+  EditRounded,
+} from "@mui/icons-material";
 import { Box, Typography } from "@mui/material";
 import React from "react";
 import { IMAGE_URL } from "../../../../config";
-import { DELETE_CATEGORY } from "../../../GraphQL/MutationShop";
+import {
+  DELETE_CATEGORY,
+  UPDATE_CATEGORY,
+} from "../../../GraphQL/MutationShop";
 import IButton from "../../../components/IButton";
-import { Red } from "../../../theme/Colors";
+import {
+  Green,
+  Red,
+  background,
+  primary,
+  primaryLight,
+} from "../../../theme/Colors";
+import NewModal from "../../../components/Modals";
+import TextInput from "../../../components/TextInput";
+import LinkButton from "../../../components/LinkButton";
+import GalleryModal from "../../Gallery/GalleryModal";
 
 interface Props {
   categories: {
@@ -18,10 +36,38 @@ interface Props {
   children?: React.ReactNode;
 }
 const CategoryList = (props: Props) => {
-  console.log(props.categories);
+  // console.log(props.categories);
 
-  const [deleteCategory,{loading}]= useMutation(DELETE_CATEGORY)
-
+  const [editModal, setEditModal] = React.useState({
+    open: false,
+    name: "",
+    imageName: "",
+    id: 0,
+  });
+  const [galleryModal, setGalleryModal] = React.useState({
+    open: false,
+    id: "",
+    name: "",
+    photo: {
+      name: "",
+      id: "",
+    },
+  });
+  const [image, setImage] = React.useState({
+    name: "",
+    id: "",
+  });
+  const [deleteCategory, { loading }] = useMutation(DELETE_CATEGORY);
+  const [updateCategory, { loading: updateLoading }] = useMutation(
+    UPDATE_CATEGORY,
+    {
+      variables: {
+        id: editModal.id,
+        title: editModal.name,
+        imageName: editModal.imageName,
+      },
+    }
+  );
   return (
     <Stack
       width={"90%"}
@@ -61,7 +107,9 @@ const CategoryList = (props: Props) => {
           <Image
             w={"50px"}
             aspectRatio={"1/1"}
-            src={`${import.meta.env.REACT_APP_IMAGE_URL || IMAGE_URL}${category.imageName}`}
+            src={`${
+              import.meta.env.REACT_APP_IMAGE_URL || IMAGE_URL
+            }${category.imageName}`}
             loading="lazy"
             alt={category.title}
           />
@@ -70,45 +118,170 @@ const CategoryList = (props: Props) => {
             justifyContent={"end"}
             alignItems={"center"}
             width={"100%"}
+            gap={2}
           >
-            <IButton backgroundColor={Red} hoverColor={"#ff0000"} fun={()=>{
-              confirm("آیا از حذف این دسته بندی اطمینان دارید؟") &&
-              deleteCategory({
-                variables:{
-                  id:category.id
-                },
-                refetchQueries: ["GetCategories"],
-                onCompleted(data, clientOptions) {
-                  console.log(data);
-                  window.location.reload()
-                },
-                onError(err) {
-                  console.log(err);
-                }
-              })
-            }}>
+            <IButton
+              backgroundColor={Red}
+              hoverColor={"#ff0000"}
+              fun={() => {
+                confirm("آیا از حذف این دسته بندی اطمینان دارید؟") &&
+                  deleteCategory({
+                    variables: {
+                      id: category.id,
+                    },
+                    refetchQueries: ["GetCategories"],
+                    onCompleted(data, clientOptions) {
+                      console.log(data);
+                      window.location.reload();
+                    },
+                    onError(err) {
+                      console.log(err);
+                    },
+                  });
+              }}
+            >
               <DeleteRounded
                 sx={{
                   color: "white",
                 }}
               />
             </IButton>
-            {/* <IButton
-                      backgroundColor={primary}
-                      hoverColor={primaryLight}
-                      fun={() => {
-                        props.editUser && props.editUser(user);
-                      }}
-                    >
-                      <EditRounded
-                        sx={{
-                          color: "white",
-                        }}
-                      />
-                    </IButton> */}
+            <IButton
+              backgroundColor={primary}
+              hoverColor={primaryLight}
+              fun={() => {
+                setEditModal({
+                  ...editModal,
+                  open: true,
+                  name: category.title,
+                  imageName: category.imageName,
+                  id: category.id,
+                });
+              }}
+            >
+              <EditRounded
+                sx={{
+                  color: "white",
+                }}
+              />
+            </IButton>
           </Box>
         </Box>
       ))}
+
+      <NewModal
+        name="ویرایش دسته بندی"
+        backgroundColor={background}
+        color={primary}
+        open={editModal.open}
+        onClose={() => {
+          setEditModal({
+            ...editModal,
+            open: false,
+          });
+        }}
+        isCloseable={true}
+        height={"80vh"}
+      >
+        <Box
+          display={"flex"}
+          flexDirection={"column"}
+          justifyContent={"center"}
+          alignItems={"center"}
+          width={"100%"}
+          height={"100%"}
+        >
+          <Box
+            display={"flex"}
+            flexDirection={"column"}
+            justifyContent={"center"}
+            alignItems={"center"}
+            width={"100%"}
+            height={"100%"}
+          >
+            {/* <Typography
+              variant={"h6"}
+              paddingX={"1rem"}
+              sx={{
+                alignSelf: "center",
+              }}
+            >
+              {editModal.name}
+            </Typography> */}
+            <TextInput
+              value={editModal.name}
+              getText={(e: { target: { value: any } }) => {
+                setEditModal({
+                  ...editModal,
+                  name: e.target.value,
+                });
+              }}
+              label={"نام دسته بندی"}
+            />
+
+            <LinkButton
+              onClick={() => {
+                setGalleryModal({
+                  ...galleryModal,
+                  open: !galleryModal.open,
+                });
+              }}
+              backgroundColor={Green}
+              icon={<AddRounded />}
+              margin={"1rem"}
+              width={"max-content"}
+            >
+              تغییر عکس از گالری
+            </LinkButton>
+
+            <GalleryModal
+              open={galleryModal.open}
+              onClose={() => {
+                setGalleryModal({
+                  ...galleryModal,
+                  open: !galleryModal.open,
+                });
+              }}
+              setId={(id: string) => {
+                setGalleryModal({ ...galleryModal, id: id });
+              }}
+              setName={(name: string) => {
+                setGalleryModal({ ...galleryModal, name: name });
+              }}
+              setPhoto={(photo: any) => {
+                console.log(photo);
+                setImage({ name: photo.name, id: photo.id });
+                setGalleryModal({ ...galleryModal, photo: photo });
+                setEditModal({
+                  ...editModal,
+                  imageName: photo.name,
+                });
+              }}
+            />
+
+            <Image
+              w={"100%"}
+              aspectRatio={"1/1"}
+              src={`${
+                import.meta.env.REACT_APP_IMAGE_URL || IMAGE_URL
+              }${editModal.imageName}`}
+              loading="lazy"
+              alt={editModal.name}
+            />
+            <LinkButton
+              onClick={() => {
+                updateCategory();
+              }}
+              backgroundColor={primary}
+              icon={<EditRounded />}
+              margin={"1rem"}
+              width={"max-content"}
+            >
+              ویرایش دسته بندی
+            </LinkButton>
+          </Box>
+        </Box>
+      </NewModal>
     </Stack>
   );
 };

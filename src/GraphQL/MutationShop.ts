@@ -99,6 +99,28 @@ export const DELETE_CATEGORY = gql`
   }
 `;
 
+export const UPDATE_CATEGORY = gql`
+  mutation category_updateCategory(
+    $id: Int!
+    $title: String!
+    $imageName: String!
+  ) {
+    category_updateCategory(
+      input: { id: $id, title: $title, imageName: $imageName }
+    ) {
+      result {
+        title
+        imageName
+        id
+      }
+      status {
+        code
+        value
+      }
+    }
+  }
+`;
+
 export const ADD_SHOP_CATEGORY = gql`
   mutation shopCategory_addShopCategory(
     $shopId: Int!
