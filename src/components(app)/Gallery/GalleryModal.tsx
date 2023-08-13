@@ -43,8 +43,8 @@ const GalleryModal = ({
     GET_ALL_GALLERY,
     {
       variables: {
-        take: 10,
-        skip: (page - 1) * 10,
+        take: 12,
+        skip: (page - 1) * 12,
       },
     }
   );
@@ -63,7 +63,7 @@ const GalleryModal = ({
 
   useEffect(() => {
     refetch({
-      skip: (page - 1) * 10,
+      skip: (page - 1) * 12,
     });
   }, [page, refetch]);
 
@@ -179,7 +179,7 @@ const GalleryModal = ({
           )}
         </ImageList>
         <Pagination
-          count={data?.photoGallery_getPhotos?.result?.totalPages}
+          count={data?.photoGallery_getPhotos?.result?.totalCount / 12}
           page={page}
           onChange={(e, value) => {
             setPage(value);

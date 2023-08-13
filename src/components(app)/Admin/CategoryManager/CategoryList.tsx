@@ -66,6 +66,16 @@ const CategoryList = (props: Props) => {
         title: editModal.name,
         imageName: editModal.imageName,
       },
+      onCompleted() {
+        alert("دسته بندی با موفقیت ویرایش شد");
+        setEditModal({
+          open: false,
+          name: "",
+          imageName: "",
+          id: 0,
+        });
+        // window.location.reload();
+      }
     }
   );
   return (
@@ -260,7 +270,7 @@ const CategoryList = (props: Props) => {
             />
 
             <Image
-              w={"100%"}
+              w={"50%"}
               aspectRatio={"1/1"}
               src={`${
                 import.meta.env.REACT_APP_IMAGE_URL || IMAGE_URL

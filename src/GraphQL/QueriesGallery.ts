@@ -6,7 +6,7 @@ export const GET_ALL_GALLERY = gql`
     $skip: Int!
   ) {
     photoGallery_getPhotos {
-      result(take: $take, skip: $skip) {
+      result(take: $take, skip: $skip , order: {createdDate: DESC}) {
         items {
           name
           id

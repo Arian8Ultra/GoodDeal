@@ -172,7 +172,7 @@ export const GET_CATEGORIES = gql`
 export const GET_SHOP_CATEGORY = gql`
   query shopCategory_getShopCategory($id: Int!) {
     shopCategory_getShopCategory(entityId: $id) {
-      result (take: 1000){
+      result (take: 1000) {
         shopId
         categoryId
         category {
