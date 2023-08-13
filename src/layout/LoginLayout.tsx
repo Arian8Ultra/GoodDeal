@@ -69,7 +69,7 @@ const LoginLayout = (props: LoginLayoutProps) => {
         color:'black',
         fontSize:'0.5rem'
       }}>
-        v{import.meta.env.REACT_APP_VERSION ? import.meta.env.REACT_APP_VERSION : 1.9}
+        v{import.meta.env.REACT_APP_VERSION ? import.meta.env.REACT_APP_VERSION : 2.0}
       </Typography>
     </Box>
   );

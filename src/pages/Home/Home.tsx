@@ -9,13 +9,12 @@ import { usePersistStore } from "../../stores/PersistStore";
 import useLayoutStore from "../../stores/layoutStore";
 
 const Home = () => {
-  const [ostanId, setOstanId] = useState(0);
+  const [, setOstanId] = useState(0);
   const [cityId, setCityId] = useState(0);
   const [regionId, setRegionId] = useState(0);
   const [neighborhoodId, setNeighborhoodId] = useState(0);
   const [search, setSearch] = useState("");
   const [stores, setStores] = useState([]);
-  const token = usePersistStore((state) => state.token);
   const changePageName = useLayoutStore((state) => state.changePageName);
   const [getShops, { loading, error ,refetch}] = useLazyQuery(GET_SHOPS_BY_SUBREGION_ID, {
     variables: {
@@ -107,7 +106,7 @@ const Home = () => {
       />
       <Box
         sx={{
-          marginTop: "50px",
+          marginTop: "10px",
           display: "flex",
           justifyContent: "space-evenly",
           alignItems: "end",

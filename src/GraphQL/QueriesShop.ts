@@ -29,6 +29,9 @@ export const GET_SHOPS_SEARCH = gql`
           or: [
             { name: { contains: $search } }
             { ownerFullName: { contains: $search } }
+            { fullAddress: { contains: $search } }
+            { city: { name: { contains: $search } } }
+            { goodsType: { contains: $search } }
           ]
         }
       ) {
@@ -201,7 +204,7 @@ export const GET_CATEGORIES = gql`
 export const GET_SHOP_CATEGORY = gql`
   query shopCategory_getShopCategory($id: Int!) {
     shopCategory_getShopCategory(entityId: $id) {
-      result(take: 1000) {
+      result {
         shopId
         categoryId
         category {
