@@ -6,7 +6,7 @@ import {
   DeleteRounded,
   EditRounded,
 } from "@mui/icons-material";
-import { Box, Typography } from "@mui/material";
+import { Box, CircularProgress, Typography } from "@mui/material";
 import React from "react";
 import { IMAGE_URL } from "../../../../config";
 import {
@@ -14,6 +14,9 @@ import {
   UPDATE_CATEGORY,
 } from "../../../GraphQL/MutationShop";
 import IButton from "../../../components/IButton";
+import LinkButton from "../../../components/LinkButton";
+import NewModal from "../../../components/Modals";
+import TextInput from "../../../components/TextInput";
 import {
   Green,
   Red,
@@ -21,9 +24,6 @@ import {
   primary,
   primaryLight,
 } from "../../../theme/Colors";
-import NewModal from "../../../components/Modals";
-import TextInput from "../../../components/TextInput";
-import LinkButton from "../../../components/LinkButton";
 import GalleryModal from "../../Gallery/GalleryModal";
 
 interface Props {
@@ -57,7 +57,7 @@ const CategoryList = (props: Props) => {
     name: "",
     id: "",
   });
-  const [deleteCategory, { loading }] = useMutation(DELETE_CATEGORY);
+  const [deleteCategory,{loading:deleteLoading}] = useMutation(DELETE_CATEGORY);
   const [updateCategory, { loading: updateLoading }] = useMutation(
     UPDATE_CATEGORY,
     {
@@ -133,6 +133,7 @@ const CategoryList = (props: Props) => {
             <IButton
               backgroundColor={Red}
               hoverColor={"#ff0000"}
+              disabled={deleteLoading}
               fun={() => {
                 confirm("آیا از حذف این دسته بندی اطمینان دارید؟") &&
                   deleteCategory({
@@ -150,11 +151,14 @@ const CategoryList = (props: Props) => {
                   });
               }}
             >
+              {deleteLoading ? (
+                <CircularProgress variant="indeterminate" />
+              ) : 
               <DeleteRounded
                 sx={{
                   color: "white",
                 }}
-              />
+              />}
             </IButton>
             <IButton
               backgroundColor={primary}

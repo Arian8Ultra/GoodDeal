@@ -14,7 +14,6 @@ import GalleryModal from "../../../components(app)/Gallery/GalleryModal";
 import LinkButton from "../../../components/LinkButton";
 import NewModal from "../../../components/Modals";
 import TextInput from "../../../components/TextInput";
-import { usePersistStore } from "../../../stores/PersistStore";
 import { Green, onPrimary, primary } from "../../../theme/Colors";
 
 const CategoryManager = () => {

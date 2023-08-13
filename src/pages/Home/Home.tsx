@@ -1,7 +1,7 @@
 import { useLazyQuery } from "@apollo/client";
-import { Box, Stack } from "@mui/material";
+import { Box, Stack, TextField } from "@mui/material";
 import { useEffect, useState } from "react";
-import { GET_SHOPS_BY_CITY_ID, GET_SHOPS_BY_REGION_ID, GET_SHOPS_BY_SUBREGION_ID } from "../../GraphQL/QueriesShop";
+import { GET_SHOPS_BY_CITY_ID, GET_SHOPS_BY_REGION_ID, GET_SHOPS_BY_SUBREGION_ID, GET_SHOPS_SEARCH } from "../../GraphQL/QueriesShop";
 import { SelectBar } from "../../components(app)/Home/SelectBar";
 import ShopList from "../../components(app)/Home/ShopList";
 import Title from "../../components(app)/Title";
@@ -13,6 +13,7 @@ const Home = () => {
   const [cityId, setCityId] = useState(0);
   const [regionId, setRegionId] = useState(0);
   const [neighborhoodId, setNeighborhoodId] = useState(0);
+  const [search, setSearch] = useState("");
   const [stores, setStores] = useState([]);
   const token = usePersistStore((state) => state.token);
   const changePageName = useLayoutStore((state) => state.changePageName);
@@ -46,6 +47,17 @@ const Home = () => {
     }
   })
 
+
+  const [getShopsBySearch,{loading:loadingSearch,error:errorSearch}] = useLazyQuery(GET_SHOPS_SEARCH,{
+    variables: {
+      search: search,
+    },
+    onCompleted: (data) => {
+      console.log(data);
+      setStores(data.shop_getShops.result.items);
+    }
+  })
+
   useEffect(() => {
     console.log('getting shops');
     getShops()
@@ -65,6 +77,11 @@ const Home = () => {
     changePageName("صفحه اصلی")
   },[changePageName])
 
+  useEffect(()=>{
+    getShopsBySearch()
+  },[getShopsBySearch,search])
+  
+
   return (
     <Stack my={6} alignItems={"center"}>
       <Title title={"صفحه اصلی"} />
@@ -73,6 +90,20 @@ const Home = () => {
         getNeighborhoodId={setNeighborhoodId}
         getPronvinceId={setOstanId}
         getRegionId={setRegionId}
+      />
+      <TextField
+        sx={{
+          width: "80%",
+          marginTop: "50px",
+          // change the border radius
+          "& .MuiOutlinedInput-root": {
+            borderRadius: "15px",
+          }
+        }}
+        label="جستجو"
+        variant="outlined"
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
       />
       <Box
         sx={{

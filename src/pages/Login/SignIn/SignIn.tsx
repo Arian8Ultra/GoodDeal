@@ -4,7 +4,7 @@ import {
   VisibilityOffRounded,
   VisibilityRounded,
 } from "@mui/icons-material";
-import { Stack } from "@mui/material";
+import { CircularProgress, Stack } from "@mui/material";
 import { useState } from "react";
 import { Form } from "react-router-dom";
 import { USER_SIGNIN } from "../../../GraphQL/MutationUser";
@@ -127,18 +127,11 @@ const SignIn = () => {
           iconClick={() => setShowPassword(!showPassword)}
           iconColor={primary}
         />
-        <LinkButton width={"100%"} type="submit">
+        <LinkButton width={"100%"} type="submit" disabled={loading} icon={
+          loading ? <CircularProgress variant="indeterminate" /> : null
+        }>
           ورود
         </LinkButton>
-        {/* <LinkButton
-          backgroundColor="transparent"
-          textColor={primary}
-          width={"100%"}
-          hoverColor={primaryLightTransparent}
-          link="/signup"
-        >
-          ثبت نام
-        </LinkButton> */}
       </Stack>
     </Form>
   );

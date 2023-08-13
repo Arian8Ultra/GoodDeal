@@ -21,6 +21,35 @@ export const GET_SHOPS = gql`
   }
 `;
 
+export const GET_SHOPS_SEARCH = gql`
+  query shop_getShops($search: String!) {
+    shop_getShops {
+      result(
+        where: {
+          or: [
+            { name: { contains: $search } }
+            { ownerFullName: { contains: $search } }
+          ]
+        }
+      ) {
+        items {
+          subregionId
+          goodsType
+          id
+          ownerFullName
+          fullAddress
+          yCoordinate
+          xCoordinate
+          phoneNumber
+          name
+        }
+      }
+      status
+      __typename
+    }
+  }
+`;
+
 export const GET_SHOPS_BY_SUBREGION_ID = gql`
   query shop_getShops_by_subregionId($id: Int!) {
     shop_getShops {
@@ -172,7 +201,7 @@ export const GET_CATEGORIES = gql`
 export const GET_SHOP_CATEGORY = gql`
   query shopCategory_getShopCategory($id: Int!) {
     shopCategory_getShopCategory(entityId: $id) {
-      result (take: 1000) {
+      result(take: 1000) {
         shopId
         categoryId
         category {
