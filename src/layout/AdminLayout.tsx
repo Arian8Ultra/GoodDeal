@@ -94,7 +94,7 @@ function AdminLayout() {
                   {role}
                 </Typography>
               </Stack>
-              <IconButton
+              {/* <IconButton
                 sx={{
                   color: secondary,
                   width: "50px",
@@ -109,7 +109,7 @@ function AdminLayout() {
                     color: primaryDark,
                   }}
                 />
-              </IconButton>
+              </IconButton> */}
               <Center>
                 {window.location.pathname === "/admin" || 
                 window.location.pathname === "/admin/"

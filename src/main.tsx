@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import React from "react";
+import React, { Suspense } from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import { CssBaseline, ThemeProvider } from "@mui/material";
@@ -26,7 +26,9 @@ ReactDOM.createRoot(
     <ThemeProvider theme={theme}>
       <CacheProvider value={cacheRtl}>
         <ApolloProvider client={client}>
-          <RouterProvider router={router} />
+          <Suspense fallback={<div>Loading...</div>}>
+            <RouterProvider router={router} />
+          </Suspense>
         </ApolloProvider>
       </CacheProvider>
     </ThemeProvider>

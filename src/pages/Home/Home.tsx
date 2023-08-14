@@ -94,6 +94,9 @@ const Home = () => {
         sx={{
           width: "80%",
           marginTop: "50px",
+          backgroundColor: "rgba(255, 255, 255, 0.7)",
+          backdropFilter: "blur(10px)",
+          borderRadius: "15px",
           // change the border radius
           "& .MuiOutlinedInput-root": {
             borderRadius: "15px",

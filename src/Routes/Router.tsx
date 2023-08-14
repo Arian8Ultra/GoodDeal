@@ -1,3 +1,4 @@
+import { lazy } from 'react';
 import {
   Route,
   createBrowserRouter,
@@ -8,15 +9,15 @@ import Root from "../layout/Root";
 import SignIn from "../pages/Login/SignIn/SignIn";
 import MainLayout from "../layout/MainLayout";
 import Home from "../pages/Home/Home";
-import Shop from "../pages/Shop/Shop";
+const Shop = lazy(() => import("../pages/Shop/Shop"));
 import Admin from "../pages/Admin/Admin";
-import Categories from "../pages/Shop/Categories/Categories";
+const Categories = lazy(() => import("../pages/Shop/Categories/Categories"));
 import AdminLayout from "../layout/AdminLayout";
-import ShopManager from "../pages/Admin/ShopManager/ShopManager";
-import ProductManager from "../pages/Admin/ProductManager/ProductManager";
-import LocationManager from "../pages/Admin/LocationManager/LocationManager";
-import UserManager from "../pages/Admin/UserManager/UserManager";
-import CategoryManager from "../pages/Admin/CategoryManager/CategoryManager";
+const ShopManager = lazy(() => import("../pages/Admin/ShopManager/ShopManager"));
+const ProductManager = lazy(() => import("../pages/Admin/ProductManager/ProductManager"));
+const LocationManager = lazy(() => import("../pages/Admin/LocationManager/LocationManager"));
+const UserManager = lazy(() => import("../pages/Admin/UserManager/UserManager"));
+const CategoryManager = lazy(() => import("../pages/Admin/CategoryManager/CategoryManager"));
 import Category from "../pages/Shop/Categories/Category/Category";
 
 const router = createBrowserRouter(

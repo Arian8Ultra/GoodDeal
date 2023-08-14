@@ -43,7 +43,7 @@ const Categories = () => {
       alignItems={"center"}
       padding={"1rem"}
     >
-      {shop.shopCategories.map((category: any) => (
+      {shop?.shopCategories?.map((category: any) => (
         // <Box key={category.category.id}>
         //     <h1>{category.category.title}</h1>
         // </Box>
