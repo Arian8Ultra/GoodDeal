@@ -127,7 +127,7 @@ const SignIn = () => {
           iconClick={() => setShowPassword(!showPassword)}
           iconColor={primary}
         />
-        <LinkButton width={"100%"} type="submit" disabled={loading} icon={
+        <LinkButton width={"100%"} type="submit" onClick={handleSignIn} disabled={loading} icon={
           loading ? <CircularProgress variant="indeterminate" /> : null
         }>
           ورود

@@ -1,12 +1,21 @@
 import { Center, Image } from "@chakra-ui/react";
-import { AccountCircleRounded, ArrowCircleLeftRounded } from "@mui/icons-material";
+import {
+  AccountCircleRounded,
+  ArrowCircleLeftRounded,
+} from "@mui/icons-material";
 import { Box, IconButton, Stack, Typography } from "@mui/material";
 import { Outlet, useNavigate } from "react-router-dom";
 import headerImage from "../assets/adminHeader.svg";
 import mainLayoutBackground from "../assets/adminLayoutBackground.svg";
 import { usePersistStore } from "../stores/PersistStore";
 import useLayoutStore from "../stores/layoutStore";
-import { onPrimary, primary, primaryDark, primaryLight, secondary } from "../theme/Colors";
+import {
+  onPrimary,
+  primary,
+  primaryDark,
+  primaryLight,
+  secondary,
+} from "../theme/Colors";
 import { borderRadiuos } from "../theme/Themes";
 import { useEffect } from "react";
 
@@ -15,14 +24,16 @@ function AdminLayout() {
   const firstName = usePersistStore((state) => state.firstName);
   const lastName = usePersistStore((state) => state.lastName);
   // const logout = usePersistStore((state) => state.logout);
-  const changePageName = useLayoutStore((state) => state.changePageName);
+  const changePageName = useLayoutStore(
+    (state) => state.changePageName
+  );
   let role = usePersistStore((state) => state.role);
   role = role === "admin" ? "مدیر" : "کاربر";
   pageName = pageName ? pageName : "صفحه اصلی";
   const navigate = useNavigate();
-  useEffect(()=>{
-    changePageName("پنل ادمین")
-  },[changePageName])
+  useEffect(() => {
+    changePageName("پنل ادمین");
+  }, [changePageName]);
   return (
     <Box
       boxSizing={"border-box"}
@@ -33,11 +44,20 @@ function AdminLayout() {
       width={"100%"}
     >
       <Box width={"100%"}>
-        <Image src={headerImage} alt='header' width={"100%"} />
+        <Image src={headerImage} alt="header" width={"100%"} />
       </Box>
       <Box
-        width={"85%"}
-        padding={8}
+        width={{
+          xs: "100%",
+          sm: "100%",
+          md: "100%",
+          lg: "85%",
+        }}
+        padding={{
+          xs: "0rem",
+          sm: "0rem",
+          md: "1rem",
+        }}
         sx={{
           backgroundColor: onPrimary,
           backgroundImage: `url(${mainLayoutBackground})`,
@@ -59,7 +79,11 @@ function AdminLayout() {
             boxShadow: "0 0 10px #ccc",
           }}
         >
-          <Stack direction={"row"} justifyContent={"space-between"} width={"100%"}>
+          <Stack
+            direction={"row"}
+            justifyContent={"space-between"}
+            width={"100%"}
+          >
             <Center>
               <Typography
                 sx={{
@@ -111,9 +135,8 @@ function AdminLayout() {
                 />
               </IconButton> */}
               <Center>
-                {window.location.pathname === "/admin" || 
-                window.location.pathname === "/admin/"
-                 ? (
+                {window.location.pathname === "/admin" ||
+                window.location.pathname === "/admin/" ? (
                   <IconButton
                     sx={{
                       color: primary,
@@ -121,7 +144,7 @@ function AdminLayout() {
                       height: "45px",
                       padding: 0,
                     }}
-                    onClick={() => navigate('/home')}
+                    onClick={() => navigate("/home")}
                   >
                     <Center
                       bgColor={primaryDark}

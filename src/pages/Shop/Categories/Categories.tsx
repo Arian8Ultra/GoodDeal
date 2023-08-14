@@ -1,13 +1,12 @@
-import React, { useState } from "react";
-import {
-  GET_CATEGORIES,
-  GET_SHOP_CATEGORY,
-} from "../../../GraphQL/QueriesShop";
 import { useQuery } from "@apollo/client";
 import { Box } from "@mui/material";
+import { lazy, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
-import CategoryCard from "../../../components(app)/Category/CategoryCard";
+import {
+  GET_SHOP_CATEGORY
+} from "../../../GraphQL/QueriesShop";
 import Title from "../../../components(app)/Title";
+const CategoryCard = lazy(() => import("../../../components(app)/Category/CategoryCard"));
 
 const Categories = () => {
   const [categories, setCategories] = useState([]);

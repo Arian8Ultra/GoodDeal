@@ -179,7 +179,9 @@ const GalleryModal = ({
           )}
         </ImageList>
         <Pagination
-          count={data?.photoGallery_getPhotos?.result?.totalCount / 12}
+          count={
+            Math.ceil(data?.photoGallery_getPhotos?.result?.totalCount / 12)
+          }
           page={page}
           onChange={(e, value) => {
             setPage(value);
