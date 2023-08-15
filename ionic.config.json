@@ -1,0 +1,7 @@
+{
+  "name": "good-deal",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "custom"
+}
